@@ -1,4 +1,9 @@
 .idea
 __pycache__/
+*.py[cod]
+*$py.class
 venv/
 pdfvenv/
+*.pdf
+*.pyc
+*.cpython-38.pyc
