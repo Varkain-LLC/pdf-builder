@@ -21,17 +21,17 @@ python converter.py
 
 ## About this microservice structure
 ```
+│───assets
+│   │   book.json
+│   │   ...
 │───converter
 │   │   converter.py
-│   │
-│   └───assets
-│       │   book.json
-│       │   ...
+│   │   ...
 │   └───templates
 │       │   book.html
 │       │   ...
 ```
-1. In `converter/assets` folder you can find `book.json` file
+1. In `assets` folder you can find `book.json` file
 2. The keys are match to variables in `converter/templates/book.html` file
 
 ## How works this microservice
