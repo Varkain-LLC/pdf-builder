@@ -38,3 +38,8 @@ python converter.py
 1. It takes variables from `book.json` by key and puts into some temp.html
 2. converts that `temp.html` to `assets/book.pdf`
 3. removes `temp.html` 
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
+
+###### Authors and acknowledgment: Special thanks to `https://github.com/maxvst` for `python-selenium-chrome-html-to-pdf-converter` repository
