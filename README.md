@@ -13,13 +13,8 @@ Install chrome (chromium) browser.
 sudo apt install chromium-browser
 ```
 
-## Demo
-```
-cd converter
-python converter.py
-```
-
-## About this microservice structure
+## Microservice Structure and Demo
+Structure:
 ```
 │───assets
 │   │   book.json
@@ -31,8 +26,19 @@ python converter.py
 │       │   book.html
 │       │   ...
 ```
-1. In `assets` folder you can find `book.json` file
-2. The keys are match to variables in `converter/templates/book.html` file
+Usage:
+```
+cd converter
+python converter.py <json_source> <html_template_sourse> <filename_to_save>
+```
+Example:
+```
+python converter.py book.json book.html book.pdf
+```
+1. `book.json` should be located in `assets` folder 
+2. `book.html` will be located in `converter/templates` folder
+3. `book.pdf` is the name of the pdf file you want to get.
+4. The keys in json file should match to variables in `converter/templates/book.html` file
 
 ## How works this microservice
 1. It takes variables from `book.json` by key and puts into some temp.html
