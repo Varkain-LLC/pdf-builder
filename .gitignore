@@ -1,0 +1,25 @@
+.idea
+*.pyc
+__pycache__/
+tools/__init__.pyc
+*.py[cod]
+*$py.class
+venv/
+pdfvenv/
+*.pdf
+
+# Distribution / packaging
+.Python
+env/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# dotenv
+.env
+.venv
+ENV/
+
+# mypy
+.mypy_cache/
