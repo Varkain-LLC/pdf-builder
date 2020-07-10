@@ -52,11 +52,11 @@ class HtmlToPdfConverter:
             print('PDF file is located at : ' + os.path.abspath(output_file))
 
 
-if __name__ == "__main__":
-    html_to_pdf_obj = HtmlToPdfConverter(
-        template_vars='book.json',
-        html_template='book.html'
-    )
-    html_to_pdf_obj.create(
-        output_file='asdfasdf'
-    )
+# if __name__ == "__main__":
+#     html_to_pdf_obj = HtmlToPdfConverter(
+#         template_vars='book.json',
+#         html_template='book.html'
+#     )
+#     html_to_pdf_obj.create(
+#         output_file='asdfasdf'
+#     )
