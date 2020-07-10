@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(
-    name='PDF-builder',
+    name='pdf-builder',
     version='0.0.1',
     author='Elya',
     author_email='elya@saasuma.com',
@@ -9,9 +9,9 @@ setup(
     packages=['converter'],
     description='HTML to PDF with Python-Jinja',
     long_description=open('README.md').read(),
-    keywords=['PDF-builder'],
+    keywords=['pdf-builder'],
     install_requires=[
-        'dselenium',
+        'selenium',
         'jinja2'
     ],
     classifiers=[
