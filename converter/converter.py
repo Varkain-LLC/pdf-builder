@@ -6,8 +6,8 @@ from tools.html_to_pdf_converter import get_pdf_from_html
 from jinja2 import Environment, FileSystemLoader
 
 # Used folders
-assetsFolder = '../assets/'
-driverPath = assetsFolder + '/drivers/chromedriver'
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+ASSETS_DIR = os.path.join(BASE_DIR, 'assets/')
 
 
 # The CLASS where we get JSON data and template
@@ -15,15 +15,15 @@ driverPath = assetsFolder + '/drivers/chromedriver'
 # convert HTML to PDF
 # For details read the README file
 class HtmlToPdfConverter:
-    def __init__(self, template_vars, html_template):
+    def __init__(self, template_vars, html_template_path):
         self.template_vars = template_vars
-        self.html_template = html_template
+        self.html_template_path = html_template_path
 
     def create(self, output_file=None):
         file_loader = FileSystemLoader('templates')
         env = Environment(loader=file_loader)
-        template = env.get_template(self.html_template)
-        input_file = assetsFolder + self.template_vars
+        template = env.get_template(self.html_template_path)
+        input_file = ASSETS_DIR + self.template_vars
 
         # Read JSON
         with open(input_file) as book:
@@ -35,23 +35,24 @@ class HtmlToPdfConverter:
         # Temp to PDF
         result = get_pdf_from_html(
             path='file://' + os.getcwd() + '/temp.html',
-            chromedriver=driverPath
+            chromedriver=os.path.join(ASSETS_DIR, 'drivers/chromedriver')
         )
 
         if not output_file:
             output_file = str(int(time.time()))  # casting it first to int, in order to get rid of the milliseconds
 
-        output_file = str(assetsFolder) + str(output_file) + '.pdf'
+        output_file = str(ASSETS_DIR) + str(output_file) + '.pdf'
 
         with open(output_file, 'wb') as file:
             file.write(result)
             os.remove('temp.html')
+            print('PDF file is located at : ' + os.path.abspath(output_file))
 
 
 if __name__ == "__main__":
     html_to_pdf_obj = HtmlToPdfConverter(
         template_vars='book.json',
-        html_template='book.html'
+        html_template_path='book.html'
     )
     html_to_pdf_obj.create(
         output_file='asdfasdf'
