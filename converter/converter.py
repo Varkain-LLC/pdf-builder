@@ -10,11 +10,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 ASSETS_DIR = os.path.join(BASE_DIR, 'assets/')
 
 
-# The CLASS where we get JSON data and template
-# create temp HTML file
-# convert HTML to PDF
-# For details read the README file
 class HtmlToPdfConverter:
+    """ The CLASS where we get JSON data and template
+    create temp HTML file
+    convert HTML to PDF
+    For details read the README file
+    """
+
     def __init__(self, template_vars, html_template_path):
         self.template_vars = template_vars
         self.html_template_path = html_template_path
@@ -22,6 +24,7 @@ class HtmlToPdfConverter:
     def create(self, output_file=None):
         file_loader = FileSystemLoader('templates')
         env = Environment(loader=file_loader)
+
         template = env.get_template(self.html_template_path)
         input_file = ASSETS_DIR + self.template_vars
 
@@ -46,7 +49,6 @@ class HtmlToPdfConverter:
         with open(output_file, 'wb') as file:
             file.write(result)
             os.remove('temp.html')
-            print('PDF file is located at : ' + os.path.abspath(output_file))
 
 
 if __name__ == "__main__":
@@ -55,5 +57,5 @@ if __name__ == "__main__":
         html_template_path='book.html'
     )
     html_to_pdf_obj.create(
-        output_file='asdfasdf'
+        output_file=''
     )
