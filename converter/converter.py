@@ -16,7 +16,6 @@ driverPath = assetsFolder + '/drivers/chromedriver'
 # For details read the README file
 class HtmlToPdfConverter:
     def __init__(self, template_vars, html_template):
-        print(f'Initializing {template_vars}, {html_template}')
         self.template_vars = template_vars
         self.html_template = html_template
 
@@ -28,7 +27,6 @@ class HtmlToPdfConverter:
 
         # Read JSON
         with open(input_file) as book:
-            print('Rendering template')
             output = template.render(json_obj=json.loads(str(book.read())))
             # Write HTML String to temp.html
             with open("temp.html", "w") as file:
@@ -46,17 +44,15 @@ class HtmlToPdfConverter:
         output_file = str(assetsFolder) + str(output_file) + '.pdf'
 
         with open(output_file, 'wb') as file:
-            print('Converting to PDF')
             file.write(result)
             os.remove('temp.html')
-            print('PDF file is located at : ' + os.path.abspath(output_file))
 
 
-# if __name__ == "__main__":
-#     html_to_pdf_obj = HtmlToPdfConverter(
-#         template_vars='book.json',
-#         html_template='book.html'
-#     )
-#     html_to_pdf_obj.create(
-#         output_file='asdfasdf'
-#     )
+if __name__ == "__main__":
+    html_to_pdf_obj = HtmlToPdfConverter(
+        template_vars='book.json',
+        html_template='book.html'
+    )
+    html_to_pdf_obj.create(
+        output_file='asdfasdf'
+    )
