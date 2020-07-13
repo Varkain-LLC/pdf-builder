@@ -17,43 +17,53 @@ class HtmlToPdfConverter:
     For details read the README file
     """
 
-    def __init__(self, template_vars, html_template_path):
-        self.template_vars = template_vars
+    def __init__(self, json_file_path, html_template_path):
+        self.json_file_path = json_file_path
         self.html_template_path = html_template_path
 
-    def create(self, output_file=None):
+    def get_template(self):
+        """Get template by path"""
         file_loader = FileSystemLoader('templates')
         env = Environment(loader=file_loader)
 
-        template = env.get_template(self.html_template_path)
-        input_file = ASSETS_DIR + self.template_vars
+        return env.get_template(self.html_template_path)
 
-        # Read JSON
-        with open(input_file) as book:
-            output = template.render(json_obj=json.loads(str(book.read())))
-            # Write HTML String to temp.html
-            with open("temp.html", "w") as file:
-                file.write(output)
+    def get_html_file(self):
+        """Get html file by path"""
+        input_file = ASSETS_DIR + self.json_file_path
 
-        # Temp to PDF
-        result = get_pdf_from_html(
+        return input_file
+
+    @staticmethod
+    def get_pdf_file():
+        """Get pdf file"""
+        return get_pdf_from_html(
             path='file://' + os.getcwd() + '/temp.html',
             chromedriver=os.path.join(ASSETS_DIR, 'drivers/chromedriver')
         )
 
+    def create(self, output_file=None):
+        """
+        Write rendered template to temp.html
+        Convert temp.html to pdf
+        """
+        with open(self.get_html_file()) as book:
+            output = self.get_template().render(json_obj=json.loads(str(book.read())))
+            with open("temp.html", "w") as file:
+                file.write(output)  # Write HTML String to temp.html
+
         if not output_file:
             output_file = str(int(time.time()))  # casting it first to int, in order to get rid of the milliseconds
-
         output_file = str(ASSETS_DIR) + str(output_file) + '.pdf'
 
         with open(output_file, 'wb') as file:
-            file.write(result)
+            file.write(self.get_pdf_file())
             os.remove('temp.html')
 
 
 if __name__ == "__main__":
     html_to_pdf_obj = HtmlToPdfConverter(
-        template_vars='book.json',
+        json_file_path='book.json',
         html_template_path='book.html'
     )
     html_to_pdf_obj.create(
