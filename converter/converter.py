@@ -28,11 +28,14 @@ class HtmlToPdfConverter:
 
         return env.get_template(self.html_template_path)
 
-    def get_html_file(self):
-        """Get html file by path"""
-        input_file = ASSETS_DIR + self.json_file_path
-
-        return input_file
+    def write_temp_html_file(self):
+        """
+        Write rendered template to temp.html
+        """
+        with open(os.path.join(ASSETS_DIR, self.json_file_path)) as book:
+            output = self.get_template().render(json_obj=json.loads(str(book.read())))
+            with open("temp.html", "w") as file:
+                file.write(output)  # Write HTML String to temp.html
 
     @staticmethod
     def get_pdf_file():
@@ -42,23 +45,20 @@ class HtmlToPdfConverter:
             chromedriver=os.path.join(ASSETS_DIR, 'drivers/chromedriver')
         )
 
+    def write_pdf_file(self, output_file):
+        with open(output_file, 'wb') as file:
+            file.write(self.get_pdf_file())
+            os.remove('temp.html')
+
     def create(self, output_file=None):
-        """
-        Write rendered template to temp.html
-        Convert temp.html to pdf
-        """
-        with open(self.get_html_file()) as book:
-            output = self.get_template().render(json_obj=json.loads(str(book.read())))
-            with open("temp.html", "w") as file:
-                file.write(output)  # Write HTML String to temp.html
+        self.write_temp_html_file()
 
         if not output_file:
             output_file = str(int(time.time()))  # casting it first to int, in order to get rid of the milliseconds
         output_file = str(ASSETS_DIR) + str(output_file) + '.pdf'
 
-        with open(output_file, 'wb') as file:
-            file.write(self.get_pdf_file())
-            os.remove('temp.html')
+        if os.path.isfile('./temp.html'):
+            self.write_pdf_file(output_file=output_file)
 
 
 if __name__ == "__main__":
