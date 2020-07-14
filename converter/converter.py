@@ -32,10 +32,14 @@ class HtmlToPdfConverter:
         """
         Write rendered template to temp.html
         """
-        with open(os.path.join(ASSETS_DIR, self.json_file_path)) as book:
-            output = self.get_template().render(json_obj=json.loads(str(book.read())))
-            with open("temp.html", "w") as file:
-                file.write(output)  # Write HTML String to temp.html
+        if isinstance(self.json_file_path, str):
+            with open(os.path.join(ASSETS_DIR, self.json_file_path)) as book:
+                output = self.get_template().render(json_obj=json.loads(str(book.read())))
+        else:
+            output = self.get_template().render(json_obj=self.json_file_path)
+
+        with open("temp.html", "w") as file:
+            file.write(output)  # Write HTML String to temp.html
 
     @staticmethod
     def get_pdf_file():
@@ -63,7 +67,12 @@ class HtmlToPdfConverter:
 
 if __name__ == "__main__":
     html_to_pdf_obj = HtmlToPdfConverter(
-        json_file_path='book.json',
+        # json_file_path='book.json',
+        json_file_path={
+            "name": "qqqq",
+            "description": "wwww",
+            "price": 123
+        },
         html_template_path='book.html'
     )
     html_to_pdf_obj.create(

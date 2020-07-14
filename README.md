@@ -1,6 +1,14 @@
 # PDF-builder
 pdf builder for fanbooks &amp; JRNL
 
+**OS:** Its most likely to have Linux OS
+
+**Used Technologies:** 
+- Python 3.x
+- Selenium 
+- Jinja2
+- HTML
+
 ## Installation
 Clone repository, move to project root dir, install dependencies:
 ```
