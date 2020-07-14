@@ -1,5 +1,6 @@
 import os
 import json
+import sys
 import time
 
 from tools.html_to_pdf_converter import get_pdf_from_html
@@ -17,8 +18,8 @@ class HtmlToPdfConverter:
     For details read the README file
     """
 
-    def __init__(self, json_file_path, html_template_path):
-        self.json_file_path = json_file_path
+    def __init__(self, json_data, html_template_path):
+        self.json_data = json_data
         self.html_template_path = html_template_path
 
     def get_template(self):
@@ -32,11 +33,20 @@ class HtmlToPdfConverter:
         """
         Write rendered template to temp.html
         """
-        if isinstance(self.json_file_path, str):
-            with open(os.path.join(ASSETS_DIR, self.json_file_path)) as book:
-                output = self.get_template().render(json_obj=json.loads(str(book.read())))
+        if isinstance(self.json_data, str):
+            json_data_file_path = os.path.join(ASSETS_DIR, self.json_data)
+            if os.path.exists(json_data_file_path):
+                with open(os.path.abspath(json_data_file_path)) as book:
+                    try:
+                        output = self.get_template().render(json_obj=json.loads(str(book.read())))
+                    except IOError:
+                        print('Could not read file')
+                        exit()
+            else:
+                print('No file')
+                exit()
         else:
-            output = self.get_template().render(json_obj=self.json_file_path)
+            output = self.get_template().render(json_obj=self.json_data)
 
         with open("temp.html", "w") as file:
             file.write(output)  # Write HTML String to temp.html
@@ -67,12 +77,12 @@ class HtmlToPdfConverter:
 
 if __name__ == "__main__":
     html_to_pdf_obj = HtmlToPdfConverter(
-        # json_file_path='book.json',
-        json_file_path={
-            "name": "qqqq",
-            "description": "wwww",
-            "price": 123
-        },
+        json_data='book.json',
+        # json_data={
+        #     "name": "qqqq",
+        #     "description": "wwww",
+        #     "price": 123
+        # },
         html_template_path='book.html'
     )
     html_to_pdf_obj.create(
