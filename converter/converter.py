@@ -77,7 +77,7 @@ class HtmlToPdfConverter:
 
         if not output_file:
             output_file = str(int(time.time()))  # casting it first to int, in order to get rid of the milliseconds
-        output_file = str(ASSETS_DIR) + str(output_file) + '.pdf'
+        output_file = f'{ASSETS_DIR}{output_file}.pdf'
 
         if os.path.isfile('./temp.html'):
             self.write_pdf_file(output_file=output_file)
