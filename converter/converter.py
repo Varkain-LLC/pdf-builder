@@ -49,7 +49,11 @@ class HtmlToPdfConverter:
             output = self.get_template().render(json_obj=self.json_data)
 
         with open("temp.html", "w") as file:
-            file.write(output)  # Write HTML String to temp.html
+            try:
+                file.write(output)  # Write HTML String to temp.html
+            except IOError:
+                print('Could not open temp.html file')
+                exit()
 
     @staticmethod
     def get_pdf_file():
@@ -61,8 +65,12 @@ class HtmlToPdfConverter:
 
     def write_pdf_file(self, output_file):
         with open(output_file, 'wb') as file:
-            file.write(self.get_pdf_file())
-            os.remove('temp.html')
+            try:
+                file.write(self.get_pdf_file())
+                os.remove('temp.html')
+            except IOError:
+                print('Could not write pdf file')
+                exit()
 
     def create(self, output_file=None):
         self.write_temp_html_file()
@@ -77,12 +85,12 @@ class HtmlToPdfConverter:
 
 if __name__ == "__main__":
     html_to_pdf_obj = HtmlToPdfConverter(
-        json_data='book.json',
-        # json_data={
-        #     "name": "qqqq",
-        #     "description": "wwww",
-        #     "price": 123
-        # },
+        # json_data='book.json',
+        json_data={
+            "name": "qqqq",
+            "description": "wwww",
+            "price": 123
+        },
         html_template_path='book.html'
     )
     html_to_pdf_obj.create(
