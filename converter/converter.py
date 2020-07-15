@@ -81,11 +81,15 @@ class HtmlToPdfConverter:
             print('No file')
             exit()
 
-    def create(self, output_file=None):
+    def get_html(self):
         json_data = self.get_json()
         rendered_html = self.render_template(json_data)
 
-        temp_html_file_path = self.create_temp_html_file(rendered_html)
+        return rendered_html
+
+    def create(self, output_file=None):
+        html = self.get_html()
+        temp_html_file_path = self.create_temp_html_file(html)
 
         if not output_file:
             output_file = str(int(time.time()))  # casting it first to int, in order to get rid of the milliseconds
