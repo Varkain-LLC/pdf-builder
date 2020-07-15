@@ -3,7 +3,7 @@ import json
 import time
 
 from tools.html_to_pdf_converter import get_pdf_from_html
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, Template
 
 # Used folders
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -17,8 +17,10 @@ class HtmlToPdfConverter:
     For details read the README file
     """
 
-    def __init__(self, json_data, html_template_path):
+    def __init__(self, json_data=None, json_file_path=None, html_data=None, html_template_path=None):
         self.json_data = json_data
+        self.json_file_path = json_file_path
+        self.html_data = html_data
         self.html_template_path = html_template_path
 
     def get_template(self):
@@ -32,12 +34,15 @@ class HtmlToPdfConverter:
         """
         Write rendered template to temp.html
         """
-        if isinstance(self.json_data, str):
-            json_data_file_path = os.path.join(ASSETS_DIR, self.json_data)
+        if self.json_file_path:
+            json_file_path = os.path.join(ASSETS_DIR, self.json_file_path)
             try:
-                with open(os.path.abspath(json_data_file_path)) as book:
+                with open(os.path.abspath(json_file_path)) as book:
                     try:
-                        output = self.get_template().render(json_obj=json.loads(str(book.read())))
+                        if self.html_template_path:
+                            output = self.get_template().render(json_obj=json.loads(str(book.read())))
+                        else:
+                            output = Template(self.html_data).render(json_obj=json.loads(str(book.read())))
                     except IOError:
                         print('Could not read file')
                         exit()
@@ -45,8 +50,10 @@ class HtmlToPdfConverter:
                 print('No file')
                 exit()
         else:
-            output = self.get_template().render(json_obj=self.json_data)
-
+            if self.html_template_path:
+                output = self.get_template().render(json_obj=self.json_data)
+            else:
+                output = Template(self.html_data).render(json_obj=self.json_data)
         try:
             with open("temp.html", "w") as file:
                 try:
@@ -92,13 +99,16 @@ class HtmlToPdfConverter:
 
 if __name__ == "__main__":
     html_to_pdf_obj = HtmlToPdfConverter(
-        # json_data='book.json',
+        # json_file_path='book.json',
         json_data={
             "name": "qqqq",
             "description": "wwww",
             "price": 123
         },
-        html_template_path='book.html'
+        # html_template_path='book.html',
+        html_data='<div class="container"><div class="row"><div class="col-lg-12 text-center">'
+                  '<h1 class="mt-5">{{ json_obj.name }}</h1><p class="lead">{{ json_obj.description }}</p>'
+                  '<p class="lead">{{ json_obj.price }}</p></div></div></div>'
     )
     html_to_pdf_obj.create(
         output_file=''
