@@ -23,43 +23,37 @@ class HtmlToPdfConverter:
         self.html_data = html_data
         self.html_template_path = html_template_path
 
-    def get_template_instance(self, json_file=None):
-        """Get template by path"""
-        file_loader = FileSystemLoader('templates')
-        env = Environment(loader=file_loader)
-
-        if json_file:
-            return env.get_template(self.html_template_path).render(json_obj=json.loads(str(json_file.read())))
-        else:
-            return env.get_template(self.html_template_path).render(json_obj=self.json_data)
-
-    def write_temp_html_file(self):
-        """
-        Write rendered template to temp.html
-        """
+    def get_json(self):
         if self.json_file_path:
             json_file_path = os.path.join(ASSETS_DIR, self.json_file_path)
             try:
                 with open(os.path.abspath(json_file_path)) as json_file:
-                    try:
-                        if self.html_template_path:
-                            output = self.get_template_instance(json_file)
-                        else:
-                            output = Template(self.html_data).render(json_obj=json.loads(str(json_file.read())))
-                    except IOError:
-                        raise Exception('Could not read file')
+                    return json.loads(str(json_file.read()))
             except FileNotFoundError:
                 print('No file')
                 exit()
+        return self.json_data
+
+    def render_template(self, json_data=None):
+        """Get template by path"""
+        file_loader = FileSystemLoader('templates')
+        env = Environment(loader=file_loader)
+        if self.html_template_path:
+            return env.get_template(self.html_template_path).render(json_obj=json_data)
         else:
-            if self.html_template_path:
-                output = self.get_template_instance()
-            else:
-                output = Template(self.html_data).render(json_obj=self.json_data)
+            return Template(self.html_data).render(json_obj=json_data)
+
+    @staticmethod
+    def create_temp_html_file(rendered_html=None):
+        """
+        Write rendered template to temp.html
+        """
         try:
             with open("temp.html", "w") as file:
                 try:
-                    file.write(output)  # Write HTML String to temp.html
+                    file.write(rendered_html)  # Write HTML String to temp.html
+                    return file.name
+                    # return file.name
                 except IOError:
                     print('Could not open temp.html file')
                     exit()
@@ -68,19 +62,19 @@ class HtmlToPdfConverter:
             exit()
 
     @staticmethod
-    def get_pdf_file():
+    def get_pdf_file(temp_html_file_path):
         """Get pdf file"""
         return get_pdf_from_html(
-            path='file://' + os.getcwd() + '/temp.html',
+            path='file://' + os.getcwd() + temp_html_file_path,
             chromedriver=os.path.join(ASSETS_DIR, 'drivers/chromedriver')
         )
 
-    def write_pdf_file(self, output_file):
+    def write_pdf_file(self, temp_html_file_path, output_file):
         try:
             with open(output_file, 'wb') as file:
                 try:
-                    file.write(self.get_pdf_file())
-                    os.remove('temp.html')
+                    file.write(self.get_pdf_file(temp_html_file_path))
+                    os.remove(temp_html_file_path)
                 except IOError:
                     print('Could not write pdf file')
                     exit()
@@ -89,14 +83,22 @@ class HtmlToPdfConverter:
             exit()
 
     def create(self, output_file=None):
-        self.write_temp_html_file()
+        json_data = self.get_json()
+        rendered_html = self.render_template(json_data)
+
+        temp_html_file_path = self.create_temp_html_file(rendered_html)
 
         if not output_file:
             output_file = str(int(time.time()))  # casting it first to int, in order to get rid of the milliseconds
         output_file = f'{ASSETS_DIR}{output_file}.pdf'
 
-        if os.path.isfile('./temp.html'):
-            self.write_pdf_file(output_file=output_file)
+        if os.path.isfile(str('./'+temp_html_file_path)):
+            self.write_pdf_file(
+                temp_html_file_path=temp_html_file_path,
+                output_file=output_file
+            )
+
+        return output_file
 
 
 if __name__ == "__main__":
@@ -107,7 +109,7 @@ if __name__ == "__main__":
             "description": "wwww",
             "price": 123
         },
-        # html_template_path='book.html',
+        html_template_path='book.html',
         html_data='<div class="container"><div class="row"><div class="col-lg-12 text-center">'
                   '<h1 class="mt-5">{{ json_obj.name }}</h1><p class="lead">{{ json_obj.description }}</p>'
                   '<p class="lead">{{ json_obj.price }}</p></div></div></div>'
