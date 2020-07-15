@@ -53,7 +53,6 @@ class HtmlToPdfConverter:
                 try:
                     file.write(rendered_html)  # Write HTML String to temp.html
                     return file.name
-                    # return file.name
                 except IOError:
                     print('Could not open temp.html file')
                     exit()
@@ -65,7 +64,7 @@ class HtmlToPdfConverter:
     def get_pdf_file(temp_html_file_path):
         """Get pdf file"""
         return get_pdf_from_html(
-            path='file://' + os.getcwd() + temp_html_file_path,
+            path='file://' + os.getcwd() + str('/' + temp_html_file_path),
             chromedriver=os.path.join(ASSETS_DIR, 'drivers/chromedriver')
         )
 
@@ -92,7 +91,7 @@ class HtmlToPdfConverter:
             output_file = str(int(time.time()))  # casting it first to int, in order to get rid of the milliseconds
         output_file = f'{ASSETS_DIR}{output_file}.pdf'
 
-        if os.path.isfile(str('./'+temp_html_file_path)):
+        if os.path.isfile(str('./' + temp_html_file_path)):
             self.write_pdf_file(
                 temp_html_file_path=temp_html_file_path,
                 output_file=output_file
