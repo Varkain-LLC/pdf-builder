@@ -14,7 +14,7 @@ class HtmlToPdfConverter:
     """ The CLASS where we get JSON data and template
     create temp HTML file
     convert HTML to PDF
-    For details read the README file
+    For more details read the README file
     """
 
     def __init__(self, json_data=None, json_file_path=None, html_data=None, html_template_path=None):
@@ -23,12 +23,15 @@ class HtmlToPdfConverter:
         self.html_data = html_data
         self.html_template_path = html_template_path
 
-    def get_template(self):
+    def get_template_instance(self, json_file=None):
         """Get template by path"""
         file_loader = FileSystemLoader('templates')
         env = Environment(loader=file_loader)
 
-        return env.get_template(self.html_template_path)
+        if json_file:
+            return env.get_template(self.html_template_path).render(json_obj=json.loads(str(json_file.read())))
+        else:
+            return env.get_template(self.html_template_path).render(json_obj=self.json_data)
 
     def write_temp_html_file(self):
         """
@@ -37,21 +40,20 @@ class HtmlToPdfConverter:
         if self.json_file_path:
             json_file_path = os.path.join(ASSETS_DIR, self.json_file_path)
             try:
-                with open(os.path.abspath(json_file_path)) as book:
+                with open(os.path.abspath(json_file_path)) as json_file:
                     try:
                         if self.html_template_path:
-                            output = self.get_template().render(json_obj=json.loads(str(book.read())))
+                            output = self.get_template_instance(json_file)
                         else:
-                            output = Template(self.html_data).render(json_obj=json.loads(str(book.read())))
+                            output = Template(self.html_data).render(json_obj=json.loads(str(json_file.read())))
                     except IOError:
-                        print('Could not read file')
-                        exit()
+                        raise Exception('Could not read file')
             except FileNotFoundError:
                 print('No file')
                 exit()
         else:
             if self.html_template_path:
-                output = self.get_template().render(json_obj=self.json_data)
+                output = self.get_template_instance()
             else:
                 output = Template(self.html_data).render(json_obj=self.json_data)
         try:
