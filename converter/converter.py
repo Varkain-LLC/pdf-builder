@@ -1,6 +1,5 @@
 import os
 import json
-import sys
 import time
 
 from tools.html_to_pdf_converter import get_pdf_from_html
@@ -35,14 +34,14 @@ class HtmlToPdfConverter:
         """
         if isinstance(self.json_data, str):
             json_data_file_path = os.path.join(ASSETS_DIR, self.json_data)
-            if os.path.exists(json_data_file_path):
+            try:
                 with open(os.path.abspath(json_data_file_path)) as book:
                     try:
                         output = self.get_template().render(json_obj=json.loads(str(book.read())))
                     except IOError:
                         print('Could not read file')
                         exit()
-            else:
+            except FileNotFoundError:
                 print('No file')
                 exit()
         else:
