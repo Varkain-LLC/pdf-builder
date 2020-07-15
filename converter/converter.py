@@ -47,12 +47,16 @@ class HtmlToPdfConverter:
         else:
             output = self.get_template().render(json_obj=self.json_data)
 
-        with open("temp.html", "w") as file:
-            try:
-                file.write(output)  # Write HTML String to temp.html
-            except IOError:
-                print('Could not open temp.html file')
-                exit()
+        try:
+            with open("temp.html", "w") as file:
+                try:
+                    file.write(output)  # Write HTML String to temp.html
+                except IOError:
+                    print('Could not open temp.html file')
+                    exit()
+        except FileNotFoundError:
+            print('No file')
+            exit()
 
     @staticmethod
     def get_pdf_file():
@@ -63,13 +67,17 @@ class HtmlToPdfConverter:
         )
 
     def write_pdf_file(self, output_file):
-        with open(output_file, 'wb') as file:
-            try:
-                file.write(self.get_pdf_file())
-                os.remove('temp.html')
-            except IOError:
-                print('Could not write pdf file')
-                exit()
+        try:
+            with open(output_file, 'wb') as file:
+                try:
+                    file.write(self.get_pdf_file())
+                    os.remove('temp.html')
+                except IOError:
+                    print('Could not write pdf file')
+                    exit()
+        except FileNotFoundError:
+            print('No file')
+            exit()
 
     def create(self, output_file=None):
         self.write_temp_html_file()
