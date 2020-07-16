@@ -30,8 +30,7 @@ class HtmlToPdfConverter:
                 with open(os.path.abspath(json_file_path)) as json_file:
                     return json.loads(str(json_file.read()))
             except FileNotFoundError:
-                print('No file')
-                exit()
+                raise Exception('No file')
         return self.json_data
 
     def render_template(self, json_data=None):
@@ -54,11 +53,9 @@ class HtmlToPdfConverter:
                     file.write(rendered_html)  # Write HTML String to temp.html
                     return file.name
                 except IOError:
-                    print('Could not open temp.html file')
-                    exit()
+                    raise Exception('Could not open temp.html file')
         except FileNotFoundError:
-            print('No file')
-            exit()
+            raise Exception('No file')
 
     @staticmethod
     def get_pdf_file(temp_html_file_path):
@@ -75,11 +72,9 @@ class HtmlToPdfConverter:
                     file.write(self.get_pdf_file(temp_html_file_path))
                     os.remove(temp_html_file_path)
                 except IOError:
-                    print('Could not write pdf file')
-                    exit()
+                    raise Exception('Could not write pdf file')
         except FileNotFoundError:
-            print('No file')
-            exit()
+            raise Exception('No file')
 
     def get_html(self):
         json_data = self.get_json()
@@ -106,7 +101,7 @@ class HtmlToPdfConverter:
 
 if __name__ == "__main__":
     html_to_pdf_obj = HtmlToPdfConverter(
-        # json_file_path='book.json',
+        json_file_path='book.json',
         json_data={
             "name": "qqqq",
             "description": "wwww",
