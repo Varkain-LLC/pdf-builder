@@ -26,11 +26,9 @@ class HtmlToPdfConverter:
     def get_json(self):
         if self.json_file_path:
             json_file_path = os.path.join(ASSETS_DIR, self.json_file_path)
-            try:
+            if os.path.exists(json_file_path):
                 with open(os.path.abspath(json_file_path)) as json_file:
                     return json.loads(str(json_file.read()))
-            except FileNotFoundError:
-                pass
         return self.json_data
 
     def render_template(self, json_data=None):
@@ -45,17 +43,11 @@ class HtmlToPdfConverter:
     @staticmethod
     def create_temp_html_file(rendered_html=None):
         """
-        Write rendered template to temp.html
+        Write rendered template to temp html
         """
-        try:
-            with open("temp.html", "w") as file:
-                try:
-                    file.write(rendered_html)  # Write HTML String to temp.html
-                    return file.name
-                except IOError:
-                    pass
-        except FileNotFoundError:
-            pass
+        with open(f'{str(int(time.time()))}.html', "w") as file:
+            file.write(rendered_html)  # Write HTML String to temp html
+            return file.name
 
     @staticmethod
     def get_pdf_file(temp_html_file_path):
@@ -66,15 +58,9 @@ class HtmlToPdfConverter:
         )
 
     def write_pdf_file(self, temp_html_file_path, output_file):
-        try:
-            with open(output_file, 'wb') as file:
-                try:
-                    file.write(self.get_pdf_file(temp_html_file_path))
-                    os.remove(temp_html_file_path)
-                except IOError:
-                    pass
-        except FileNotFoundError:
-            pass
+        with open(output_file, 'wb') as file:
+            file.write(self.get_pdf_file(temp_html_file_path))
+            os.remove(temp_html_file_path)
 
     def get_html(self):
         json_data = self.get_json()
