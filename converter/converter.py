@@ -26,9 +26,8 @@ class HtmlToPdfConverter:
     def get_json(self):
         if self.json_file_path:
             json_file_path = os.path.join(ASSETS_DIR, self.json_file_path)
-            if os.path.exists(json_file_path):
-                with open(os.path.abspath(json_file_path)) as json_file:
-                    return json.loads(str(json_file.read()))
+            with open(os.path.abspath(json_file_path)) as json_file:
+                return json.loads(str(json_file.read()))
         return self.json_data
 
     def render_template(self, json_data=None):
