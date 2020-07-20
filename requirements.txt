@@ -1,2 +1,4 @@
 selenium==3.141.0
-jinja2
+jinja2~=2.11.2
+
+numpy~=1.19.0

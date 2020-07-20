@@ -1,6 +1,8 @@
+import base64
+import json
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-import json, base64
 
 
 def send_devtools(driver, cmd, params={}):
