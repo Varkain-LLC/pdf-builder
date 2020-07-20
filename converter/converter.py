@@ -1,6 +1,11 @@
 import os
 import json
+import string
 import time
+
+import secrets
+import numpy as np
+from functools import partial
 
 from tools.html_to_pdf_converter import get_pdf_from_html
 from jinja2 import Environment, FileSystemLoader, Template
@@ -23,6 +28,14 @@ class HtmlToPdfConverter:
         self.html_data = html_data
         self.html_template_path = html_template_path
 
+    def produce_amount_names(self, amount_of_names, _randint=np.random.randint):
+        names = set()
+        pickchar = partial(secrets.choice, string.ascii_lowercase + string.digits)
+        while len(names) < amount_of_names:
+            names |= {''.join([pickchar() for _ in range(_randint(12, 20))]) for _ in
+                      range(amount_of_names - len(names))}
+        return names
+
     def get_json(self):
         if self.json_file_path:
             json_file_path = os.path.join(ASSETS_DIR, self.json_file_path)
@@ -39,12 +52,11 @@ class HtmlToPdfConverter:
         else:
             return Template(self.html_data).render(json_obj=json_data)
 
-    @staticmethod
-    def create_temp_html_file(rendered_html=None):
+    def create_temp_html_file(self, rendered_html=None):
         """
         Write rendered template to temp html
         """
-        with open(f'{str(int(time.time()))}.html', "w") as file:
+        with open(f'{list(self.produce_amount_names(1))[0]}.html', "w") as file:
             file.write(rendered_html)  # Write HTML String to temp html
             return file.name
 
@@ -72,7 +84,7 @@ class HtmlToPdfConverter:
         temp_html_file_path = self.create_temp_html_file(html)
 
         if not output_file:
-            output_file = str(int(time.time()))  # casting it first to int, in order to get rid of the milliseconds
+            output_file = list(self.produce_amount_names(1))[0]  # using function for generate random name
         output_file = f'{ASSETS_DIR}{output_file}.pdf'
 
         if os.path.isfile(str('./' + temp_html_file_path)):
@@ -86,7 +98,7 @@ class HtmlToPdfConverter:
 
 if __name__ == "__main__":
     html_to_pdf_obj = HtmlToPdfConverter(
-        json_file_path='book1.json',
+        json_file_path='book.json',
         json_data={
             "name": "qqqq",
             "description": "wwww",
