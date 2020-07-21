@@ -91,7 +91,11 @@ if __name__ == "__main__":
             "description": "wwww",
             "price": 123
         },
-        html_template_path='book.html',
+        html_template_path={
+            't1': 'book.html',
+            't2': 'book1.html',
+            }.get('t2'),
+        # html_template_path='book.html',
         html_data='<div class="container"><div class="row"><div class="col-lg-12 text-center">'
                   '<h1 class="mt-5">{{ json_obj.name }}</h1><p class="lead">{{ json_obj.description }}</p>'
                   '<p class="lead">{{ json_obj.price }}</p></div></div></div>'
