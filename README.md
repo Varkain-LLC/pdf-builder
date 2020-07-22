@@ -27,7 +27,7 @@ Structure:
 │───assets
 │   │   book.json
 │   │   ...
-│───converter
+│───html2pdf_converter
 │   │   converter.py
 │   │   ...
 │   └───templates
@@ -36,17 +36,17 @@ Structure:
 ```
 Usage:
 ```
-cd converter
-python converter.py <json_source> <html_template_source> <filename_to_save>
+cd html2pdf_converter
+python converter.py <json_source> <html_template_id> <filename_to_save>
 ```
 Example:
 ```
-python converter.py /absolute-path-to/assets/book.json jrnl-template.html /absolute-path-to/test.pdf
+python converter.py /absolute-path-to/assets/book.json jrnl /absolute-path-to/test.pdf
 ```
 1. `book.json` or json data is required
-2. `html_template_source` will be located in `converter/templates` folder
+2. `html_template_id` alias with html file which be located in `html2pdf_converter/templates` folder
 3. `filename_to_save` is the name of the pdf file you want to get.
-4. The keys in json file should match to variables in `converter/templates/<html_template_source>` file
+4. The keys in json file should match to variables in `html2pdf_converter/templates/<html_template_source>` file
 
 ## How works this microservice
 1. It takes variables from `book.json` by key and puts into some temp.html
