@@ -6,19 +6,13 @@ from selenium.webdriver.chrome.options import Options
 
 
 def get_html_name(name):
-    try:
-        return f'{name}.html'
-    except SyntaxError:
-        # support python2.7
-        return '{}.html'.format(name)
+    # support python2.7
+    return '{}.html'.format(name)
 
 
 def get_pdf_name(prefix, name):
-    try:
-        return f'{prefix}{name}.pdf'
-    except SyntaxError:
-        # support python2.7
-        return '{}{}.pdf'.format(prefix, name)
+    # support python2.7
+    return '{}{}.pdf'.format(prefix, name)
 
 
 def send_devtools(driver, cmd, params={}):
