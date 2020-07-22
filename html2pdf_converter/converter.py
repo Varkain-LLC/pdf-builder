@@ -1,6 +1,8 @@
+# coding: utf-8
 import os
 import json
 import sys
+import platform
 
 # from jinja2 import Environment, FileSystemLoader
 from jinja2 import Template
@@ -13,6 +15,9 @@ from tools.html_to_pdf_converter import (
 from tools.random_names import produce_amount_names
 
 from choices import templates
+
+
+is_python2 = platform.python_version().startswith('2.7')
 
 
 class HtmlToPdfConverter:
@@ -70,6 +75,9 @@ class HtmlToPdfConverter:
             with open(os.path.abspath(_path)) as html_file:
                 self.html_data = html_file.read()
 
+        if is_python2:
+            self.html_data = self.html_data.decode('utf-8')
+
         return Template(self.html_data).render(json_obj=json_data)
 
     @staticmethod
@@ -77,8 +85,11 @@ class HtmlToPdfConverter:
         """
         Write rendered template to temp html
         """
-        _name = list(produce_amount_names(1))[0]
-        with open(get_html_name(_name), "w") as file:
+        if is_python2:
+            rendered_html = rendered_html.encode('utf-8')
+
+        _name = get_html_name(list(produce_amount_names(1))[0])
+        with open(_name, "w") as file:
             file.write(rendered_html)  # Write HTML String to temp html
             return file.name
 
