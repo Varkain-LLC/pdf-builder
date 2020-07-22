@@ -53,7 +53,7 @@ class HtmlToPdfConverter:
         if self.json_file_path:
             with open(os.path.abspath(self.json_file_path)) as json_file:
                 return json.loads(str(json_file.read()))
-        return self.json_data
+        return json.loads((self.json_data))
 
     def render_template(self, json_data=None):
         """Get template by path"""
@@ -120,11 +120,11 @@ class HtmlToPdfConverter:
 if __name__ == "__main__":
     html_to_pdf_obj = HtmlToPdfConverter(
         json_file_path=sys.argv[1],  # 'assets/book.json'
-        json_data={
+        json_data=json.dumps({
             "name": "qqqq",
             "description": "wwww",
             "price": 123
-        },
+        }),
         html_template_path=templates.get(sys.argv[2]),
         html_data='<div class="container">'
         '<div class="row"><div class="col-lg-12 text-center">'
