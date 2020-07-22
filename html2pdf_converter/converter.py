@@ -2,7 +2,8 @@ import os
 import json
 import sys
 
-from jinja2 import Environment, FileSystemLoader, Template
+# from jinja2 import Environment, FileSystemLoader
+from jinja2 import Template
 
 from tools.html_to_pdf_converter import (
     get_pdf_from_html,
@@ -57,13 +58,20 @@ class HtmlToPdfConverter:
 
     def render_template(self, json_data=None):
         """Get template by path"""
-        file_loader = FileSystemLoader('templates')
-        env = Environment(loader=file_loader)
+        # file_loader = FileSystemLoader('templates')
+        # env = Environment(loader=file_loader)
         if self.html_template_path:
-            return env.get_template(self.html_template_path).render(
-                json_obj=json_data)
-        else:
-            return Template(self.html_data).render(json_obj=json_data)
+            # return env.get_template(self.html_template_path).render(
+            #     json_obj=json_data)
+            _path = os.path.join(
+                os.path.dirname(os.path.dirname(__file__)),
+                'templates',
+                self.html_template_path
+            )
+            with open(os.path.abspath(_path)) as html_file:
+                self.html_data = html_file.read()
+
+        return Template(self.html_data).render(json_obj=json_data)
 
     @staticmethod
     def create_temp_html_file(rendered_html=None):
