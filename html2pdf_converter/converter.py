@@ -64,7 +64,7 @@ class HtmlToPdfConverter:
             # return env.get_template(self.html_template_path).render(
             #     json_obj=json_data)
             _path = os.path.join(
-                os.path.dirname(os.path.dirname(__file__)),
+                BASE_DIR,
                 'templates',
                 self.html_template_path
             )
