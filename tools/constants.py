@@ -1,4 +1,3 @@
-keys = {
-    0: 'jrnl',
-    1: 'fanbooks',
-}
+JRNL_TEMPLATE_ID = 'jrnl'
+FANBOOKS_TEMPLATE_ID = 'fanbooks'
+

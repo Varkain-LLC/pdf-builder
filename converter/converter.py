@@ -3,7 +3,7 @@ import json
 
 from tools.html_to_pdf_converter import get_pdf_from_html
 from tools.random_names import produce_amount_names
-import tools.choices
+from tools.choices import templates
 import tools.constants
 from jinja2 import Environment, FileSystemLoader, Template
 
@@ -93,7 +93,7 @@ if __name__ == "__main__":
             "description": "wwww",
             "price": 123
         },
-        html_template_path=tools.choices.templates.get(tools.constants.keys.get(1)),
+        html_template_path=templates.get('JRNL_TEMPLATE_ID'),
         # html_template_path='book.html',
         html_data='<div class="container"><div class="row"><div class="col-lg-12 text-center">'
                   '<h1 class="mt-5">{{ json_obj.name }}</h1><p class="lead">{{ json_obj.description }}</p>'

@@ -1,4 +1,4 @@
 templates = {
-    'jrnl': 'jrnl-template.html',
-    'fanbooks': 'book1.html',
+    'JRNL_TEMPLATE_ID': 'jrnl-template.html',
+    'FANBOOKS_TEMPLATE_ID': 'book1.html',
 }
