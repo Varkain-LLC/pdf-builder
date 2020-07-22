@@ -6,7 +6,7 @@ setup(
     author='Elya',
     author_email='elya@saasuma.com',
     url='https://github.com/Varkain-LLC/PDF-builder/',
-    packages=['converter'],
+    packages=['html2pdf_converter'],
     description='HTML to PDF with Python-Jinja',
     long_description=open('README.md').read(),
     keywords=['pdf', 'pdf_builder', 'pdf-builder', 'PDFbuilder'],
