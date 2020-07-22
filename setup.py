@@ -11,8 +11,8 @@ setup(
     long_description=open('README.md').read(),
     keywords=['pdf', 'pdf_builder', 'pdf-builder', 'PDFbuilder'],
     install_requires=[
-        'dselenium==3.141.0',
-        'jinja2'
+        'selenium==3.141.0',
+        'jinja2==2.11.2'
     ],
     classifiers=[
         'Programming Language :: Python',
