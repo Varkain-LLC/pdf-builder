@@ -1,8 +1,24 @@
 import base64
 import json
+import platform
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+
+
+py_ver = platform.python_version()
+
+
+def get_html_name(name):
+    if py_ver.startswith('2'):
+        return '{}.html'.format(name)
+    return f'{name}.html'
+
+
+def get_pdf_name(prefix, name):
+    if py_ver.startswith('2'):
+        return '{}{}.pdf'.format(prefix, name)
+    return f'{prefix}{name}.pdf'
 
 
 def send_devtools(driver, cmd, params={}):

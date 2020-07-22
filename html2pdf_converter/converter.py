@@ -4,7 +4,11 @@ import sys
 
 from jinja2 import Environment, FileSystemLoader, Template
 
-from tools.html_to_pdf_converter import get_pdf_from_html
+from tools.html_to_pdf_converter import (
+    get_pdf_from_html,
+    get_html_name,
+    get_pdf_name,
+)
 from tools.random_names import produce_amount_names
 
 from choices import templates
@@ -66,7 +70,8 @@ class HtmlToPdfConverter:
         """
         Write rendered template to temp html
         """
-        with open(f'{list(produce_amount_names(1))[0]}.html', "w") as file:
+        _name = list(produce_amount_names(1))[0]
+        with open(get_html_name(_name), "w") as file:
             file.write(rendered_html)  # Write HTML String to temp html
             return file.name
 
@@ -95,7 +100,7 @@ class HtmlToPdfConverter:
         if not output_file:
             # using function for generate random name
             output_file = list(produce_amount_names(1))[0]
-            output_file = f'{ASSETS_DIR}{output_file}.pdf'
+            output_file = get_pdf_name(ASSETS_DIR, output_file)
 
         if os.path.isfile(str('./' + temp_html_file_path)):
             self.write_pdf_file(
