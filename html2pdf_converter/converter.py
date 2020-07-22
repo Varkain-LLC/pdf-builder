@@ -14,24 +14,6 @@ from tools.random_names import produce_amount_names
 
 from choices import templates
 
-# Used folders
-BASE_DIR = os.path.abspath(os.path.join(
-    os.path.dirname(os.path.dirname(__file__)), '..'))
-ASSETS_DIR = os.path.join(BASE_DIR, 'assets/')
-CHROMIUM_PATH = os.path.join(ASSETS_DIR, 'drivers/')
-
-
-def get_chromium_driver():
-    _type = sys.platform
-    if _type in ('linux', 'linux2'):
-        return os.path.join(CHROMIUM_PATH, 'linux-chromedriver')
-
-    if _type == 'darwin':
-        return os.path.join(CHROMIUM_PATH, 'mac-chromedriver')
-
-    if _type == 'win32':
-        return os.path.join(CHROMIUM_PATH, 'chromedriver.exe')
-
 
 class HtmlToPdfConverter:
     """
@@ -42,13 +24,30 @@ class HtmlToPdfConverter:
     """
 
     def __init__(
-        self, json_data=None, html_data=None,
+        self,
+        base_dir=None,
+        json_data=None, html_data=None,
         json_file_path=None, html_template_path=None
     ):
         self.json_data = json_data
         self.json_file_path = json_file_path
         self.html_data = html_data
         self.html_template_path = html_template_path
+        self.base_dir = base_dir or os.path.abspath(os.path.join(
+            os.path.dirname(os.path.dirname(__file__)), '..'))
+        self.assets_dir = os.path.join(self.base_dir, 'assets/')
+        self.chromium_path = os.path.join(self.assets_dir, 'drivers/')
+
+    def get_chromium_driver(self):
+        _type = sys.platform
+        if _type in ('linux', 'linux2'):
+            return os.path.join(self.chromium_path, 'linux-chromedriver')
+
+        if _type == 'darwin':
+            return os.path.join(self.chromium_path, 'mac-chromedriver')
+
+        if _type == 'win32':
+            return os.path.join(self.chromium_path, 'chromedriver.exe')
 
     def get_json(self):
         if self.json_file_path:
@@ -64,7 +63,7 @@ class HtmlToPdfConverter:
             # return env.get_template(self.html_template_path).render(
             #     json_obj=json_data)
             _path = os.path.join(
-                BASE_DIR,
+                self.base_dir,
                 'templates',
                 self.html_template_path
             )
@@ -83,12 +82,11 @@ class HtmlToPdfConverter:
             file.write(rendered_html)  # Write HTML String to temp html
             return file.name
 
-    @staticmethod
-    def get_pdf_file(temp_html_file_path):
+    def get_pdf_file(self, temp_html_file_path):
         """Get pdf file"""
         html_path = 'file://' + os.getcwd() + str('/' + temp_html_file_path)
         return get_pdf_from_html(
-            path=html_path, chromedriver=get_chromium_driver())
+            path=html_path, chromedriver=self.get_chromium_driver())
 
     def write_pdf_file(self, temp_html_file_path, output_file):
         with open(output_file, 'wb') as file:
@@ -108,7 +106,7 @@ class HtmlToPdfConverter:
         if not output_file:
             # using function for generate random name
             output_file = list(produce_amount_names(1))[0]
-            output_file = get_pdf_name(ASSETS_DIR, output_file)
+            output_file = get_pdf_name(self.assets_dir, output_file)
 
         if os.path.isfile(str('./' + temp_html_file_path)):
             self.write_pdf_file(
