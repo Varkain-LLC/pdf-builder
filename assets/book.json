@@ -1,5 +1,80 @@
 {
-  "name": "bbb",
-  "description": "ccc",
-  "price": 789
+  "document_title": "Title",
+  "document_date": "March 21, 2020 - May 30, 2020",
+  "document_logo_src": "images/timeline-images/logo.png",
+  "table_of_contents": [
+    {
+      "name": "Journal",
+      "page": 1,
+      "pages": [
+        {
+          "page_number": 3,
+          "articles": [
+            {
+              "date_header": "Wednesday, March 22, 2020",
+              "article_title": "111A title for my new entry",
+              "article_text": "111This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety."
+            },
+            {
+              "date_header": "Wednesday, March 23, 2020",
+              "article_title": "222A title for my new entry",
+              "article_text": "222This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety."
+            },
+            {
+              "date_header": "Wednesday, March 24, 2020",
+              "article_title": "333A title for my new entry",
+              "article_text": "333This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety."
+            }
+          ]
+        },
+        {
+          "page_number": 4,
+          "articles": [
+            {
+              "date_header": "Wednesday, March 25, 2020",
+              "article_title": "444A title for my new entry",
+              "article_text": "444This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety."
+            },
+            {
+              "date_header": "Wednesday, March 26, 2020",
+              "article_title": "555A title for my new entry",
+              "article_text": "666This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety."
+            },
+            {
+              "date_header": "Wednesday, March 27, 2020",
+              "article_title": "777A title for my new entry",
+              "article_text": "888This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety."
+            }
+          ]
+        },
+        {
+          "page_number": 5,
+          "articles": [
+            {
+              "date_header": "Wednesday, March 25, 2020",
+              "article_title": "000A title for my new entry",
+              "article_text": "000This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety."
+            },
+            {
+              "date_header": "Wednesday, March 26, 2020",
+              "article_title": "999A title for my new entry",
+              "article_text": "987This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety."
+            },
+            {
+              "date_header": "Wednesday, March 27, 2020",
+              "article_title": "224A title for my new entry",
+              "article_text": "147This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Introduction",
+      "page": 2,
+      "page_number": 12,
+      "pages": [
+      ]
+    }
+  ]
 }

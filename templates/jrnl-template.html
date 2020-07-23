@@ -1,132 +1,114 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>PDF TEMPLATE</title>
 
     <!-- FONTS -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
     <!-- CSS -->
 
-    <link rel="stylesheet" href="fonts/saasuma-icons/style.css" />
-    <link rel="stylesheet" href="css/fontawesome.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <link rel="stylesheet" href="fonts/saasuma-icons/style.css"/>
+    <link rel="stylesheet" href="css/fontawesome.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
 
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
 
     <!-- CUSTOM CSS -->
-    <link rel="stylesheet" href="css/pdf.css" />
-  </head>
-  <body>
-    <main>
-      <section class="page-1">
+    <link rel="stylesheet" href="css/pdf.css"/>
+</head>
+<body>
+<main>
+    <section class="page-1">
         <div class="document-content text-center">
-          <h3 class="document-title" style='color: #f00;'>
-            test
-          </h3>
-          <p class="document-date" style='color: #f00;'>
-            March 11, 2020 - May 20, 2020
-          </p>
-          <img src="images/timeline-images/logo.png" alt="logo" class="center" />
+            <h3 class="document-title" style='color: #f00;'>
+                {{ json_obj.document_title }}
+            </h3>
+            <p class="document-date" style='color: #f00;'>
+                {{ json_obj.document_date }}
+            </p>
+            <img src={{ json_obj.document_logo_src }} alt="logo" class="center"/>
         </div>
 
         <div class="watermark">
-          <p>
-            PREVIEW
-          </p>
+            <p>
+                PREVIEW
+            </p>
         </div>
-      </section>
-      <section class="page-2">
-        <div class="footer">
-          <p class="page-number" style='color: #f00;'>
-            1
-          </p>
-        </div>
-        <div class="watermark">
-          <p>
-            PREVIEW
-          </p>
-        </div>
-      </section>
-      <section class="page-3">
+    </section>
+    <section class="page-2">
         <div class="table-of-contents">
-          <h3>Table of Contents</h3>
-          <p class="table-of-contents-body" style='color: #f00;'>Journal</p>
-          <p class="table-of-contents-body" style='color: #f00;'>1</p>
+            <h3>Table of Contents</h3>
+
+            {% for item in json_obj.table_of_contents %}
+            <p class="table-of-contents-body" style='color: #f00;'>{{ item.name }}</p>
+            <p class="table-of-contents-body" style='color: #f00;'>{{ item.page }}</p>
+            {% endfor %}
         </div>
-        <img src="images/timeline-images/logo.png" alt="logo" class="center" />
+        <img src={{ json_obj.document_logo_src }} alt="logo" class="center"/>
         <div class="footer">
-          <p class="page-number" style='color: #f00;'>
-            2
-          </p>
+            <p class="page-number" style='color: #f00;'>
+                2
+            </p>
         </div>
         <div class="watermark">
-          <p>
-            PREVIEW
-          </p>
+            <p>
+                PREVIEW
+            </p>
         </div>
-      </section>
-      <section class="page-4">
-        <div class="header">
-          <p class="date-header" style='color: #f00;'>
-            Wednesday, March 11, 2020
-          </p>
-        </div>
-        <div class="article-content">
-          <h3 class="article-title" style='color: #f00;'>
-            A title for my new entry
-          </h3>
-          <p class="article-text" style='color: #f00;'>
-            This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety.
-          </p>
-        </div>
+    </section>
 
-        <div class="header">
-          <p class="date-header" style='color: #f00;'>
-            Wednesday, March 11, 2020
-          </p>
-        </div>
-        <div class="article-content">
-          <h3 class="article-title" style='color: #f00;'>
-            A title for my new entry
-          </h3>
-          <p class="article-text" style='color: #f00;'>
-            This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety.
-          </p>
-        </div>
+    {% for item in json_obj.table_of_contents %}
+        <h1>{{ item.name }}</h1>
+        <img src={{ json_obj.document_logo_src }} alt="logo" class="center"/>
+        <section>
+            {% for page in item.pages %}
+                {% for article in page.articles %}
+                    <div class="header {% if page.page_number is not divisibleby 2 %} text-right {% endif %}">
+                        <p class="date-header" style='color: #f00;'>
+                            {{ article.date_header }}
+                        </p>
+                    </div>
+                    <div class="article-content">
+                        <h3 class="article-title" style='color: #f00;'>
+                            {{ article.article_title }}
+                        </h3>
+                        <p class="article-text" style='color: #f00;'>
+                            {{ article.article_text }}
+                        </p>
+                    </div>
+                {% endfor %}
 
-        <div class="header text-right">
-          <p class="date-header" style='color: #f00;'>
-            Wednesday, March 11, 2020
-          </p>
-        </div>
-        <div class="article-content">
-          <h3 class="article-title" style='color: #f00;'>
-            A title for my new entry
-          </h3>
-          <p class="article-text" style='color: #f00;'>
-            This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety.
-          </p>
-        </div>
-        <div class="footer">
-          <p class="page-number text-right" style='color: #f00;'>
-            3
-          </p>
-        </div>
-        <div class="watermark">
-          <p>
-            PREVIEW
-          </p>
-        </div>
-      </section>
-    </main>
-  </body>
+                <div class="footer">
+                    <p class="page-number {% if page.page_number is not divisibleby 2 %} text-right {% endif %}"
+                       style='color: #f00;'>
+                        {{ page.page_number}}
+                    </p>
+                </div>
+                <div class="watermark">
+                    <p>
+                        PREVIEW
+                    </p>
+                </div>
+            {% endfor %}
+        </section>
+    {% endfor %}
+</main>
+</body>
 </html>
