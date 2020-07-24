@@ -27,6 +27,8 @@ def get_pdf_from_html(path, chromedriver='./chromedriver', print_options={}):
     webdriver_options = Options()
     webdriver_options.add_argument('--headless')
     webdriver_options.add_argument('--disable-gpu')
+    webdriver_options.add_argument('--no-sandbox')
+    webdriver_options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(chromedriver, options=webdriver_options)
 
     driver.get(path)

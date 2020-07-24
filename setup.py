@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='PDFbuilder',
-    version='0.0.2',
+    version='0.0.3',
     author='Elya',
     author_email='elya@saasuma.com',
     url='https://github.com/Varkain-LLC/PDF-builder/',
