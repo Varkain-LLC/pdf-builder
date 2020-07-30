@@ -48,8 +48,12 @@
 
     <style media="print">
       @page {
-        size: auto;   /* auto is the initial value */
+        size: A4;   /* auto is the initial value */
         margin: 0;  /* this affects the margin in the printer settings */
+      }
+      html, body {
+        width: 210mm;
+        height: 297mm;
       }
     </style>
 
@@ -61,7 +65,7 @@
     
     <script>
       $(function(){
-        var content_height = 850;	// the height of the content, discluding the header/footer
+        var content_height = 1122.52;	// the height of the content, discluding the header/footer
         var page = 1;				// the beginning page number to show in the footer
         function buildNewsletter(){
           if($('#newsletterContent').contents().length > 0){
