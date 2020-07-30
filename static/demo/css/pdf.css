@@ -48,6 +48,10 @@ section {
   font-size: 2.5rem;
 }
 
+.footer {
+  position: absolute;
+  bottom: 0;
+}
 
 .document-content {
   padding-top: 50%;
@@ -73,6 +77,10 @@ section {
   margin: auto;
   border-bottom: 2px solid #000000;
   position: relative;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .table-of-contents-body {
@@ -80,8 +88,10 @@ section {
 }
 
 .table-of-contents {
+  padding-top: 60px;
   text-align: center;
   padding-bottom: 20px;
+  margin-bottom: 50px;
 }
 
 .center {
@@ -111,7 +121,7 @@ section {
 }
 
 .subtitle {
-    font-size: 1cm;;
+    font-size: 20px;
     padding-bottom: 5px;
     border-bottom: 2px solid #000;
     margin: 40px;
@@ -138,7 +148,7 @@ section {
 
 .aam-question-text {
     margin-top: 20px;
-    font-size: 1cm;
+    font-size: 20px;
     font-weight: bold;
     border-bottom: 2px solid #000;
     margin-bottom: 20px;
@@ -146,7 +156,7 @@ section {
 
 .journal-title-text {
     margin-top: 20px;
-    font-size: 1cm;;
+    font-size: 20px;
     font-weight: bold;
     margin-bottom: 20px;
 }
@@ -172,11 +182,11 @@ section {
     padding-bottom: 20px;
 }
 
-.page:nth-child(2n) .page-number {
+.page:nth-child(2n) .footer {
     left: 0;
 }
 
-.page:nth-child(2n+1) .page-number {
+.page:nth-child(2n+1) .footer {
     right: 0;
 }
 
