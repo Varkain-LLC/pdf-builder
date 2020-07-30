@@ -181,3 +181,19 @@ section {
 .footer .page-number{ 
     padding-bottom: 20px;
 }
+
+.page:nth-child(2n) .footer {
+    left: 0;
+}
+
+.page:nth-child(2n+1) .footer {
+    right: 0;
+}
+
+.page:nth-child(2n) .subtitle {
+    text-align: left !important;
+}
+
+.page:nth-child(2n+1) .subtitle {
+    text-align: right !important;
+}

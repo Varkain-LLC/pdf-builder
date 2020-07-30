@@ -28,13 +28,30 @@
 .page .footer span{ position: absolute; bottom: 10px; right: 10px; }
 #page_template{ display: none; }
 
+.page:nth-child(2n) .footer{
+    left: 0;
+}
+
+.page:nth-child(2n+1) .footer{
+    right: 0;
+}
+
+.page:nth-child(2n) .subtitle{
+    text-align: left !important;
+}
+
+.page:nth-child(2n+1) .subtitle{
+    text-align: right !important;
+}
+
 .enclosure {border:1px dashed black}	  
+
 </style>
 	<script type="text/javascript" src="jquery.js"></script>
 	<script src="autocolumn.min.js" type="text/javascript" charset="utf-8"></script>
 	<script>
 		$(function(){
-			var content_height = 900;	// the height of the content, discluding the header/footer
+			var content_height = 850;	// the height of the content, discluding the header/footer
 			var page = 1;				// the beginning page number to show in the footer
 			function buildNewsletter(){
 				if($('#newsletterContent').contents().length > 0){
@@ -46,13 +63,14 @@
 					$page.find(".footer .page-number").append(page);
 					$("body").append($page);
 					page++;
-					
+					/*
                     if (page % 2 === 0) {
                         $page.find(".left-align-pagenumber").removeClass('left-align-pagenumber').addClass('right-align-pagenumber');
                     }
                     else {
                         $page.find(".right-align-pagenumber").removeClass('right-align-pagenumber').addClass('left-align-pagenumber');
                     }
+                    */
 					// here is the columnizer magic
 					$('#newsletterContent').columnize({
 						columns: 1,
@@ -63,16 +81,19 @@
 							id: "#newsletterContent",
 							doneFunc: function(e){
 								console.log("done with page", $("#newsletterContent").children().first().attr('title'));
+                                /*
                                 if (page % 2 === 0) {
                                     $("#newsletterContent").children(".subtitle.right-align-text").removeClass('right-align-text').addClass('left-align-text');
                                 }
                                 else {
                                     $("#newsletterContent").children(".subtitle.left-align-text").removeClass('left-align-text').addClass('right-align-text');
                                 }
+                                */
+
                                 const title = $("#newsletterContent").children().first().attr('title');
                                 if (title) {
                                     $("#newsletterContent").prepend($(`
-                                    <h3 class="subtitle right-align-text">
+                                    <h3 class="subtitle">
                                         ${title}
                                     </h3>`));
                                 }
@@ -143,7 +164,7 @@ your community?1</div>
 
 <div id="page_template">  
     <div class="content"></div>
-    <div class="footer two-margin right-align-pagenumber">
+    <div class="footer two-margin">
         <div class="page-number">1</div>
     </div>
 </div>
@@ -156,64 +177,70 @@ your community?1</div>
     <h3 class="subtitle right-align-text">
         Wednesday, May 13, 2020
     </h3>
-    <div class="two-margin journal-title-text">The World Around Me</div>
+    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
+    <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsd
+        <img src='./images/timeline-images/logo.png' style="width: 100%;"/> 
+        fdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div>
+    <h3 class="subtitle right-align-text">
+        Wednesday, May 13, 2020
+    </h3>
+    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
     <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
         Wednesday, May 13, 2020
     </h3>
-    <div class="two-margin journal-title-text">The World Around Me</div>
+    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
     <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
         Wednesday, May 13, 2020
     </h3>
-    <div class="two-margin journal-title-text">The World Around Me</div>
+    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
     <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
         Wednesday, May 13, 2020
     </h3>
-    <div class="two-margin journal-title-text">The World Around Me</div>
+    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
     <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
         Wednesday, May 13, 2020
     </h3>
-    <div class="two-margin journal-title-text">The World Around Me</div>
+    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
     <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
         Wednesday, May 13, 2020
     </h3>
-    <div class="two-margin journal-title-text">The World Around Me</div>
+    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
     <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
         Wednesday, May 13, 2020
     </h3>
-    <div class="two-margin journal-title-text">The World Around Me</div>
+    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
     <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
         Wednesday, May 13, 2020
     </h3>
-    <div class="two-margin journal-title-text">The World Around Me</div>
+    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
     <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
         Wednesday, May 13, 2020
     </h3>
-    <div class="two-margin journal-title-text">The World Around Me</div>
+    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
     <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
         Wednesday, May 13, 2020
     </h3>
-    <div class="two-margin journal-title-text">The World Around Me</div>
+    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
     <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
         Wednesday, May 13, 2020
     </h3>
-    <div class="two-margin journal-title-text">The World Around Me</div>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
-        Wednesday, May 13, 2020
-    </h3>
-    <div class="two-margin journal-title-text">The World Around Me</div>
+    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
     <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslk
     fjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdf
     asdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsd
     fsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfas
-    dfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfa
+    <img src='./images/timeline-images/logo.png' style="width: 100%;"/> 
+    dfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfa    
     sdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfas
     dfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsd
     fsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdsl
     kfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfja
     sdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfds
+    <img src='./images/timeline-images/logo.png' style="width: 100%;"/> 
     lkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsd
     fsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfas
-    dfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslk
+    dfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslk    
+    <img src='./images/timeline-images/logo.png' style="width: 100%;"/> 
     fjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdf
     sdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfja
     </div>
