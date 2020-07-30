@@ -143,7 +143,12 @@
     section, h1, p.date-header { page-break-before: always;}
     p { widows: 4;}
     p { orphans: 3;}
+    @page {
+      size: auto;   /* auto is the initial value */
+      margin: 0;  /* this affects the margin in the printer settings */
+    }
   </style>
+  
 </head>
 <body>
 <main>
