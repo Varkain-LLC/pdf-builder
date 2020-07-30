@@ -1,4 +1,13 @@
 body {
+  margin: 0;
+  padding: 0;
+  background-color: #FAFAFA;
+  font: 12pt "Tahoma";
+}
+
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 .watermark {
@@ -172,12 +181,17 @@ section {
     padding-bottom: 20px;
 }
 
-
-
 .page:nth-child(2n) .subtitle {
     text-align: left !important;
 }
 
 .page:nth-child(2n+1) .subtitle {
     text-align: right !important;
+}
+.page:nth-child(2n) .page-number {
+  left: 0;
+}
+
+.page:nth-child(2n+1) .page-number {
+  right: 0;
 }

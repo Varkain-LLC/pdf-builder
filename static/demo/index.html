@@ -5,37 +5,25 @@
 <head>
 <link href="./../css/pdf.css" rel="stylesheet" />
 <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #FAFAFA;
-      font: 12pt "Tahoma";
-    }
-
-    * {
-      box-sizing: border-box;
-      -moz-box-sizing: border-box;
-    }
-
     .page {
-      width: 21cm;
-        height: 29.7cm;
-      min-height: 29.7cm;
-      padding: 2cm;
-      margin: 1cm auto;
-      border: 1px #D3D3D3 solid;
-      border-radius: 5px;
+      width: 210mm;
+      height: 297mm;
+      min-height: 297mm;
+      padding: 15mm;
+      margin: 10mm auto;
       background: white;
-			position: relative;
+      position: relative;
     }
 
     .subpage {
-      padding: 1cm;
-      height: 256mm;
-			position: relative;
+      /*padding: 10mm;*/
+      height: 255mm;
+      min-height: 255mm;
+      max-height: 255mm;
+      position: relative;
+      border: 1mm solid black;
     }
-		.first.last.column{ 
-		}
+		/*.first.last.column{}*/
 
     @page {
       size: A4;
@@ -45,98 +33,85 @@
     @media print {
       .page {
         margin: 0;
-        border: initial;
+        border: 5mm solid black;
         border-radius: initial;
         width: initial;
         min-height: initial;
         box-shadow: initial;
         background: initial;
-				position: initial;
+        position: initial;
       }
     }
-
-		.page:nth-child(2n) .page-number {
-				left: 0;
-		}
-
-		.page:nth-child(2n+1) .page-number {
-				right: 0;
-		}
-
   </style>
 <script type="text/javascript" src="./../vendors/jquery.js"></script>
 <script src="./../vendors/autocolumn.min.js" type="text/javascript" charset="utf-8"></script>
+
+<template id="page_template">
+  <div class="page">  
+    <div class="subpage"></div>		
+  </div>
+</template>
 <script>
-    $(function(){
-        var content_height = $('.page').height();	// the height of the content, discluding the header/footer
-        var page = 1;				// the beginning page number to show in the footer
-        console.log(content_height);
-        function buildNewsletter(){
-            if($('#newsletterContent').contents().length > 0){
-                // when we need to add a new page, use a jq object for a template
-                // or use a long HTML string, whatever your preference
-                $page = $("#page_template").clone().addClass("page")
-                
-                // fun stuff, like adding page numbers to the footer
-                $page.find(".footer .page-number").append(page);
-                $("body").append($page);
-                page++;
-                /*
-                if (page % 2 === 0) {
-                    $page.find(".left-align-pagenumber").removeClass('left-align-pagenumber').addClass('right-align-pagenumber');
-                }
-                else {
-                    $page.find(".right-align-pagenumber").removeClass('right-align-pagenumber').addClass('left-align-pagenumber');
-                }
-                */
-                // here is the columnizer magic
-                $('#newsletterContent').columnize({
-                    columns: 1,
-                    keepHtml: true,
-                    target: ".page:last .subpage",
-                    overflow: {
-                        height: content_height,
-                        id: "#newsletterContent",
-                        doneFunc: function(e){
-                            console.log("done with page", $("#newsletterContent").children().first().attr('title'));
-                            /*
-                            if (page % 2 === 0) {
-                                $("#newsletterContent").children(".subtitle.right-align-text").removeClass('right-align-text').addClass('left-align-text');
-                            }
-                            else {
-                                $("#newsletterContent").children(".subtitle.left-align-text").removeClass('left-align-text').addClass('right-align-text');
-                            }
-                            */
+  $(function(){
+      var content_height = $('.page').height();	// the height of the content, discluding the header/footer
+      var page = 1; // the beginning page number to show in the footer
+      // console.log(content_height);
+      function buildNewsletter(){
+        var targetId = "#newsletterContent",
+            targetElement = $(targetId);
+        if(targetElement.contents().length > 0){
+            // when we need to add a new page, use a jq object for a template
+            // or use a long HTML string, whatever your preference
+            _page = page_template.content.cloneNode(true);
+            $page = $(_page);
+            
+            // fun stuff, like adding page numbers to the footer
+            $page.find(".footer .page-number").append(page);
+            $("body").append($page);
+            page++;
 
-                            const title = $("#newsletterContent").children().first().attr('title');
-                            if (title) {
-                                $("#newsletterContent").prepend($(`
-                                <h3 class="subtitle">
-                                    ${title}
-                                </h3>`));
-                            }
-                            buildNewsletter();
-                        }
+            // here is the columnizer magic
+            targetElement.columnize({
+              columns: 1,
+              keepHtml: true,
+              target: ".page:last .subpage",
+              overflow: {
+                height: content_height,
+                id: targetId,
+                doneFunc: function(e){
+                    console.log("done with page", targetElement.children().first().attr('title'));
+
+                    const title = targetElement.children().first().attr('title');
+                    if (title) {
+                        targetElement.prepend($(`
+                        <h3 class="subtitle">
+                            ${title}
+                        </h3>`));
                     }
-                });
-            } else {
-							$.each($('.page'), function(i, val) {
-								$(val).find('.subpage').append(`<div style="position: absolute; bottom: 0;" class="page-number"> ${i} </div>`);
-							});
-							/*
-							const elements = $('.page');
-							elements.forEach(obj => {
-								obj.find('.subpage').append(`<div class="footer two-margin">
-									<div class="page-number">Page ${12}</div>
-								</div>`);
-							});			
-							*/
-						}
+                    buildNewsletter();
+                  }
+              }
+            });
+        } else {
+          $.each($('.page'), function(i, val) {
+            if (i>0) {
+              $(val).find('.subpage').append(`<div style="position: absolute; bottom: 0;" class="page-number"> ${i} </div>`);
+            }
+          });
+          /*
+          const elements = $('.page');
+          elements.forEach(obj => {
+            obj.find('.subpage').append(`<div class="footer two-margin">
+              <div class="page-number">Page ${12}</div>
+            </div>`);
+          });			
+          */
         }
+      }
 
-        buildNewsletter();
+      buildNewsletter();
     });
-</script>
+  </script>
 </head>
 <body>
 <div class="page">
@@ -148,7 +123,7 @@
 			<p class="document-date" style='color: #f00;'>
 			March 11, 2020 - May 20, 2020
 			</p>
-			<img src="images/timeline-images/logo.png" alt="logo" class="center" />
+			<img src="./../images/timeline-images/logo.png" alt="logo" class="center" />
 		</div>  
 	</div>
 </div>
@@ -177,11 +152,6 @@
 				Wednesday, May 13, 2020
 		</h3>
 	<div>
-</div>
-
-<div id="page_template">  
-    <div class="subpage">			
-		</div>		
 </div>
 <div id="newsletterContent">
 	<h3 class="subtitle right-align-text">
