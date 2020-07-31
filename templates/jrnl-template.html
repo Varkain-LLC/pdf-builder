@@ -159,7 +159,7 @@
         </div>
         <div id="newsletterContent">
             {% for item in json_obj.table_of_contents %}
-                {% for page in item.pages %}
+                {% for page in item.data %}
                     {% for article in page.articles %}
                         <h3 class="subtitle right-align-text">
                             {{ json_obj.document_date }}
