@@ -43,16 +43,17 @@
 
 
 
-    </style>
-    <script type="text/javascript" src="./../vendors/jquery.js"></script>
-    <script src="./../vendors/autocolumn.min.js" type="text/javascript" charset="utf-8"></script>
 
-    <template id="page_template">
-        <div class="page">
-            <div class="subpage"></div>
-        </div>
-    </template>
-    <script>
+    </style>
+  <script type="text/javascript" src="./../vendors/jquery.js"></script>
+  <script src="./../vendors/autocolumn.min.js" type="text/javascript" charset="utf-8"></script>
+
+  <template id="page_template">
+    <div class="page">
+      <div class="subpage"></div>
+    </div>
+  </template>
+  <script>
   $(function(){
       var content_height = $('.page').height();	// the height of the content, discluding the header/footer
       var page = 1; // the beginning page number to show in the footer
@@ -115,65 +116,102 @@
 
 
 
-    </script>
+
+  </script>
 </head>
 <body>
 <div class="page">
-    <div class="subpage">
-        <div class='content' style="position: relative; top: 50%; transform: translateY(-50%);">
-            <h5 class="document-title" style='color: #f00;'>
-                {{ json_obj.document_title }}
-            </h5>
-            <p class="document-date" style='color: #f00;'>
-                {{ json_obj.document_date }}
-            </p>
-            <img src="./../images/timeline-images/logo.png" alt="logo" class="center"/>
-        </div>
+  <div class="subpage">
+    <div class='content' style="position: relative; top: 50%; transform: translateY(-50%);">
+      <h5 class="document-title" style='color: #f00;'>
+        {{ json_obj.document_title }}
+      </h5>
+      <p class="document-date" style='color: #f00;'>
+        {{ json_obj.document_date }}
+      </p>
+      <img src="./../images/timeline-images/logo.png" alt="logo" class="center"/>
     </div>
+  </div>
 </div>
 <div class="page">
-    <div class="subpage">
-        <div class="table-of-contents">
-            <h3>Table of Contents</h3>
-            <div class="table-of-contents-body" style='color: #f00;'>Journal</div>
-            <div class="table-of-contents-body" style='color: #f00;'>1</div>
-        </div>
-        <div class="end-line"></div>
-        <img src="../images/timeline-images/logo.png" alt="logo" class="center"/>
+  <div class="subpage">
+    <div class="table-of-contents">
+      <h3>Table of Contents</h3>
+      <div class="table-of-contents-body" style='color: #f00;'>Introduction</div>
     </div>
+    <div class="end-line"></div>
+    <img src="../images/timeline-images/logo.png" alt="logo" class="center"/>
+  </div>
 </div>
 <div class="page">
-    <div class="subpage">
-        <div class="vertical-align-center">
-            <h3 class="table-content-title">Introduction</h3>
-            <img src="../images/timeline-images/logo.png" alt="logo" class="center"/>
-        </div>
+  <div class="subpage">
+    <div class="vertical-align-center">
+      <h3 class="table-content-title">All About Me</h3>
+      <img src="../images/timeline-images/logo.png" alt="logo" class="center"/>
     </div>
+  </div>
 </div>
 <div class="page">
-    <div class="subpage" style="position: relative;">
-        <h3 class="subtitle right-align-text">
-            {{ json_obj.document_date }}
-        </h3>
-        <div>
-        </div>
-        <div id="newsletterContent">
-            {% for item in json_obj.table_of_contents %}
-                {% for page in item.pages %}
-                    {% for article in page.articles %}
+  <div class="subpage">
+    <div class="vertical-align-center">
+      <h3 class="table-content-title">Journal</h3>
+      <img src="../images/timeline-images/logo.png" alt="logo" class="center"/>
+    </div>
+  </div>
+</div>
+<div class="page">
+  <div class="subpage" style="position: relative;">
+    <h3 class="subtitle right-align-text">
+      {{ json_obj.document_date }}
+    </h3>
+    <div id="newsletterContent">
+        {% for item in json_obj.table_of_contents %}
+            <h3 class="subtitle right-align-text">
+              {{ item.name }}
+            </h3>
+            {% if item.name is 'Introduction' %}
+                <div title='{{ item.name }}' class="two-margin journal-title-text">{{ item.name }}</div>
+                <div title='{{ item.name }}' class="two-margin journal-text">
+                  {{ item.data }}
+                </div>
+            {% elif item.name is 'All About Me' %}
+                {% for page in item.data %}
+                    {% for aam in page.aam %}
                         <h3 class="subtitle right-align-text">
-                            {{ json_obj.document_date }}
+                          {{ json_obj.document_date }}
                         </h3>
-                        <div title='{{ article.article_title }}' class="two-margin journal-title-text">{{ article.article_title }}</div>
-                        <div title='{{ article.article_title }}' class="two-margin journal-text">
-                            {{ article.article_text }}
-                            {{ article.image }}
+                        <div class="two-margin journal-title-text">{{ aam.title }}</div>
+                        <div class="two-margin journal-text">
+                          {{ aam.text }}
+                        </div>
+                    {% endfor %}
+                    {% for comment in page.comments %}
+                        <h3 class="subtitle right-align-text">
+                          {{ json_obj.document_date }}
+                        </h3>
+                        <div class="two-margin journal-title-text">{{ comment.title }}</div>
+                        <div class="two-margin journal-text">
+                          {{ comment.text }}
                         </div>
                     {% endfor %}
                 {% endfor %}
-            {% endfor %}
-        </div>
+            {% elif item.name is 'Journal' %}
+                {% for page in item.data %}
+                    {% for article in page.articles %}
+                        <h3 class="subtitle right-align-text">
+                          {{ json_obj.document_date }}
+                        </h3>
+                        <div title='{{ article.article_title }}' class="two-margin journal-title-text">{{ article.article_title }}</div>
+                        <div title='{{ article.article_title }}' class="two-margin journal-text">
+                          {{ article.article_text }}
+                          {{ article.image }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
     </div>
+  </div>
 </div>
 </body>
 </html>
