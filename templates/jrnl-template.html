@@ -7,7 +7,7 @@
     width: 210mm;
     height: 297mm;
     min-height: 297mm;
-    padding: 15mm;
+    padding: 20mm;
     margin: 10mm auto;
     background: white;
     position: relative;
@@ -31,7 +31,7 @@
   @media print {
     .page {
       margin: 0;
-      border: 5mm solid black;
+      border: initial;
       border-radius: initial;
       width: initial;
       min-height: initial;
@@ -54,8 +54,8 @@
       var content_height = $('.page').height();	// the height of the content, discluding the header/footer
       var page = 1; // the beginning page number to show in the footer
       // console.log(content_height);
-      function buildPages(){
-        var targetId = "#book-content",
+      function buildPages(name){
+        var targetId = "#book-content-" + name,
             targetElement = $(targetId);
         if(targetElement.contents().length > 0){
             // when we need to add a new page, use a jq object for a template
@@ -106,8 +106,9 @@
           */
         }
       }
-
-      buildPages();
+      {% for item in json_obj.table_of_contents %}
+        buildPages('{{ item.name }}');
+      {% endfor %}
     });
   </script>
 </head>
@@ -115,10 +116,10 @@
 <div class="page">
   <div class="subpage">
     <div class='content' style="position: relative; top: 50%; transform: translateY(-50%);">
-      <h5 class="document-title" style='color: #f00;'>
+      <h5 class="document-title">
         {{ json_obj.document_title }}
       </h5>
-      <p class="document-date" style='color: #f00;'>
+      <p class="document-date">
         {{ json_obj.document_date }}
       </p>
       <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center"/>
@@ -129,26 +130,12 @@
   <div class="subpage">
     <div class="table-of-contents">
       <h3>Table of Contents</h3>
-      <div class="table-of-contents-body" style='color: #f00;'>Introduction</div>
+      {% for item in json_obj.table_of_contents %}
+        <div class="table-of-contents-body">{{ item.name }}</div>
+        <div class="end-line"></div>
+      {% endfor %}
     </div>
-    <div class="end-line"></div>
     <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center"/>
-  </div>
-</div>
-<div class="page">
-  <div class="subpage">
-    <div class="vertical-align-center">
-      <h3 class="table-content-title">All About Me</h3>
-      <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center"/>
-    </div>
-  </div>
-</div>
-<div class="page">
-  <div class="subpage">
-    <div class="vertical-align-center">
-      <h3 class="table-content-title">Journal</h3>
-      <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center"/>
-    </div>
   </div>
 </div>
 <div class="page">
@@ -156,53 +143,56 @@
     <h3 class="subtitle right-align-text">
       {{ json_obj.document_date }}
     </h3>
-    <div id="book-content">
     {% for item in json_obj.table_of_contents %}
+    <div id="book-content-{{ item.name }}">
+      <div class="vertical-align-center">
         <h3 class="subtitle right-align-text">
           {{ item.name }}
         </h3>
-        {% if item.name is 'Introduction' %}
-            <div title='{{ item.name }}' class="two-margin journal-title-text">{{ item.name }}</div>
-            <div title='{{ item.name }}' class="two-margin journal-text">
-              {{ item.data }}
-            </div>
-        {% elif item.name is 'All About Me' %}
-            {% for page in item.data %}
-                {% for aam in page.aam %}
-                    <h3 class="subtitle right-align-text">
-                      {{ json_obj.document_date }}
-                    </h3>
-                    <div class="two-margin journal-title-text">{{ aam.title }}</div>
-                    <div class="two-margin journal-text">
-                      {{ aam.text }}
-                    </div>
-                {% endfor %}
-                {% for comment in page.comments %}
-                    <h3 class="subtitle right-align-text">
-                      {{ json_obj.document_date }}
-                    </h3>
-                    <div class="two-margin journal-title-text">{{ comment.title }}</div>
-                    <div class="two-margin journal-text">
-                      {{ comment.text }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
-        {% elif item.name is 'Journal' %}
-            {% for page in item.data %}
-                {% for article in page.articles %}
-                    <h3 class="subtitle right-align-text">
-                      {{ json_obj.document_date }}
-                    </h3>
-                    <div title='{{ article.article_title }}' class="two-margin journal-title-text">{{ article.article_title }}</div>
-                    <div title='{{ article.article_title }}' class="two-margin journal-text">
-                      {{ article.article_text }}
-                      {{ article.image }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
-        {% endif %}
-    {% endfor %}
+        <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center"/>
+      </div>
+      {% if item.name == 'Introduction' %}
+          <div title="{{ item.name }}" class="two-margin journal-title-text">{{ item.name }}</div>
+          <div title="{{ item.name }}" class="two-margin journal-text">
+            {{ item.data }}
+          </div>
+      {% elif item.name == 'All About Me' %}
+          {% for page in item.data %}
+              {% for aam in page.aam %}
+                  <h3 class="subtitle right-align-text">
+                    {{ json_obj.document_date }}
+                  </h3>
+                  <div class="two-margin journal-title-text">{{ aam.title }}</div>
+                  <div class="two-margin journal-text">
+                    {{ aam.text }}
+                  </div>
+              {% endfor %}
+              {% for comment in page.comments %}
+                  <h3 class="subtitle right-align-text">
+                    {{ json_obj.document_date }}
+                  </h3>
+                  <div class="two-margin journal-title-text">{{ comment.title }}</div>
+                  <div class="two-margin journal-text">
+                    {{ comment.text }}
+                  </div>
+              {% endfor %}
+          {% endfor %}
+      {% elif item.name == 'Journal' %}
+          {% for page in item.data %}
+              {% for article in page.articles %}
+                  <h3 class="subtitle right-align-text">
+                    {{ json_obj.document_date }}
+                  </h3>
+                  <div title='{{ article.article_title }}' class="two-margin journal-title-text">{{ article.article_title }}</div>
+                  <div title='{{ article.article_title }}' class="two-margin journal-text">
+                    {{ article.article_text }}
+                    {{ article.image }}
+                  </div>
+              {% endfor %}
+          {% endfor %}
+      {% endif %}
     </div>
+    {% endfor %}
   </div>
 </div>
 </body>

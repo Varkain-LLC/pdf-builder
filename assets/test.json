@@ -1,0 +1,46 @@
+{
+    "document_date": "2020-06-30 - 2020-07-04",
+    "journal_page_count": null,
+    "all_about_me": "",
+    "version": 3,
+    "photos": false,
+    "color": false,
+    "miscellaneous_page_count": null,
+    "photo_page_count": null,
+    "document_logo_src": "",
+    "all_about_me_full_page_count": null,
+    "document_back_cover": "",
+    "document_cover_image": null,
+    "all_about_me_recent_page_count": null,
+    "document_subtitle": "",
+    "introduction_page_count": null,
+    "table_of_contents": [
+        {
+            "data": "",
+            "name": "Introduction"
+        },
+        {
+            "data": {
+                "aam": [],
+                "comments": []
+            },
+            "name": "All About Me"
+        },
+        {
+            "data": [
+                {
+                    "items": [],
+                    "title": "test123 changed default journal",
+                    "title_page_content": "",
+                    "tags": []
+                }
+            ],
+            "name": "Journals"
+        }
+    ],
+    "custom_introduction": "",
+    "spine": "",
+    "document_title": "test",
+    "quantity": 1,
+    "cover_pdf": ""
+}

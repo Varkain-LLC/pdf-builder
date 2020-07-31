@@ -41,7 +41,7 @@ class HtmlToPdfConverter:
         self.base_dir = base_dir or os.path.abspath(os.path.join(
             os.path.dirname(os.path.dirname(__file__)), '..'))
         self.assets_dir = os.path.join(self.base_dir, 'assets/')
-        self.static_dir = os.path.join(self.base_dir, 'static/')
+        self.static_url = os.path.join(self.base_dir, 'static/')
         self.chromium_path = os.path.join(self.assets_dir, 'drivers/')
 
     def get_chromium_driver(self):
@@ -81,7 +81,7 @@ class HtmlToPdfConverter:
 
         return Template(self.html_data).render(
             json_obj=json_data,
-            static_url=self.static_dir
+            static_url=self.static_url
         )
 
     @staticmethod
