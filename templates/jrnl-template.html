@@ -174,6 +174,7 @@
                 <div title='{{ item.name }}' class="two-margin journal-text">
                   {{ item.data }}
                 </div>
+      			<img src="./../images/timeline-images/logo.png" alt="logo" class="center" />
             {% elif item.name is 'All About Me' %}
                 {% for page in item.data %}
                     {% for aam in page.aam %}
@@ -184,6 +185,7 @@
                         <div class="two-margin journal-text">
                           {{ aam.text }}
                         </div>
+            			<img src="./../images/timeline-images/logo.png" alt="logo" class="center" />
                     {% endfor %}
                     {% for comment in page.comments %}
                         <h3 class="subtitle right-align-text">
@@ -193,6 +195,7 @@
                         <div class="two-margin journal-text">
                           {{ comment.text }}
                         </div>
+                        <img src="./../images/timeline-images/logo.png" alt="logo" class="center" />
                     {% endfor %}
                 {% endfor %}
             {% elif item.name is 'Journal' %}
@@ -206,6 +209,7 @@
                           {{ article.article_text }}
                           {{ article.image }}
                         </div>
+                        <img src="./../images/timeline-images/logo.png" alt="logo" class="center" />
                     {% endfor %}
                 {% endfor %}
             {% endif %}
