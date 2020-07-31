@@ -157,6 +157,7 @@
             {{ item.data }}
           </div>
       {% elif item.name == 'All About Me' %}
+          <div title="{{ item.name }}" class="two-margin journal-text"></div>
           {% for page in item.data %}
               {% for aam in page.aam %}
                   <h3 class="subtitle right-align-text">
@@ -179,15 +180,20 @@
           {% endfor %}
       {% elif item.name == 'Journal' %}
           {% for page in item.data %}
-              {% for article in page.articles %}
-                  <h3 class="subtitle right-align-text">
-                    {{ json_obj.document_date }}
-                  </h3>
-                  <div title='{{ article.article_title }}' class="two-margin journal-title-text">{{ article.article_title }}</div>
-                  <div title='{{ article.article_title }}' class="two-margin journal-text">
-                    {{ article.article_text }}
-                    {{ article.image }}
+              {% for journal in page.journals_posts %}
+                  <div title="{{ journal.title }}"class="two-margin journal-title-text">{{ journal.title }}</div>
+                  <div title="{{ journal.title }}"class="two-margin journal-text">
+                    {{ journal.title_page_content }}
                   </div>
+                {% for entry in journal.items %}
+                  <h3 class="subtitle right-align-text">
+                    {{ entry.entry_date }}
+                  </h3>
+                  <div title="{{ journal.title }}"class="two-margin journal-title-text">{{ entry.title }}</div>
+                  <div title="{{ journal.title }}"class="two-margin journal-text">
+                    {{ entry.content }}
+                  </div>
+                {% endfor %}
               {% endfor %}
           {% endfor %}
       {% endif %}
