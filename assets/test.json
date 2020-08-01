@@ -14,30 +14,30 @@
     "all_about_me_recent_page_count": null,
     "document_subtitle": "",
     "introduction_page_count": null,
-    "table_of_contents": [
-        {
-            "data": "",
-            "name": "Introduction"
+    "table_of_contents": {
+        "intro": {
+            "name": "Introduction",
+            "data": "self.custom_introduction"
         },
-        {
+        "aam": {
+            "name": "All About Me",
             "data": {
                 "aam": [],
                 "comments": []
-            },
-            "name": "All About Me"
+            }
         },
-        {
+        "journals": {
+            "name": "Journals",
             "data": [
                 {
-                    "items": [],
+                    "entries": [],
                     "title": "test123 changed default journal",
-                    "title_page_content": "",
+                    "content": "",
                     "tags": []
                 }
-            ],
-            "name": "Journals"
+            ]
         }
-    ],
+    },
     "custom_introduction": "",
     "spine": "",
     "document_title": "test",

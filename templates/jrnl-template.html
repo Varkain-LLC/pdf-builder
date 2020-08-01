@@ -86,7 +86,7 @@
                             ${title}
                         </h3>`));
                     }
-                    buildPages();
+                    buildPages(name);
                   }
               }
             });
@@ -106,9 +106,9 @@
           */
         }
       }
-      {% for item in json_obj.table_of_contents %}
-        buildPages('{{ item.name }}');
-      {% endfor %}
+      buildPages('intro');
+      buildPages('aam');
+      buildPages('journals');
     });
   </script>
 </head>
@@ -130,10 +130,21 @@
   <div class="subpage">
     <div class="table-of-contents">
       <h3>Table of Contents</h3>
-      {% for item in json_obj.table_of_contents %}
-        <div class="table-of-contents-body">{{ item.name }}</div>
-        <div class="end-line"></div>
-      {% endfor %}
+        {% if json_obj.table_of_contents.intro %}
+          {% set item = json_obj.table_of_contents.intro %}
+          <div class="table-of-contents-body">{{ item.name }}</div>
+          <div class="end-line"></div>
+        {% endif %}
+        {% if json_obj.table_of_contents.aam %}
+          {% set item = json_obj.table_of_contents.aam %}
+          <div class="table-of-contents-body">{{ item.name }}</div>
+          <div class="end-line"></div>
+        {% endif %}
+        {% if json_obj.table_of_contents.journals %}
+          {% set item = json_obj.table_of_contents.journals %}
+          <div class="table-of-contents-body">{{ item.name }}</div>
+          <div class="end-line"></div>
+        {% endif %}
     </div>
     <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center"/>
   </div>
@@ -143,63 +154,57 @@
     <h3 class="subtitle right-align-text">
       {{ json_obj.document_date }}
     </h3>
-    {% for item in json_obj.table_of_contents %}
-    <div id="book-content-{{ item.name }}">
-      <div class="vertical-align-center">
-        <h3 class="subtitle right-align-text">
-          {{ item.name }}
-        </h3>
-        <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center"/>
-      </div>
-      {% if item.name == 'Introduction' %}
-          <div title="{{ item.name }}" class="two-margin journal-title-text">{{ item.name }}</div>
-          <div title="{{ item.name }}" class="two-margin journal-text">
-            {{ item.data }}
-          </div>
-      {% elif item.name == 'All About Me' %}
-          <div title="{{ item.name }}" class="two-margin journal-text"></div>
-          {% for page in item.data %}
-              {% for aam in page.aam %}
-                  <h3 class="subtitle right-align-text">
-                    {{ json_obj.document_date }}
-                  </h3>
-                  <div class="two-margin journal-title-text">{{ aam.title }}</div>
-                  <div class="two-margin journal-text">
-                    {{ aam.text }}
-                  </div>
-              {% endfor %}
-              {% for comment in page.comments %}
-                  <h3 class="subtitle right-align-text">
-                    {{ json_obj.document_date }}
-                  </h3>
-                  <div class="two-margin journal-title-text">{{ comment.title }}</div>
-                  <div class="two-margin journal-text">
-                    {{ comment.text }}
-                  </div>
-              {% endfor %}
-          {% endfor %}
-      {% elif item.name == 'Journal' %}
-          {% for page in item.data %}
-              {% for journal in page.journals_posts %}
-                  <div title="{{ journal.title }}"class="two-margin journal-title-text">{{ journal.title }}</div>
-                  <div title="{{ journal.title }}"class="two-margin journal-text">
-                    {{ journal.title_page_content }}
-                  </div>
-                {% for entry in journal.items %}
-                  <h3 class="subtitle right-align-text">
-                    {{ entry.entry_date }}
-                  </h3>
-                  <div title="{{ journal.title }}"class="two-margin journal-title-text">{{ entry.title }}</div>
-                  <div title="{{ journal.title }}"class="two-margin journal-text">
-                    {{ entry.content }}
-                  </div>
-                {% endfor %}
-              {% endfor %}
-          {% endfor %}
-      {% endif %}
-    </div>
-    {% endfor %}
   </div>
 </div>
+
+{% if json_obj.table_of_contents.intro %}
+  {% set item = json_obj.table_of_contents.intro %}
+  <div id="book-content-intro">
+    <div title="{{ item.name }}" class="two-margin journal-title-text">{{ item.name }}</div>
+    <div title="{{ item.name }}" class="two-margin journal-text">
+      {{ item.data }}
+    </div>
+  </div>
+{% endif %}
+{% if json_obj.table_of_contents.aam %}
+  {% set item = json_obj.table_of_contents.aam %}
+  <div id="book-content-aam">
+    <div title="{{ item.name }}" class="two-margin journal-title-text">{{ item.name }}</div>
+    <div title="{{ item.name }}" class="two-margin journal-text"></div>
+    {% for page in item.data %}
+        {% for aam in page.aam %}
+            <div class="two-margin journal-title-text">{{ aam.title }}</div>
+            <div class="two-margin journal-text">
+              {{ aam.content|e }}
+            </div>
+        {% endfor %}
+        {% for comment in page.comments %}
+            <div class="two-margin journal-title-text">{{ comment.title }}</div>
+            <div class="two-margin journal-text">
+              {{ comment.content|e }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+  </div>
+{% endif %}
+{% if json_obj.table_of_contents.journals %}
+  {% set item = json_obj.table_of_contents.journals %}
+  <div id="book-content-journals">
+    <div title="{{ item.name }}" class="two-margin journal-title-text">{{ item.name }}</div>
+    <div title="{{ item.name }}" class="two-margin journal-text"></div>
+    {% for journal in item.data %}
+      <div class="two-margin journal-title-text">{{ journal.title }}</div>
+      <div class="two-margin journal-text">
+        {{ journal.content|e }}
+      </div>
+      {% for entry in journal.entries %}
+        <div class="two-margin journal-title-text">{{ entry.title }}</div>
+        <div class="two-margin journal-text">
+          {{ entry.content|e }}
+        </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+{% endif %}
 </body>
 </html>
