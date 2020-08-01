@@ -15,11 +15,11 @@
 
   .subpage {
     /*padding: 10mm;*/
-    height: 255mm;
-    min-height: 255mm;
-    max-height: 255mm;
+    height: 257mm;
+    min-height: 257mm;
+    max-height: 257mm;
     position: relative;
-    border: 1mm solid black;
+    /*border: 1mm solid black;*/
   }
   /*.first.last.column{}*/
 
@@ -175,13 +175,13 @@
         {% for aam in page.aam %}
             <div class="two-margin journal-title-text">{{ aam.title }}</div>
             <div class="two-margin journal-text">
-              {{ aam.content|e }}
+              {{ aam.content }}
             </div>
         {% endfor %}
         {% for comment in page.comments %}
             <div class="two-margin journal-title-text">{{ comment.title }}</div>
             <div class="two-margin journal-text">
-              {{ comment.content|e }}
+              {{ comment.content }}
             </div>
         {% endfor %}
     {% endfor %}
@@ -195,12 +195,12 @@
     {% for journal in item.data %}
       <div class="two-margin journal-title-text">{{ journal.title }}</div>
       <div class="two-margin journal-text">
-        {{ journal.content|e }}
+        {{ journal.content }}
       </div>
       {% for entry in journal.entries %}
         <div class="two-margin journal-title-text">{{ entry.title }}</div>
         <div class="two-margin journal-text">
-          {{ entry.content|e }}
+          {{ entry.content }}
         </div>
       {% endfor %}
     {% endfor %}
