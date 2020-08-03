@@ -193,6 +193,7 @@
     <div title="{{ item.name }}" class="two-margin journal-title-text">{{ item.name }}</div>
     <div title="{{ item.name }}" class="two-margin journal-text"></div>
     {% for journal in item.data %}
+      <p>{{ journal }}</p>
       <div class="two-margin journal-title-text">{{ journal.title }}</div>
       <div class="two-margin journal-text">
         {{ journal.content|e }}
