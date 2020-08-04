@@ -103,7 +103,7 @@
               $(val).find('.subpage').append(
                 `<div style="position: absolute; bottom: 0;" class="page-number"> ${i} </div>`
               );
-              $(val).find('.subpage').append(
+              $(val).append(
                 '<div class="watermark"><p>PREVIEW</p></div>'
               );
             }
@@ -200,13 +200,6 @@
   <div class="page"><div class="subpage"></div></div>
   <div id="book-content-aam">
     <h3 class="subtitle right-align-text">{{ item.name }}</h3>
-    {% for aam in item.data.aam %}
-      <div class="two-margin journal-title-text">{{ aam.title }}</div>
-      <div class="two-margin journal-text">{{ aam.entry_date }}</div>
-      <div class="two-margin journal-text">{{ aam.content|e }}</div>
-      <br/>
-      <br/>
-    {% endfor %}
   </div>
 {% endif %}
 

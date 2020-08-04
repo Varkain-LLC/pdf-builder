@@ -18,7 +18,7 @@ body {
 .watermark > p {
   position: absolute;
   top: 50rem;
-  font-size: 18rem;
+  font-size: 22rem;
   color: grey;
   transform: rotate(-35deg);
   opacity: 0.5; 
