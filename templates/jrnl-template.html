@@ -198,6 +198,11 @@
   <div class="page"><div class="subpage"></div></div>
   <div id="book-content-aam">
     <h3 class="subtitle right-align-text">{{ item.name }}</h3>
+  {% for entry in item.data.aam %}
+    <h3 class="subtitle right-align-text">{{ entry.entry_date }}</h3>
+    <div class="two-margin journal-title-text">{{ entry.title }}</div>
+    <div class="two-margin journal-text">{{ entry.content|e }}</div>
+  {% endfor %}
   </div>
 {% endif %}
 
