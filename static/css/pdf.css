@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  font: 12pt "Tahoma";
 }
 
 * {
@@ -17,7 +18,7 @@ body {
 .watermark > p {
   position: absolute;
   top: 50rem;
-  font-size: 22rem;
+  font-size: 18rem;
   color: grey;
   transform: rotate(-35deg);
   opacity: 0.5; 
@@ -84,6 +85,7 @@ section {
 
 .table-of-contents-body {
   font-size: 25px;
+  padding: 15px;
 }
 
 .table-of-contents {
