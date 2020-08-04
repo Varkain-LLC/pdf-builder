@@ -198,7 +198,7 @@
       {% for aam in page.aam %}
         <div class="two-margin journal-title-text">{{ aam.title }}</div>
         <div class="two-margin journal-text">{{ aam.entry_date }}</div>
-        <div class="two-margin journal-text">{{ aam.content|safe }}</div>
+        <div class="two-margin journal-text">{{ aam.content|e }}</div>
         <br/>
         <br/>
       {% endfor %}
@@ -227,7 +227,7 @@
         <h3 class="subtitle right-align-text">{{ entry.entry_date }}</div>
         <div class="two-margin journal-title-text">{{ entry.title }}</div>
         <div class="two-margin journal-text">
-          {{ entry.content|safe }}
+          {{ entry.content|e }}
         </div>
       {% endfor %}
     {% endfor %}
