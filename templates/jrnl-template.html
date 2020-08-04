@@ -228,7 +228,7 @@
       {% for entry in journal.entries %}
         <h3 class="subtitle right-align-text">{{ entry.entry_date }}</h3>
         <div class="two-margin journal-title-text">{{ entry.title }}</div>
-        <div class="two-margin journal-text">{{ entry.content|e }}</div>
+        <div class="two-margin journal-text">{{ entry.content|safe }}</div>
       {% endfor %}
     {% endfor %}
   </div>
