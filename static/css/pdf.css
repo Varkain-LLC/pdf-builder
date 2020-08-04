@@ -1,8 +1,6 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #FAFAFA;
-  font: 12pt "Tahoma";
 }
 
 * {
@@ -65,7 +63,7 @@ section {
 .document-title {
   font-size: 48px;
   text-align: center;
-  border-bottom: 2px solid #000000;
+  border-bottom: 1px solid #000000;
   padding-bottom: 30px;
   margin-left: 10%;
   margin-right: 10%;
@@ -80,7 +78,7 @@ section {
 .table-of-contents > h3 {
   font-size: 40px;
   margin: auto;
-  border-bottom: 2px solid #000000;
+  border-bottom: 1px solid #000000;
   position: relative;
 }
 
@@ -103,7 +101,7 @@ section {
 .end-line {
     margin-left: 10%;
     margin-right: 10%;
-    border-bottom: 2px solid #000000;
+    border-bottom: 1px solid #000000;
     margin-bottom: 20px;
 }
 
@@ -122,7 +120,7 @@ section {
 .subtitle {
     font-size: 20px;
     padding-bottom: 5px;
-    border-bottom: 2px solid #000;
+    border-bottom: 1px solid #000;
     margin: 40px;
 }
 
@@ -137,7 +135,7 @@ section {
 .aam-category-text { 
     font-size: 30px;
     font-weight: bold;
-    border-bottom: 2px solid #000;
+    border-bottom: 1px solid #000;
 }
 
 .two-margin {
@@ -149,7 +147,7 @@ section {
     margin-top: 20px;
     font-size: 20px;
     font-weight: bold;
-    border-bottom: 2px solid #000;
+    border-bottom: 1px solid #000;
     margin-bottom: 20px;
 }
 
@@ -177,7 +175,7 @@ section {
     right: 0;
 }
 
-.footer .page-number{ 
+.footer .page-number { 
     padding-bottom: 20px;
 }
 
@@ -194,10 +192,4 @@ section {
 
 .page:nth-child(2n+1) .page-number {
   right: 0;
-}
-
-.black-white-style img{ 
-     -webkit-filter: grayscale(100%);
-     /* Safari 6.0 - 9.0 */
-     filter: grayscale(100%);
 }
