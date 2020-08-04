@@ -54,6 +54,7 @@
   <template id="page_template">
     <div class="page">
       <div class="subpage"></div>
+      <div class="watermark"><p>PREVIEW</p></div>
     </div>
   </template>
   <script>
@@ -199,9 +200,11 @@
   <div id="book-content-aam">
     <h3 class="subtitle right-align-text">{{ item.name }}</h3>
   {% for entry in item.data.aam %}
-    <h3 class="subtitle right-align-text">{{ entry.entry_date }}</h3>
-    <div class="two-margin journal-title-text">{{ entry.title }}</div>
-    <div class="two-margin journal-text">{{ entry.content|e }}</div>
+    <div class="two-margin journal-title-text">{{ aam.title }}</div>
+    <div class="two-margin journal-text">{{ aam.entry_date }}</div>
+    <div class="two-margin journal-text" style="padding-bottom: 20cm;">
+      {{ aam.content|safe }}
+    </div>
   {% endfor %}
   </div>
 {% endif %}
