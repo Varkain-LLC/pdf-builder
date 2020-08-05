@@ -211,7 +211,11 @@
       <div class="two-margin journal-text">{{ entry.title }}</div>
       <div class="two-margin journal-text">{{ entry.entry_date }}</div>
       <div class="two-margin journal-text" style="padding-bottom: 20mm;">
-        {{ entry.content|safe }}
+        {% if json_obj.photos is true %}
+          {{ entry.content|safe }}
+        {% else %}
+          {{ entry.no_img_content|safe }}
+        {% endif %}
       </div>
     {% endfor %}
     </div>
@@ -239,7 +243,13 @@
         {% for entry in journal.entries %}
           <h3 class="subtitle right-align-text">{{ entry.entry_date }}</h3>
           <div class="two-margin journal-title-text">{{ entry.title }}</div>
-          <div class="two-margin journal-text">{{ entry.content|safe }}</div>
+          <div class="two-margin journal-text">
+            {% if json_obj.photos is true %}
+              {{ entry.content|safe }}
+            {% else %}
+              {{ entry.no_img_content|safe }}
+            {% endif %}
+          </div>
         {% endfor %}
       {% endfor %}
     </div>
