@@ -23,22 +23,32 @@
                     {
                         "content": "<p data-tag=\"input\" style=\"color:#000000;\">1</p>",
                         "entry_date": "Wednesday, June 10, 2020",
-                        "title": "What special experiences have you had through service to your community?1"
-                    },
-                    {
-                        "content": "<p data-tag=\"input\" style=\"color:#000000;\">yes. definitely. absolutely</p>",
-                        "entry_date": "Monday, June 22, 2020",
-                        "title": "Were you a good student?"
-                    },
-                    {
-                        "content": "<p>Purple sometimes. </p>",
-                        "entry_date": "Monday, June 22, 2020",
-                        "title": "What is your favorite color?"
+                        "title": "What special experiences have you had through service to your community?1",
+                        "group": "The World Around Me"
                     },
                     {
                         "content": "<p>Blue</p>",
                         "entry_date": "Wednesday, June 24, 2020",
-                        "title": "What is your favorite color?"
+                        "title": "What is your favorite color?",
+                        "group": "The World Around Me"
+                    },
+                    {
+                        "content": "<p data-tag=\"input\" style=\"color:#000000;\">yes. definitely. absolutely</p>",
+                        "entry_date": "Monday, June 22, 2020",
+                        "title": "Were you a good student?",
+                        "group": "Education"
+                    },
+                    {
+                        "content": "<p>Purple sometimes. </p>",
+                        "entry_date": "Monday, June 22, 2020",
+                        "title": "What is your favorite color?",
+                        "group": "General"
+                    },
+                    {
+                        "content": "<p>Blue</p>",
+                        "entry_date": "Wednesday, June 24, 2020",
+                        "title": "What is your favorite color?",
+                        "group": "General"
                     }
                 ],
                 "comments": []
