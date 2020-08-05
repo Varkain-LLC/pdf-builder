@@ -61,9 +61,9 @@
       var content_height = $('.subpage').height();	// the height of the content, discluding the header/footer
       var page = 1; // the beginning page number to show in the footer
       // console.log(content_height);
-      function buildPages(name){
-        var targetId = "#book-content-" + name,
-            targetElement = $(targetId);
+      function buildPages(targetEl){
+        var targetId = $(targetEl).attr("id"),
+            targetElement = $(targetEl);
         if(targetElement.contents().length > 0){
             // when we need to add a new page, use a jq object for a template
             // or use a long HTML string, whatever your preference
@@ -72,19 +72,24 @@
 
             // fun stuff, like adding page numbers to the footer
             $page.find(".footer .page-number").append(page);
-            $("body").append($page);
+            $(targetEl).parent().append($page);
+            page++;
+
+            // fun stuff, like adding page numbers to the footer
+            $page.find(".footer .page-number").append(page);
+            targetElement.parent().append($page);
             page++;
 
             // here is the columnizer magic
             targetElement.columnize({
               columns: 1,
               keepHtml: true,
-              target: ".page:last .subpage",
+              target: "#" + $(targetEl).parent().attr("id") + " .page:last .subpage",
               overflow: {
                 height: content_height,
-                id: targetId,
+                id: '#' + targetId,
                 doneFunc: function(e){
-                    console.log("done with page", targetElement.children().first().attr('title'));
+                    console.log("done with page", targetId);
 
                     const title = targetElement.children().first().attr('title');
                     if (title) {
@@ -93,32 +98,30 @@
                             ${title}
                         </h3>`));
                     }
-                    buildPages(name);
+                    buildPages($(targetEl));
                   }
               }
             });
         } else {
           $.each($('.page'), function(i, val) {
             if (i > 0) {
-              $(val).find('.subpage').append(
-                `<div style="position: absolute; bottom: 0;" class="page-number"> ${i} </div>`
+              $(val).find('.subpage').append(`
+                <div style="position: absolute; bottom: 0;" class="page-number"> 
+                  ${i} 
+                </div>
+                <div class="watermark">
+                  PREVIEW
+                </div>`
               );
-              // $(val).append('<div class="watermark"><p>PREVIEW</p></div>');
+              // $(val).append('<div class="watermark">PREVIEW</div>');
             }
           });
-          /*
-          const elements = $('.page');
-          elements.forEach(obj => {
-            obj.find('.subpage').append(`<div class="footer two-margin">
-              <div class="page-number">Page ${12}</div>
-            </div>`);
-          });
-          */
         }
       }
-      buildPages('intro');
-      buildPages('aam');
-      buildPages('journals');
+      
+      $.each($('.contentarea'), function(i, val) {
+        buildPages($(val));
+      });
     });
   </script>
 </head>
@@ -136,11 +139,11 @@
         {{ json_obj.document_date }}
       {% endif %}
       </p>
-      <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center"/>
+      <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center logo-img"/>
     </div>
   </div>
 </div>
-<div class="page"><div class="subpage"></div></div>
+<div class="page"></div>
 
 <div class="page">
   <div class="subpage">
@@ -163,77 +166,83 @@
         {% endif %}
         <div class="end-line"></div>
     </div>
-    <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center"/>
+    <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center logo-img"/>
   </div>
 </div>
-<div class="page"><div class="subpage"></div></div>
+<div class="page"></div>
 
 {% if json_obj.table_of_contents.intro %}
   {% set item = json_obj.table_of_contents.intro %}
-  <div class="page">
-    <div class="subpage">
-      <div class="vertical-align-center">
-          <h3 class="table-content-title">{{ item.name }}</h3>
-          <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center"/>
+  <div id='intro'>
+    <div class="page">
+      <div class="subpage">
+        <div class="vertical-align-center">
+            <h3 class="table-content-title">{{ item.name }}</h3>
+            <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center logo-img"/>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="page"><div class="subpage"></div></div>
-  <div id="book-content-intro">
-    <h3 class="subtitle right-align-text">{{ item.name }}</h3>
-    <div class="two-margin journal-text">{{ item.data }}</div>
+    <div class="page"></div>
+    <div id="book-content-intro" class="contentarea">
+      <h3 class="subtitle right-align-text">{{ item.name }}</h3>
+      <div class="two-margin journal-text">{{ item.data }}</div>
+    </div>
   </div>
 {% endif %}
 
 {% if json_obj.table_of_contents.aam %}
   {% set item = json_obj.table_of_contents.aam %}
-  <div class="page">
-    <div class="subpage">
-      <div class="vertical-align-center">
-          <h3 class="table-content-title">{{ item.name }}</h3>
-          <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center"/>
+  <div id='aam'>
+    <div class="page">
+      <div class="subpage">
+        <div class="vertical-align-center">
+            <h3 class="table-content-title">{{ item.name }}</h3>
+            <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center logo-img"/>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="page"><div class="subpage"></div></div>
-  <div id="book-content-aam">
-    <h3 class="subtitle right-align-text">{{ item.name }}</h3>
-  {% for entry in item.data.aam %}
-    {% if loop.first or loop.previtem.group != entry.group %}
-      <div class="two-margin journal-title-text">{{ entry.group }}</div>
-    {% endif %}
-    <div class="two-margin journal-text">{{ entry.title }}</div>
-    <div class="two-margin journal-text">{{ entry.entry_date }}</div>
-    <div class="two-margin journal-text" style="padding-bottom: 20mm;">
-      {{ entry.content|safe }}
+    <div class="page"></div>
+    <div id="book-content-aam" class="contentarea">
+      <h3 class="subtitle right-align-text">{{ item.name }}</h3>
+    {% for entry in item.data.aam %}
+      {% if loop.first or loop.previtem.group != entry.group %}
+        <div class="two-margin journal-title-text">{{ entry.group }}</div>
+      {% endif %}
+      <div class="two-margin journal-text">{{ entry.title }}</div>
+      <div class="two-margin journal-text">{{ entry.entry_date }}</div>
+      <div class="two-margin journal-text" style="padding-bottom: 20mm;">
+        {{ entry.content|safe }}
+      </div>
+    {% endfor %}
     </div>
-  {% endfor %}
   </div>
 {% endif %}
 
 {% if json_obj.table_of_contents.journals %}
   {% set item = json_obj.table_of_contents.journals %}
-  <div class="page">
-    <div class="subpage">
-      <div class="vertical-align-center">
-          <h3 class="table-content-title">{{ item.name }}</h3>
-          <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center"/>
+  <div id='jorunals'>
+    <div class="page">
+      <div class="subpage">
+        <div class="vertical-align-center">
+            <h3 class="table-content-title">{{ item.name }}</h3>
+            <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center logo-img"/>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="page"><div class="subpage"></div></div>
-  <div id="book-content-journals">
-    {% for journal in item.data %}
-      <div class="two-margin journal-title-text">{{ journal.title }}</div>
-      <div class="two-margin journal-text">
-        {{ journal.content|safe }}
-      </div>
-      {% for entry in journal.entries %}
-        <h3 class="subtitle right-align-text">{{ entry.entry_date }}</h3>
-        <div class="two-margin journal-title-text">{{ entry.title }}</div>
-        <div class="two-margin journal-text">{{ entry.content|safe }}</div>
+    <div class="page"></div>
+    <div id="book-content-journals" class="contentarea">
+      {% for journal in item.data %}
+        <div class="two-margin journal-title-text">{{ journal.title }}</div>
+        <div class="two-margin journal-text">
+          {{ journal.content|safe }}
+        </div>
+        {% for entry in journal.entries %}
+          <h3 class="subtitle right-align-text">{{ entry.entry_date }}</h3>
+          <div class="two-margin journal-title-text">{{ entry.title }}</div>
+          <div class="two-margin journal-text">{{ entry.content|safe }}</div>
+        {% endfor %}
       {% endfor %}
-    {% endfor %}
+    </div>
   </div>
 {% endif %}
 </body>
