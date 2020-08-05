@@ -10,17 +10,12 @@ body {
 }
 
 .watermark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.watermark > p {
   position: absolute;
-  top: 50rem;
-  font-size: 22rem;
+  top: 50%;
+  left: 50%;
+  font-size: 4cm;
   color: grey;
-  transform: rotate(-35deg);
+  transform: translateX(-50%) translateY(-50%) rotate(-35deg);
   opacity: 0.5; 
 }
 
@@ -81,10 +76,14 @@ section {
   margin: auto;
   border-bottom: 1px solid #000000;
   position: relative;
+  margin-top: 3cm;
+  margin-left: 3cm;
+  margin-right: 3cm;
+  padding-bottom: 1cm;
 }
 
 .table-of-contents-body {
-  font-size: 25px;
+  font-size: 20px;
   padding: 15px;
 }
 
@@ -101,8 +100,8 @@ section {
 }
 
 .end-line {
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 3cm;
+    margin-right: 3cm;
     border-bottom: 1px solid #000000;
     margin-bottom: 20px;
 }
@@ -194,4 +193,14 @@ section {
 
 .page:nth-child(2n+1) .page-number {
   right: 0;
+}
+
+.logo-img {
+    width: 3cm;
+    height: 3cm;
+}
+
+.subpage img {
+    max-width: 100%;
+    max-height: 100%;
 }
