@@ -57,3 +57,8 @@ python converter.py /absolute-path-to/assets/book.json jrnl /absolute-path-to/te
 [MIT](https://choosealicense.com/licenses/mit/)
 
 ###### Authors and acknowledgment: Special thanks to `https://github.com/maxvst` for `python-selenium-chrome-html-to-pdf-converter` repository
+
+
+chrome -disk-cache-dir=/tmp --user-data-dir=/tmp --crash-dumps-dir=/tmp --disable-dev-shm-usage --disable-gpu --headless --print-to-pdf=/Users/phoenix/Documents/Projects/jrnl/PDF-builder/static/demo/test-pdf.pdf /Users/phoenix/Documents/Projects/jrnl/PDF-builder/static/demo/index.html
+
+python converter.py /Users/phoenix/Documents/Projects/jrnl/PDF-builder/assets/test2.json jrnl /Users/phoenix/Downloads/test.pdf

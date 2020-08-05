@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arvo">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Khula">
 <link href="./../css/pdf.css" rel="stylesheet" />
 <style>
     .page {
@@ -44,17 +46,19 @@
 <script type="text/javascript" src="./../vendors/jquery.js"></script>
 <script src="./../vendors/autocolumn.min.js" type="text/javascript" charset="utf-8"></script>
 
-<template id="page_template">
-  <div class="page">
-    <div class="subpage"></div>
-  </div>
-</template>
-<script>
+ <template id="page_template">
+    <div class="page">
+      <div class="subpage">      
+        
+      </div>
+    </div>
+  </template>
+  <script>
   $(function(){
-      var content_height = $('.subpage').height();	// the height of the content, discluding the header/footer
+      var content_height = $('.subpage').height() - 20;	// the height of the content, discluding the header/footer
       var page = 1; // the beginning page number to show in the footer
       // console.log(content_height);
-      function buildNewsletter(targetEl){
+      function buildPages(targetEl){
         var targetId = $(targetEl).attr("id"),
             targetElement = $(targetEl);
         if(targetElement.contents().length > 0){
@@ -68,16 +72,23 @@
             $(targetEl).parent().append($page);
             page++;
 
+            // fun stuff, like adding page numbers to the footer
+            $page.find(".footer .page-number").append(page);
+            targetElement.parent().append($page);
+            page++;
+
+            const targetSelector = "#" + $(targetEl).parent().attr("id") + " .page:last .subpage";
+
             // here is the columnizer magic
             targetElement.columnize({
               columns: 1,
               keepHtml: true,
-              target: "#" + $(targetEl).parent().attr("id") + " .page:last .subpage",
+              target: targetSelector,
+              ignoreImageLoading: false,
               overflow: {
                 height: content_height,
                 id: '#' + targetId,
                 doneFunc: function(e){
-                    console.log("done with page", targetElement.children().first().attr('title'));
 
                     const title = targetElement.children().first().attr('title');
                     if (title) {
@@ -86,206 +97,251 @@
                             ${title}
                         </h3>`));
                     }
-                    buildNewsletter($(targetEl));
+
+                    $(targetSelector).append(`
+                      <div class="watermark">PREVIEW</div>
+                    `);
+                    buildPages($(targetEl));
                   }
               }
             });
         } else {
           $.each($('.page'), function(i, val) {
-            if (i>0) {
+            if (i > 0) {
               $(val).find('.subpage').append(`
                 <div style="position: absolute; bottom: 0;" class="page-number"> 
                   ${i} 
-                </div>  
-                <div class="watermark">
-                  Preview
                 </div>`
               );
+              // $(val).append('<div class="watermark">PREVIEW</div>');
             }
           });
-          /*
-          const elements = $('.page');
-          elements.forEach(obj => {
-            obj.find('.subpage').append(`<div class="footer two-margin">
-              <div class="page-number">Page ${12}</div>
-            </div>`);
-          });
-          */
         }
       }
+      
+      $(document).ready(() => { 
+       
 
-      $.each($('.contentarea'), function(i, val) {
-        buildNewsletter($(val));
+        const count = $("img").length;
+        let  loadedCount = 0;
+        
+        $("img").load(() => {
+          console.log('image loaded');
+          loadedCount ++;
+          if (loadedCount === count) {
+            $.each($('.contentarea'), function(i, val) {
+              buildPages($(val));
+            });
+          }
+        })
       });
+      
     });
   </script>
 </head>
 <body>
 <div class="page">
-	<div class="subpage">
-		<div class='content' style="position: relative; top: 50%; transform: translateY(-50%);">
-			<h5 class="document-title" style='color: #f00;'>
-			test
-			</h5>
-			<p class="document-date" style='color: #f00;'>
-			March 11, 2020 - May 20, 2020
-			</p>
-			<img src="./../images/timeline-images/logo.png" alt="logo" class="center logo-img" />
-		</div>
-        <div class="watermark">
-          Preview
-        </div>
-	</div>
+  <div class="subpage">
+    <div class='content' style="position: relative; top: 50%; transform: translateY(-50%);">
+      <h5 class="document-title">
+        My JRNL cover
+      </h5>
+      <p class="document-date">
+      
+        custom subtitle
+      
+      </p>
+      <img src="../images/timeline-images/logo.png" alt="logo" class="center logo-img"/>
+    </div>
+  </div>
 </div>
+<div class="page"></div>
 
 <div class="page">
+  <div class="subpage">
+    <div class="table-of-contents">
+      <h3>Table of Contents</h3>
+        
+          
+          <div class="table-of-contents-body">
+            Introduction </br>
+            1
+          </div>        
+        
+          
+          <div class="table-of-contents-body">
+            All About Me </br>
+            2
+          </div>
+        
+        <div class="end-line"></div>
+    </div>
+    <img src="../images/timeline-images/logo.png" alt="logo" class="center logo-img"/>
+  </div>
 </div>
-<div class="page">
-	<div class="subpage">
-		<div class="table-of-contents">
-			<h3>Table of Contents</h3>
-            <div class="table-of-contents-body" style='color: #f00;'>
-                Journal <br />
-                1
-            </div>
-            <div class="table-of-contents-body" style='color: #f00;'>
-                AAM <br />
-                1
-            </div>
-        </div>
-		<div class="end-line"> </div>
-		<img src="../images/timeline-images/logo.png" alt="logo" class="center logo-img" />
-        <div class="watermark">
-          Preview
-        </div>
-	</div>
-</div>
+<div class="page"></div>
 
-<div class="page">
-	<div class="subpage">
-		<div class="vertical-align-center">
+
+  
+  <div id='intro'>
+    <div class="page">
+      <div class="subpage">
+        <div class="vertical-align-center">
             <h3 class="table-content-title">Introduction</h3>
-            <img src="../images/timeline-images/logo.png" alt="logo" class="center logo-img" />
+            <div class='logo-img-container'>
+              <div class='line left-3-margin'></div>
+              <img src="../images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
+              <div class='line right-3-margin'></div>
+            </div>
         </div>
-        <div class="watermark">
-          Preview
-        </div>
-	</div>
-</div>
+      </div>
+    </div>
+    <div class="page"></div>
+    <div id="book-content-intro" class="contentarea">
+      <h3 class="subtitle right-align-text">Introduction</h3>
+      <div class="two-margin journal-text">custom intro page</div>
+    </div>
+  </div>
 
-<div class="page">
-	<div class="subpage" style="position: relative;">
-		<h3 class="subtitle right-align-text">
-				Wednesday, May 13, 2020
-		</h3>
-        <div class="watermark">
-          Preview
+
+
+  
+  <div id='aam'>
+    <div class="page">
+      <div class="subpage">
+        <div class="vertical-align-center">
+            <h3 class="table-content-title">All About Me</h3>
+            <div class='logo-img-container'>
+              <div class='line left-3-margin'></div>
+              <img src="../images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
+              <div class='line right-3-margin'></div>
+            </div>
         </div>
-	</div>
-</div>
-<div id='aam'>
-  <div class="page">
-    <div class="subpage">
-      <div class="vertical-align-center">
-          <h3 class="table-content-title">AAM Journal</h3>
-          <img src="../images/timeline-images/logo.png" alt="logo" class="center logo-img" />
-      </div>
-      <div class="watermark">
-        Preview
       </div>
     </div>
-  </div>
-  <div id="aam-content" class='contentarea'>
-    <h3 class="subtitle right-align-text">
-        AAM Journal
-    </h3>
-    <div class="two-margin aam-category-text">The World Around Me</div>
-    <div class="two-margin aam-question-text">What special experiences have you had through service to
-your community?1</div>
-    <div class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div>    
-  </div>
-</div>
-<div id='journal'>
-  <div class="page">
-    <div class="subpage">
-      <div class="vertical-align-center">
-          <h3 class="table-content-title">Journal</h3>
-          <img src="../images/timeline-images/logo.png" alt="logo" class="center logo-img" />
+    <div class="page"></div>
+    <div id="book-content-aam" class="contentarea">
+      <h3 class="subtitle right-align-text">All About Me</h3>
+    
+      
+        <span class="two-margin aam-category-text">The World Around Me</span>
+      
+      <div class="two-margin journal-text aam-question-text">What special experiences have you had through service to your community?1</div>
+      <div class="two-margin journal-text">Wednesday, June 10, 2020</div>
+      <div class="two-margin journal-text" style="padding-bottom: 20mm;">
+        <p data-tag="input" style="color:#000000;">1</p>
       </div>
-      <div class="watermark">
-          Preview
+    
+      
+      <div class="two-margin journal-text">What is your favorite color?</div>
+      <div class="two-margin journal-text">Wednesday, June 24, 2020</div>
+      <div class="two-margin journal-text" style="padding-bottom: 20mm;">
+        <p>Blue</p>
+      </div>
+    
+      
+        <div class="two-margin journal-title-text">Education</div>
+      
+      <div class="two-margin journal-text">Were you a good student?</div>
+      <div class="two-margin journal-text">Monday, June 22, 2020</div>
+      <div class="two-margin journal-text" style="padding-bottom: 20mm;">
+        <p data-tag="input" style="color:#000000;">yes. definitely. absolutely</p>
+      </div>
+    
+      
+        <div class="two-margin journal-title-text">General</div>
+      
+      <div class="two-margin journal-text">What is your favorite color?</div>
+      <div class="two-margin journal-text">Monday, June 22, 2020</div>
+      <div class="two-margin journal-text" style="padding-bottom: 20mm;">
+        <p>Purple sometimes. </p>
+      </div>
+    
+      
+      <div class="two-margin journal-text">What is your favorite color?</div>
+      <div class="two-margin journal-text">Wednesday, June 24, 2020</div>
+      <div class="two-margin journal-text" style="padding-bottom: 20mm;">
+        <p>Blue</p>
+      </div>
+    
+    </div>
+  </div>
+
+
+
+  
+  <div id='jorunals'>
+    <div class="page">
+      <div class="subpage">
+        <div class="vertical-align-center">
+            <h3 class="table-content-title">Journals</h3>
+            <img src="../images/timeline-images/logo.png" alt="logo" class="center logo-img"/>
         </div>
+      </div>
+    </div>
+    <div class="page"></div>
+    <div id="book-content-journals" class="contentarea">
+      
+        <div title="Friday, May 22, 2020" class="two-margin journal-title-text">Daniela</div>
+        <div class="two-margin journal-text">
+          
+        </div>
+        
+          <h3 class="subtitle right-align-text">Friday, May 22, 2020</h3>
+          <div class="two-margin journal-title-text"></div>
+          <div class="two-margin journal-text"><p data-tag="input" style="color:#000000;"><u>qwe</u></p></div>
+        
+          <h3 class="subtitle right-align-text">Friday, May 22, 2020</h3>
+          <div class="two-margin journal-title-text"></div>
+          <div class="two-margin journal-text"><p data-tag="input" style="color:#000000;"><u>Entry</u></p></div>
+        
+          <h3 class="subtitle right-align-text">Friday, May 22, 2020</h3>
+          <div class="two-margin journal-title-text"></div>
+          <div class="two-margin journal-text"><p data-tag="input" style="color:#000000;">Entry1</p></div>
+        
+          <h3 class="subtitle right-align-text">Wednesday, May 27, 2020</h3>
+          <div class="two-margin journal-title-text">MT</div>
+          <div class="two-margin journal-text"><p data-tag="input" style="color:#000000;">Entry123</p></div>
+        
+          <h3 class="subtitle right-align-text">Wednesday, May 27, 2020</h3>
+          <div class="two-margin journal-title-text">MT</div>
+          <div class="two-margin journal-text"><p data-tag="input" style="color: #000000">Entry123</p></div>
+        
+          <h3 class="subtitle right-align-text">Thursday, May 28, 2020</h3>
+          <div class="two-margin journal-title-text"></div>
+          <div class="two-margin journal-text"><p data-tag="input" style="color:#000000;">qqqqq</p><p data-tag="input" style="color:#000000;">qqqqq</p><p data-tag="input" style="color:#000000;"><u>qqqqq</u></p></div>
+        
+          <h3 class="subtitle right-align-text">Thursday, May 28, 2020</h3>
+          <div class="two-margin journal-title-text"></div>
+          <div class="two-margin journal-text"><p data-tag="input" style="color:#000000;"><u>was a we </u><u><u>awe</u></u></p></div>
+        
+          <h3 class="subtitle right-align-text">Friday, May 29, 2020</h3>
+          <div class="two-margin journal-title-text"></div>
+          <div class="two-margin journal-text"><p data-tag="input" style="color:#000000;">1</p></div>
+        
+          <h3 class="subtitle right-align-text">Friday, May 29, 2020</h3>
+          <div class="two-margin journal-title-text"></div>
+          <div class="two-margin journal-text dontsplit">
+            <div data-tag="img"><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/10/2020/05/29/img1590747450868_299c0822-f5b2-46cf-aa2a-ef9bed447625" style=" " />
+            <p data-tag="img-sub" style="color:#5E5E5E;" class="editor-image-subtitle"></p></div><p data-tag="input" style="color:#000000;">dack returns</p>
+          </div>
+        
+          <h3 class="subtitle right-align-text">Tuesday, June 16, 2020</h3>
+          <div class="two-margin journal-title-text">123123123</div>
+          <div class="two-margin journal-text"><p class="align-left">12312</p></div>
+        
+          <h3 class="subtitle right-align-text">Wednesday, June 17, 2020</h3>
+          <div class="two-margin journal-title-text">Test autosave</div>
+          <div class="two-margin journal-text"><p>Dddddd dfdfdfdrf j sdf jsjivsdjkvjksdjvksdv is Melvin kJ sdf </p></div>
+        
+          <h3 class="subtitle right-align-text">Monday, June 29, 2020</h3>
+          <div class="two-margin journal-title-text">Word counter</div>
+          <div class="two-margin journal-text"><p class="align-left"><span style="font-family: Roboto">bcbcbc</span></p></div>
+        
+      
     </div>
   </div>
-  <div id="journal-content" class='contentarea'>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
-        Wednesday, May 13, 2020
-    </h3>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
-        Wednesday, May 13, 2020
-    </h3>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
-        Wednesday, May 13, 2020
-    </h3>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
-        Wednesday, May 13, 2020
-    </h3>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
-        Wednesday, May 13, 2020
-    </h3>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
-        Wednesday, May 13, 2020
-    </h3>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-title-text">The World Around Me</div>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdf</div><h3 class="subtitle right-align-text">
-        Wednesday, May 13, 2020
-    </h3>
-    <div title=' Wednesday, May 13, 2020' class="two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslk
-    fjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdf
-    asdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsd
-    fsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfas
-    <img src='../images/timeline-images/logo.png' style="width: 100%;"/>
-    dfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfa
-    sdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfas
-    dfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsd
-    fsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdsl
-    kfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfja
-    sdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfds
-    <img src='../images/timeline-images/logo.png' style="width: 100%;"/>
-    lkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsd
-    fsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfas
-    dfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslk
-    <img src='../images/timeline-images/logo.png' style="width: 100%;"/>
-    fjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdf
-    sdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfja
-    </div>
-    <div title=' Wednesday, May 13, 2020' class="black-white-style two-margin journal-text">sdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslk
-    fjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdf
-    asdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsd
-    fsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfas
-    <img src='../images/timeline-images/logo.png' style="width: 100%;"/>
-    dfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfa
-    sdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfas
-    dfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsd
-    fsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdsl
-    kfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfja
-    sdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfds
-    <img src='../images/main-bg.png' style="max-width: 100%; max-height: 100%;"/>
-    lkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsd
-    fsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfas
-    dfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslk
-    <img src='../images/timeline-images/logo.png' style="width: 100%;"/>
-    fjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdf
-    sdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfjasdfasdfasdfsdfsdfdslkfja
-    </div>
+  <div class='image-check'>
   </div>
-</div>
-</body>
 </body>
 </html>
