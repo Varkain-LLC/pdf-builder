@@ -57,7 +57,7 @@ section {
 }
 
 .document-title {
-  font-size: 48px;
+  font-size: 7vw;
   text-align: center;
   border-bottom: 1px solid #000000;
   padding-bottom: 30px;
@@ -65,6 +65,8 @@ section {
   margin-right: 10%;
   margin-bottom: 30px;
   font-family: 'Arvo';
+  margin-block-start: 0;
+  margin-block-end: 0;
 }
 
 .document-date {
@@ -73,19 +75,19 @@ section {
 }
 
 .table-of-contents > h3 {
-  font-size: 40px;
+  font-size: 5.5vw;
   margin: auto;
   border-bottom: 1px solid #000000;
   position: relative;
   margin-top: 3cm;
-  margin-left: 3cm;
-  margin-right: 3cm;
+  margin-left: 10%;
+  margin-right: 10%;
   font-family: "Arvo";
   margin-bottom: 1cm;
 }
 
 .table-of-contents-body {
-  font-size: 20px;
+  font-size: 2.5vw;
   padding: 15px;
   font-family: "Khula";
 }
@@ -103,15 +105,15 @@ section {
 }
 
 .end-line {
-    margin-left: 3cm;
-    margin-right: 3cm;
+    margin-left: 10%;
+    margin-right: 10%;
     border-bottom: 1px solid #000000;
     margin-bottom: 20px;
     margin-top: 2cm;
 }
 
 .table-content-title {
-    font-size: 40px;
+    font-size: 4.5vw;
     margin-bottom: 40px;    
     text-align: center;     
     font-family: "Arvo";   
@@ -126,7 +128,7 @@ section {
 }
 
 .subtitle {
-    font-size: 20px;
+    font-size: 2.5vw;
     padding-bottom: 5px;
     border-bottom: 1px solid #000;
     margin: 40px;
@@ -142,7 +144,7 @@ section {
 }
 
 .aam-category-text { 
-    font-size: 30px;
+    font-size: 3vw;
     font-weight: bold;
     border-bottom: 1px solid #000;
     font-family: 'Arvo';
@@ -155,7 +157,7 @@ section {
 
 .aam-question-text {
     margin-top: 20px;
-    font-size: 25px;
+    font-size: 2vw;
     font-weight: bold;
     border-bottom: 1px solid #000;
     margin-bottom: 20px;
@@ -164,7 +166,7 @@ section {
 
 .journal-title-text {
     margin-top: 20px;
-    font-size: 20px;
+    font-size: 2vw;
     font-weight: bold;
     margin-bottom: 20px;
 }
