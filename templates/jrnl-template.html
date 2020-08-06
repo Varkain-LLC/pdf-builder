@@ -49,6 +49,11 @@
         filter: grayscale(100%);
     }
   {% endif %}
+  {% if json_obj.preview is true %}
+    .watermark {
+      opacity: 0.1;
+    }
+  {% endif %}
   </style>
   <script type="text/javascript" src="{{ static_url }}vendors/jquery.js"></script>
   <script src="{{ static_url }}vendors/autocolumn.min.js" type="text/javascript" charset="utf-8"></script>
@@ -196,7 +201,7 @@
     <div class="watermark">PREVIEW</div>
   </div>
 </div>
-<div class="page"><div class="subpage"></div></div>
+<div class="page"><div class="subpage"><div class="watermark">PREVIEW</div></div></div>
 
 {% if json_obj.table_of_contents.intro %}
   {% set item = json_obj.table_of_contents.intro %}
@@ -246,7 +251,9 @@
         <span class="two-margin aam-category-text">{{ entry.group }}</span>
       {% endif %}
       <div class="two-margin aam-question-text">{{ entry.title }}</div>
-      <div class="two-margin journal-text">{{ entry.entry_date }}</div>
+      <div class="two-margin journal-text" style="font-style: italic;">
+        {{ entry.entry_date }}
+      </div>
       <div class="two-margin journal-text" style="padding-bottom: 20mm;">
         {% if json_obj.photos is true %}
           {{ entry.content|safe }}
@@ -285,7 +292,13 @@
       {% for entry in journal.entries %}
         <h3 class="subtitle right-align-text">{{ entry.entry_date }}</h3>
         <div title="{{entry.entry_date}}" class="two-margin journal-title-text">{{ entry.title }}</div>
-        <div title="{{entry.entry_date}}" class="two-margin journal-text">{{ entry.content|safe }}</div>
+        <div title="{{entry.entry_date}}" class="two-margin journal-text">
+        {% if json_obj.photos is true %}
+          {{ entry.content|safe }}
+        {% else %}
+          {{ entry.no_img_content|safe }}
+        {% endif %}
+        </div>
       {% endfor %}
     {% endfor %}
   </div>
