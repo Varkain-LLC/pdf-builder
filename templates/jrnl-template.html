@@ -62,8 +62,10 @@
   $(function(){
       var content_height = $('.subpage').height() - 20;	// the height of the content, discluding the header/footer
       var page = 1; // the beginning page number to show in the footer
+      var pageContentIndex = 0;
+      var pageContents = ['intro', 'aam', 'journals'];
       // console.log(content_height);
-      function buildPages(name){
+      function buildPages(name, contentPageCount){
         var targetId = "#book-content-" + name,
             targetElement = $(targetId);
         if(targetElement.contents().length > 0){
@@ -77,6 +79,7 @@
             $(targetElement).parent().append($page);
             
             const targetSelector = `#${$(targetElement).parent().attr("id")} .page:last .subpage`;
+            contentPageCount ++;
             // here is the columnizer magic
             targetElement.columnize({
               columns: 1,
@@ -86,8 +89,6 @@
                 height: content_height,
                 id: targetId,
                 doneFunc: function(e){
-                    console.log("done with page", targetElement.children().first().attr('title'));
-
                     const title = targetElement.children().first().attr('title');
                     if (title) {
                         targetElement.prepend($(`
@@ -103,19 +104,22 @@
 
                     page ++;
 
-                    buildPages(name);
+                    buildPages(name, contentPageCount);
                   }
               }
             });
         } else {
-          /*
-          const elements = $('.page');
-          elements.forEach(obj => {
-            obj.find('.subpage').append(`<div class="footer two-margin">
-              <div class="page-number">Page ${12}</div>
-            </div>`);
-          });
-          */
+          console.log(contentPageCount);
+          if (contentPageCount % 2 === 1) {
+            _page = page_template.content.cloneNode(true);
+            $page = $(_page);
+            $(targetElement).parent().append($page);
+          }
+
+          pageContentIndex ++;
+          if (pageContentIndex < pageContents.length) {
+            buildPages(pageContents[pageContentIndex], 0);
+          }
         }
       }
 
@@ -126,9 +130,7 @@
         $("img").load(() => {
           loadedCount ++;
           if (loadedCount === count) {
-            buildPages('intro');
-            buildPages('aam');
-            buildPages('journals');
+            buildPages(pageContents[0], 0);
           }
         });
       });
