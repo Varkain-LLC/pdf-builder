@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arvo">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Khula">
+    <link href="./../css/pdf.css" rel="stylesheet" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #FAFAFA;
+        font: 12pt "Tahoma";
+      }
+
+      .page {
+        height: 100vh;
+        width: 100%;
+        position: relative;
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      @media print {
+        .page {
+          margin: 0;
+          border-radius: initial;
+          width: initial;
+          min-height: initial;
+          box-shadow: initial;
+          position: initial;
+        }
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="title-container">
+        <div style="width: 100%; display: flex; flex-direction: column;">
+          <div class='cover-title'> My JRNL cover </div>
+          <div class='cover-sub-title' style="color: rgb(66, 205, 217); margin: auto; margin-top: 4vh;"> Custom subtitle </div>
+        </div>
+      </div>
+      <div class="logo-container">
+        <img src="../images/timeline-images/logo.png" style="width: 6vw; height: 6vw;" />
+        <span style="font-size: 5vw; line-height: 1; padding-left: 10px;">JRNL</span>
+        <span>.com</span>
+      </div>
+    </div>
+    <div class="page" style="background-color: rgb(66, 205, 217);">
+      <div class="subpage" style="width: 100%; height: 100%; position: relative;" >
+        <div class="back-cover-container">
+          <div style="width: 100%; display: flex;">
+            <span class='back-cover'> cover</span>
+          </div>
+        </div>
+        <div class="back-logo-container">
+          <div>
+            <img src="../images/timeline-images/logo.png" style="width: 6vw; height: 6vw;" />
+            <span style="font-size: 5vw; line-height: 1; padding-left: 10px;">JRNL</span>
+            <span>.com</span>
+          </div>
+          <div style="padding-top: 1vw;">
+            life is recording
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
