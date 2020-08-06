@@ -69,6 +69,10 @@
         var targetId = "#book-content-" + name,
             targetElement = $(targetId);
         if(targetElement.contents().length > 0){
+            // add page number to table of contents
+            if (contentPageCount === 0) {
+              $(`#${name}-pagenumber`).text(page);
+            }
             // when we need to add a new page, use a jq object for a template
             // or use a long HTML string, whatever your preference
             _page = page_template.content.cloneNode(true);
@@ -109,7 +113,6 @@
               }
             });
         } else {
-          console.log(contentPageCount);
           if (contentPageCount % 2 === 1) {
             _page = page_template.content.cloneNode(true);
             $page = $(_page);
@@ -168,7 +171,7 @@
           <div class="table-of-contents-body">
             {{ item.name }}
             </br>
-            1
+            <span id='intro-pagenumber'>1</span>
         </div>
         {% endif %}
         {% if json_obj.table_of_contents.aam %}
@@ -176,7 +179,7 @@
           <div class="table-of-contents-body">
             {{ item.name }}
             </br>
-            2
+            <span id='aam-pagenumber'>2</span>
           </div>
         {% endif %}
         {% if json_obj.table_of_contents.journals %}
@@ -184,7 +187,7 @@
           <div class="table-of-contents-body">
             {{ item.name }}
             </br>
-            3
+            <span id='journals-pagenumber'>3</span>
           </div>
         {% endif %}
         <div class="end-line"></div>
@@ -245,7 +248,11 @@
       <div class="two-margin aam-question-text">{{ entry.title }}</div>
       <div class="two-margin journal-text">{{ entry.entry_date }}</div>
       <div class="two-margin journal-text" style="padding-bottom: 20mm;">
-        {{ entry.content|safe }}
+        {% if json_obj.photos is true %}
+          {{ entry.content|safe }}
+        {% else %}
+          {{ entry.no_img_content|safe }}
+        {% endif %}
       </div>
     {% endfor %}
     </div>
