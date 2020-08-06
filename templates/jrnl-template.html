@@ -91,7 +91,7 @@
               target: targetSelector,
               overflow: {
                 height: content_height,
-                id: '#' + targetId,
+                id: targetId,
                 doneFunc: function(e){
                     const title = targetElement.children().first().attr('title');
                     if (title) {
@@ -100,6 +100,7 @@
                             ${title}
                         </h3>`));
                     }
+
                     $(targetSelector).append(`
                       <div class="watermark">PREVIEW</div>
                       <div style="position: absolute; bottom: 0;" class="page-number"> ${page} </div>
@@ -136,6 +137,7 @@
           }
         });
       });
+     
     });
   </script>
 </head>
@@ -194,7 +196,7 @@
     <div class="watermark">PREVIEW</div>
   </div>
 </div>
-<div class="page"></div>
+<div class="page"><div class="subpage"></div></div>
 
 {% if json_obj.table_of_contents.intro %}
   {% set item = json_obj.table_of_contents.intro %}
@@ -285,7 +287,7 @@
         <div title="{{entry.entry_date}}" class="two-margin journal-title-text">{{ entry.title }}</div>
         <div title="{{entry.entry_date}}" class="two-margin journal-text">{{ entry.content|safe }}</div>
       {% endfor %}
-    </div>
+    {% endfor %}
   </div>
 </div>
 {% endif %}
