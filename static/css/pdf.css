@@ -244,3 +244,52 @@ section {
 .subpage{
     
 }
+
+
+.cover-title {
+  font-weight: bold;
+  font-size: 8vw;
+  border-bottom: 1px solid rgb(66, 205, 217);
+  padding: 2vw;
+  margin: auto;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color: rgb(20, 13, 108);
+}
+
+.title-container {
+  padding-top: 20vh;
+}
+
+.logo-container {
+  display: flex;
+  width: 100%;
+  position: absolute;
+  bottom: 10%;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.back-cover-container {
+  padding-top: 20vh;
+  padding-left: 10vw;
+}
+
+.back-cover {
+  color: #FFF;
+}
+
+.back-logo-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: absolute;
+  bottom: 10%;
+  color: #FFF;
+}
+
+.back-logo-container>div {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+}
