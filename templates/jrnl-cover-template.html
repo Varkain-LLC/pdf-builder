@@ -4,7 +4,8 @@
   <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arvo">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Khula">
-    <link href="./../css/pdf.css" rel="stylesheet" />
+    <link href="{{ static_url }}css/pdf.css" rel="stylesheet"/>
+
     <style>
       body {
         margin: 0;
@@ -15,20 +16,29 @@
 
       .page {
         height: 100vh;
+        min-height: 100vh;
         width: 100%;
         position: relative;
       }
 
-      @page {
-        size: A4;
-        margin: 0;
-      }
-
+    </style>
+  {% if json_obj.export_format == '6X9' %}
+    <style>
       @page {
         size: 6in 9in;
         margin: 0;
       }
+    </style>
+  {% else %}
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+    </style>
+  {% endif %}
 
+    <style>
       @media print {
         .page {
           margin: 0;
@@ -39,19 +49,20 @@
           position: initial;
         }
       }
-
     </style>
   </head>
   <body>
     <div class="page">
       <div class="title-container">
         <div style="width: 100%; display: flex; flex-direction: column;">
-          <div class='cover-title'> My JRNL cover </div>
-          <div class='cover-sub-title' style="color: rgb(66, 205, 217); margin: auto; margin-top: 4vh;"> Custom subtitle </div>
+          <div class='cover-title'> {{ json_obj.document_title }} </div>
+          <div class='cover-sub-title' style="color: rgb(66, 205, 217); margin: auto; margin-top: 4vh;">
+            {{ json_obj.document_subtitle }}
+          </div>
         </div>
       </div>
       <div class="logo-container">
-        <img src="../images/timeline-images/jrnl-logo-simple-blue.png" class='logo-cover-image' />
+        <img class='logo-cover-image' src="{{ static_url }}images/timeline-images/jrnl-logo-simple-blue.png" />
         <span class='logo-title-JRNL'>JRNL</span>
         <span class='logo-title-COM'>.COM</span>
       </div>
@@ -60,12 +71,12 @@
       <div class="subpage" style="width: 100%; height: 100%; position: relative;" >
         <div class="back-cover-container">
           <div style="width: 100%; display: flex;">
-            <span class='back-cover'> cover</span>
+            <span class='back-cover'>{{ json_obj.document_back_cover }}</span>
           </div>
         </div>
         <div class="back-logo-container">
           <div>
-            <img src="../images/timeline-images/jrnl-logo-simple-white.png" class='logo-cover-image'/>
+            <img src="{{ static_url }}images/timeline-images/jrnl-logo-simple-white.png" class='logo-cover-image' />
             <span class='logo-title-JRNL' style='color: #FFF;'>JRNL</span>
             <span class='logo-title-COM' style='color: #FFF;'>.COM</span>
           </div>

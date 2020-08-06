@@ -62,3 +62,5 @@ python converter.py /absolute-path-to/assets/book.json jrnl /absolute-path-to/te
 chrome -disk-cache-dir=/tmp --user-data-dir=/tmp --crash-dumps-dir=/tmp --disable-dev-shm-usage --disable-gpu --headless --print-to-pdf=/Users/phoenix/Documents/Projects/jrnl/PDF-builder/static/demo/test-pdf.pdf /Users/phoenix/Documents/Projects/jrnl/PDF-builder/static/demo/index.html
 
 python converter.py /Users/phoenix/Documents/Projects/jrnl/PDF-builder/assets/test2.json jrnl /Users/phoenix/Downloads/test.pdf
+
+python converter.py /Users/phoenix/Documents/Projects/jrnl/PDF-builder/assets/jrnl-example.json jrnl-cover /Users/phoenix/Downloads/test-cover.pdf
