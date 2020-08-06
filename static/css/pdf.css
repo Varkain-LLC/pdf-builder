@@ -64,6 +64,7 @@ section {
   margin-left: 10%;
   margin-right: 10%;
   margin-bottom: 30px;
+  font-family: 'Arvo';
 }
 
 .document-date {
@@ -79,12 +80,14 @@ section {
   margin-top: 3cm;
   margin-left: 3cm;
   margin-right: 3cm;
-  padding-bottom: 1cm;
+  font-family: "Arvo";
+  margin-bottom: 1cm;
 }
 
 .table-of-contents-body {
   font-size: 20px;
   padding: 15px;
+  font-family: "Khula";
 }
 
 .table-of-contents {
@@ -104,18 +107,22 @@ section {
     margin-right: 3cm;
     border-bottom: 1px solid #000000;
     margin-bottom: 20px;
+    margin-top: 2cm;
 }
 
 .table-content-title {
     font-size: 40px;
     margin-bottom: 40px;    
-    text-align: center;        
+    text-align: center;     
+    font-family: "Arvo";   
 }
 
 .vertical-align-center {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
+    padding-bottom: 3cm;
+    z-index: 100;
 }
 
 .subtitle {
@@ -123,6 +130,7 @@ section {
     padding-bottom: 5px;
     border-bottom: 1px solid #000;
     margin: 40px;
+    font-family: 'Arvo';
 }
 
 .right-align-text { 
@@ -137,6 +145,7 @@ section {
     font-size: 30px;
     font-weight: bold;
     border-bottom: 1px solid #000;
+    font-family: 'Arvo';
 }
 
 .two-margin {
@@ -146,10 +155,11 @@ section {
 
 .aam-question-text {
     margin-top: 20px;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
     border-bottom: 1px solid #000;
     margin-bottom: 20px;
+    font-family: 'Arvo';
 }
 
 .journal-title-text {
@@ -196,11 +206,39 @@ section {
 }
 
 .logo-img {
-    width: 3cm;
-    height: 3cm;
+    width: 2cm;
+    height: 2cm;
+}
+.small-logo-img {
+    max-height: 1cm !important;
+    max-width: 1cm !important;
 }
 
 .subpage img {
     max-width: 100%;
     max-height: 100%;
+}
+
+.logo-img-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.line { 
+    width: 5cm;
+    border-bottom: 1px solid #000000;
+    transform: translateY(-50%);
+    flex: 1;
+}
+
+.left-3-margin { 
+    margin-left: 3cm;
+}
+
+.right-3-margin { 
+    margin-right: 3cm;
+}
+
+.subpage{
+    
 }
