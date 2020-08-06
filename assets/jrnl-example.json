@@ -5,6 +5,7 @@
     "version": 1,
     "photos": true,
     "color": true,
+    "export_format": "6X9",
     "preview": true,
     "spine": "My JRNL spine",
     "photo_page_count": -1,
