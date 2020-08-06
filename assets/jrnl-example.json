@@ -1,0 +1,127 @@
+{
+    "document_title": "My JRNL cover",
+    "journal_page_count": 6,
+    "all_about_me": "ALL",
+    "version": 1,
+    "photos": false,
+    "color": false,
+    "spine": "My JRNL spine",
+    "photo_page_count": -1,
+    "document_logo_src": "",
+    "all_about_me_full_page_count": 4,
+    "cover_pdf": "https://bookbuilder-books.s3.amazonaws.com/preview-dustjacket-1282_1_96e98b7b-feda-49ef-b54f-9ec14a26bd3d.pdf",
+    "document_back_cover": "back cover",
+    "document_cover_image": null,
+    "all_about_me_recent_page_count": -1,
+    "document_subtitle": "custom subtitle",
+    "introduction_page_count": 4,
+    "miscellaneous_page_count": 4,
+    "table_of_contents": {
+        "aam": {
+            "data": {
+                "aam": [
+                    {
+                        "content": "<p data-tag=\"input\" style=\"color:#000000;\">1</p>",
+                        "entry_date": "Wednesday, June 10, 2020",
+                        "title": "What special experiences have you had through service to your community?1",
+                        "group": "The World Around Me"
+                    },
+                    {
+                        "content": "<p>Blue</p>",
+                        "entry_date": "Wednesday, June 24, 2020",
+                        "title": "What is your favorite color?",
+                        "group": "The World Around Me"
+                    },
+                    {
+                        "content": "<p data-tag=\"input\" style=\"color:#000000;\">yes. definitely. absolutely</p>",
+                        "entry_date": "Monday, June 22, 2020",
+                        "title": "Were you a good student?",
+                        "group": "Education"
+                    },
+                    {
+                        "content": "<p>Purple sometimes. </p>",
+                        "entry_date": "Monday, June 22, 2020",
+                        "title": "What is your favorite color?",
+                        "group": "General"
+                    },
+                    {
+                        "content": "<p>Blue</p>",
+                        "entry_date": "Wednesday, June 24, 2020",
+                        "title": "What is your favorite color?",
+                        "group": "General"
+                    }
+                ],
+                "comments": []
+            },
+            "name": "All About Me"
+        },
+        "intro": {
+            "data": "custom intro page",
+            "name": "Introduction"
+        },
+        "journals": {
+            "data": [
+                {
+                    "content": "",
+                    "entries": [
+                        {
+                            "content": "<p data-tag=\"input\" style=\"color:#000000;\"><u>qwe</u></p>",
+                            "entry_date": "Friday, May 22, 2020",
+                            "title": ""
+                        },
+                        {
+                            "content": "<p data-tag=\"input\" style=\"color:#000000;\"><u>Entry</u></p>",
+                            "entry_date": "Friday, May 22, 2020",
+                            "title": ""},
+                        {
+                            "content": "<p data-tag=\"input\" style=\"color:#000000;\">Entry1</p>",
+                            "entry_date": "Friday, May 22, 2020",
+                            "title": ""},
+                        {
+                            "content": "<p data-tag=\"input\" style=\"color:#000000;\">Entry123</p>",
+                            "entry_date": "Wednesday, May 27, 2020",
+                            "title": "MT"},
+                        {
+                            "content": "<p data-tag=\"input\" style=\"color: #000000\">Entry123</p>",
+                            "entry_date": "Wednesday, May 27, 2020",
+                            "title": "MT"},
+                        {
+                            "content": "<p data-tag=\"input\" style=\"color:#000000;\">qqqqq</p><p data-tag=\"input\" style=\"color:#000000;\">qqqqq</p><p data-tag=\"input\" style=\"color:#000000;\"><u>qqqqq</u></p>",
+                            "entry_date": "Thursday, May 28, 2020",
+                            "title": ""},
+                        {
+                            "content": "<p data-tag=\"input\" style=\"color:#000000;\"><u>was a we </u><u><u>awe</u></u></p>",
+                            "entry_date": "Thursday, May 28, 2020",
+                            "title": ""},
+                        {
+                            "content": "<p data-tag=\"input\" style=\"color:#000000;\">1</p>",
+                            "entry_date": "Friday, May 29, 2020",
+                            "title": ""},
+                        {
+                            "content": "<div data-tag=\"img\"><img src=\"https://jrnl.s3.amazonaws.com/dev/entry_images/10/2020/05/29/img1590747450868_299c0822-f5b2-46cf-aa2a-ef9bed447625\" /><p data-tag=\"img-sub\" style=\"color:#5E5E5E;\" class=\"editor-image-subtitle\"></p></div><p data-tag=\"input\" style=\"color:#000000;\">dack returns</p>",
+                            "entry_date": "Friday, May 29, 2020",
+                            "title": ""},
+                        {
+                            "content": "<p class=\"align-left\">12312</p>",
+                            "entry_date": "Tuesday, June 16, 2020",
+                            "title": "123123123"},
+                        {
+                            "content": "<p>Dddddd dfdfdfdrf j sdf jsjivsdjkvjksdjvksdv is Melvin kJ sdf </p>",
+                            "entry_date": "Wednesday, June 17, 2020",
+                            "title": "Test autosave"},
+                        {
+                            "content": "<p class=\"align-left\"><span style=\"font-family: Roboto\">bcbcbc</span></p>",
+                            "entry_date": "Monday, June 29, 2020",
+                            "title": "Word counter"
+                        }
+                    ],
+                    "title": "Daniela"
+                }
+            ],
+            "name": "Journals"
+        }
+    },
+    "custom_introduction": "custom intro page",
+    "quantity": 1,
+    "document_date": "None - None"
+}
