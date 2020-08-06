@@ -1,2 +1,3 @@
 JRNL_TEMPLATE_ID = 'jrnl'
+JRNL_COVER_TEMPLATE_ID = 'jrnl-cover'
 FANBOOKS_TEMPLATE_ID = 'fanbooks'
