@@ -4,6 +4,46 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arvo">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Khula">
   <link href="{{ static_url }}css/pdf.css" rel="stylesheet"/>
+
+{% if json_obj.export_format == '6X9' %}
+  <style>
+    .page {
+      width: 6in;
+      height: 9in;
+      min-height: 9in;
+      padding: 0.2in;
+      margin: 0.1in auto;
+      background: white;
+      position: relative;
+    }
+
+    .subpage {
+      height: 8.6in;
+      min-height: 8.6in;
+      max-height: 8.6in;
+      position: relative;
+    }
+
+    @page {
+      size: 6in 9in;
+      margin: 0;
+    }
+
+    @media print {
+      .page {
+        margin: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+        position: initial;
+        page-break-after: always;
+      }
+    }
+  </style>
+{% else %}
   <style>
     .page {
       width: 210mm;
@@ -29,35 +69,7 @@
       size: A4;
       margin: 0;
     }
-  </style>
 
-{% if json_obj.export_format == '6X9' %}
-  <style>
-    .page {
-      width: 6in;
-      height: 9in;
-      min-height: 9in;
-      padding: 0.2in;
-      margin: 0.1in auto;
-      background: white;
-      position: relative;
-    }
-
-    .subpage {
-      height: 8.6in;
-      min-height: 8.6in;
-      max-height: 8.6in;
-      position: relative;
-    }
-
-    @page {
-      size: 6in 9in;
-      margin: 0;
-    }
-  </style>
-{% endif %}
-
-  <style>
     @media print {
       .page {
         margin: 0;
@@ -71,6 +83,7 @@
       }
     }
   </style>
+{% endif %}
 
 {% if json_obj.color is false %}
   <style>
