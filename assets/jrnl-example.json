@@ -67,57 +67,115 @@
                     "content": "",
                     "entries": [
                         {
+                            "id": "41989",
+                            "commenting": true,
                             "content": "<p data-tag=\"input\" style=\"color:#000000;\"><u>qwe</u></p>",
                             "entry_date": "Friday, May 22, 2020",
                             "title": ""
                         },
                         {
+                            "id": "16710",
+                            "commenting": true,
                             "content": "<p data-tag=\"input\" style=\"color:#000000;\"><u>Entry</u></p>",
                             "entry_date": "Friday, May 22, 2020",
                             "title": ""},
                         {
+                            "id": "42193",
+                            "commenting": true,
                             "content": "<p data-tag=\"input\" style=\"color:#000000;\">Entry1</p>",
                             "entry_date": "Friday, May 22, 2020",
                             "title": ""},
                         {
+                            "id": "77777",
+                            "commenting": false,
                             "content": "<p data-tag=\"input\" style=\"color:#000000;\">Entry123</p>",
                             "entry_date": "Wednesday, May 27, 2020",
                             "title": "MT"},
                         {
+                            "id": "88888",
+                            "commenting": false,
                             "content": "<p data-tag=\"input\" style=\"color: #000000\">Entry123</p>",
                             "entry_date": "Wednesday, May 27, 2020",
                             "title": "MT"},
                         {
+                            "id": "99999",
+                            "commenting": false,
                             "content": "<p data-tag=\"input\" style=\"color:#000000;\">qqqqq</p><p data-tag=\"input\" style=\"color:#000000;\">qqqqq</p><p data-tag=\"input\" style=\"color:#000000;\"><u>qqqqq</u></p>",
                             "entry_date": "Thursday, May 28, 2020",
-                            "title": ""},
+                            "title": ""
+                        },
                         {
+                            "id": "26889",
+                            "commenting": true,
                             "content": "<p data-tag=\"input\" style=\"color:#000000;\"><u>was a we </u><u><u>awe</u></u></p>",
                             "entry_date": "Thursday, May 28, 2020",
                             "title": ""},
                         {
+                            "id": "36730",
+                            "commenting": true,
                             "content": "<p data-tag=\"input\" style=\"color:#000000;\">1</p>",
                             "entry_date": "Friday, May 29, 2020",
                             "title": ""},
                         {
+                            "id": "29975",
+                            "commenting": true,
                             "content": "<div data-tag=\"img\"><img src=\"https://jrnl.s3.amazonaws.com/dev/entry_images/10/2020/05/29/img1590747450868_299c0822-f5b2-46cf-aa2a-ef9bed447625\" /><p data-tag=\"img-sub\" style=\"color:#5E5E5E;\" class=\"editor-image-subtitle\"></p></div><p data-tag=\"input\" style=\"color:#000000;\">dack returns</p>",
                             "entry_date": "Friday, May 29, 2020",
                             "title": ""},
                         {
+                            "id": "36721",
+                            "commenting": true,
                             "content": "<p class=\"align-left\">12312</p>",
                             "entry_date": "Tuesday, June 16, 2020",
                             "title": "123123123"},
                         {
+                            "id": "42219",
+                            "commenting": true,
                             "content": "<p>Dddddd dfdfdfdrf j sdf jsjivsdjkvjksdjvksdv is Melvin kJ sdf </p>",
                             "entry_date": "Wednesday, June 17, 2020",
                             "title": "Test autosave"},
                         {
+                            "id": "36105",
+                            "commenting": true,
                             "content": "<p class=\"align-left\"><span style=\"font-family: Vollkorn, serif;\">asdfasdf</span></p><p class=\"align-left\"><span style=\"font-family: Vollkorn, serif;\">asdfasdfasdf</span><span style=\"font-family: Abril Fatface, cursive;\">asdfasdfadfadfadf</span>😂 🤣 😄 😘 🤔 🙂 😣 😣&nbsp;</p>",
                             "entry_date": "Monday, June 29, 2020",
                             "title": "Word counter"
                         }
                     ],
-                    "title": "Daniela"
+                    "title": "Daniela",
+                    "comments": {
+                        "41989": [
+                            {"content": "Test", "entry_id": 41989, "id": 6868, "title": "", "user": {"short_public_display_name": "Terrance", "username": "tj01"}}
+                        ],
+                        "16710": [
+                            {"content": "Sorry, but that made me totally LOL! &#x1F605", "entry_id": 16710, "id": 5646, "title": "Me too", "user": {"short_public_display_name": "Terrance", "username": "tj01"}}
+                        ],
+                        "42193": [
+                            {"content": "Yet kind of cool once you know how to use it. Hidden comments are kind of cool, perhaps would be more useful with some kind of filtering system itself. Then again, might be too complex. Ah whatever.", "entry_id": 42193, "id": 6897, "title": "", "user": {"short_public_display_name": "Terrance", "username": "tj01"}},
+                            {"content": "This is confusing!", "entry_id": 42193, "id": 6896, "title": "", "user": {"short_public_display_name": "Terrance", "username": "tj01"}}, {"content": "Test comment from sharing user.", "entry_id": 42193, "id": 6895, "title": "", "user": {"short_public_display_name": "Terrance", "username": "tj01"}}
+                        ],
+                        "36105": [
+                            {"content": "Another ", "entry_id": 36105, "id": 6461, "title": "", "user": {"short_public_display_name": "Terrance", "username": "tj01"}},
+                            {"content": "Test", "entry_id": 36105, "id": 6460, "title": "", "user": {"short_public_display_name": "Terrance", "username": "tj01"}}
+                        ],
+                        "42219": [
+                            {"content": "Test", "entry_id": 42219, "id": 6911, "title": "", "user": {"short_public_display_name": "Terrance", "username": "tj01"}}
+                        ],
+                        "36721": [
+                            {"content": "Rghhh", "entry_id": 36721, "id": 6472, "title": "", "user": {"short_public_display_name": "Terrance", "username": "tj01"}}
+                        ],
+                        "29975": [
+                            {"content": "asdf", "entry_id": 29975, "id": 6310, "title": "", "user": {"short_public_display_name": "Terrance", "username": "tj01"}},
+                            {"content": "asdf", "entry_id": 29975, "id": 6309, "title": "", "user": {"short_public_display_name": "Terrance", "username": "tj01"}},
+                            {"content": "asdfasdf", "entry_id": 29975, "id": 6308, "title": "", "user": {"short_public_display_name": "Terrance", "username": "tj01"}}
+                        ],
+                        "36730": [
+                            {"content": "The error seen was due to image still in-flight, even though we removed from DOM.", "entry_id": 36730, "id": 6474, "title": "", "user": {"short_public_display_name": "Terrance", "username": "tj01"}}
+                        ],
+                        "26889": [
+                            {"content": "wtf ... ah well NFF isn't necessarily a bad thing lol. We need to test this stuff more, nevertheless!", "entry_id": 26889, "id": 6120, "title": "", "user": {"short_public_display_name": "Terrance", "username": "tj01"}}
+                        ]
+                    }
                 }
             ],
             "name": "Journals"

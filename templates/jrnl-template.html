@@ -361,6 +361,21 @@
           {{ entry.no_img_content|safe }}
         {% endif %}
         </div>
+        {% if entry.commenting is true %}
+          {% for comment in journal.comments[entry.id] %}
+            {% if loop.first %}
+              <div class="three-margin journal-comments-title-text">Comments:</div>
+            {% endif %}
+            {% if loop.first or loop.previtem.user.username != comment.user.username %}
+              <div title="{{entry.entry_date}}" class="three-margin journal-comments-username">
+                {{ comment.user.short_public_display_name }}:
+              </div>
+            {% endif %}
+              <div title="{{entry.entry_date}}" class="three-margin journal-comments-text">
+                {{ comment.title }} {{ comment.content }}
+              </div>
+          {% endfor %}
+        {% endif %}
       {% endfor %}
     {% endfor %}
   </div>
