@@ -25,6 +25,13 @@ body {
   -moz-box-sizing: border-box;
 }
 
+figure { 
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    margin-block-start: auto;
+    margin-block-end: auto;
+}
+
 .watermark {
   position: absolute;
   top: 50%;
