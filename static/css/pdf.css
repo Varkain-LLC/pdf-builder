@@ -1,8 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-
-/* DRAFT JS FONTS IMPORT */
-@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Gravitas+One&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&family=PT+Mono&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Vollkorn:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("../fonts/google-fonts/style.css");
 
 @font-face {
   font-family: 'Roboto Slab';
@@ -23,6 +19,13 @@ body {
 * {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+}
+
+figure { 
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    margin-block-start: auto;
+    margin-block-end: auto;
 }
 
 .watermark {
