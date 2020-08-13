@@ -184,9 +184,9 @@ section {
 }
 
 .journal-title-text {
-    margin-top: 20px;
-    font-size: 2vw;
-    font-weight: bold;
+    margin-top: 3vw;
+    font-size: 3vw;
+    font-weight: 600;
     margin-bottom: 20px;
 }
 
