@@ -25,8 +25,8 @@ def send_devtools(driver, cmd, params={}):
 
 def get_pdf_from_html(path, chromedriver='./chromedriver', print_options={}):
     webdriver_options = Options()
-    timeout = 5*60*1000  # 5 minutes
-    webdriver_options.add_argument(f'--timeout {timeout}')  # 5 minutes
+    webdriver_options.add_argument('--timeout {timeout}'.format(
+        timeout=5*60*1000))  # 5 minutes
     webdriver_options.add_argument('--headless')
     webdriver_options.add_argument('--disable-gpu')
     webdriver_options.add_argument('--no-sandbox')
