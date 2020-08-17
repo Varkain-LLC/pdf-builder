@@ -53,6 +53,10 @@ python converter.py /absolute-path-to/assets/book.json jrnl /absolute-path-to/te
 2. converts that `temp.html` to `assets/book.pdf`
 3. removes `temp.html`
 
+## Emoji support
+1. install `https://github.com/samuelngs/apple-emoji-linux`
+2. install `https://www.omgubuntu.co.uk/2016/08/enable-color-emoji-linux-google-chrome-noto`
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
