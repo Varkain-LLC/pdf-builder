@@ -134,26 +134,41 @@
                 ],
                 "comments":{
                    "44608":[
-                      {
-                         "content":"Checking with comments",
-                         "entry_id":44608,
-                         "user":{
-                            "username":"test01072020",
-                            "short_public_display_name":"Daniela"
-                         },
-                         "title":""
-                      }
+                        {
+                            "content":"How we will display two rows? ",
+                            "created":"Friday, August 14, 2020",
+                            "entry_id":44608,
+                            "user":{
+                                "username":"test01072020",
+                                "short_public_display_name":"Daniela",
+                                "avatar_image_url":"https://s3.amazonaws.com/jrnl/static/images/avatar.png"
+                            },
+                            "title":""
+                        },
+                        {
+                            "content":"Checking with comments",
+                            "created":"Wednesday, August 12, 2020",
+                            "entry_id":44608,
+                            "user":{
+                                "username":"test01072020",
+                                "short_public_display_name":"Daniela",
+                                "avatar_image_url":"https://s3.amazonaws.com/jrnl/static/images/avatar.png"
+                            },
+                            "title":""
+                        }
                    ],
                    "43981":[
-                      {
-                         "content":"See how the text into a comment will look like",
-                         "entry_id":43981,
-                         "user":{
-                            "username":"test01072020",
-                            "short_public_display_name":"Daniela"
-                         },
-                         "title":""
-                      }
+                        {
+                            "content":"See how the text into a comment will look like",
+                            "created":"Tuesday, August 11, 2020",
+                            "entry_id":43981,
+                            "user":{
+                                "username":"test01072020",
+                                "short_public_display_name":"Daniela",
+                                "avatar_image_url":"https://s3.amazonaws.com/jrnl/static/images/avatar.png"
+                            },
+                            "title":""
+                        }
                    ]
                 },
                 "title":"test01072020's default journal"
