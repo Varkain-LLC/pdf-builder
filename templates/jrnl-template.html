@@ -195,14 +195,24 @@
 
       $(document).ready(() => { 
         const count = $("img").length;
-        let  loadedCount = 0;
+        const videoCount = $("video").length;
+        let  loadedCount = 0, loadedVideoCount = 0;
         
         $("img").load(() => {
           loadedCount ++;
-          if (loadedCount === count) {
+          if (loadedCount === count && loadedVideoCount === videoCount) {
             buildPages(pageContents[0], 0);
           }
         });
+
+        $("video").bind("loadstart", function(){
+            $(this).removeAttr("controls");
+            console.log($(this));
+            loadedVideoCount ++;
+            if (loadedCount === count && loadedVideoCount === videoCount) {
+                buildPages(pageContents[0], 0);
+            }
+        })
       });
      
     });
