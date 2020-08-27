@@ -365,14 +365,19 @@
             {% if loop.first %}
               <div class="three-margin journal-comments-title-text">Comments:</div>
             {% endif %}
-            {% if loop.first or loop.previtem.user.username != comment.user.username %}
-              <div title="{{entry.entry_date}}" class="three-margin journal-comments-username">
-                {{ comment.user.short_public_display_name }}:
-              </div>
-            {% endif %}
-              <div title="{{entry.entry_date}}" class="three-margin journal-comments-text">
-                {{ comment.title }} {{ comment.content }}
-              </div>
+						<div class="three-margin journal-comment-container">
+							<div class="journal-comment-user-container">
+								<img src="{{ comment.user.avatar_image_url }}" alt="user"/>
+							</div>
+							<div class="journal-comment-content-container">
+								<div class="journal-comments-text">
+									{{ comment.title }} {{ comment.content }}
+								</div>
+								<div class="journal-comment-content-info">
+									<b>{{ comment.user.short_public_display_name }}</b> &nbsp; . &nbsp; {{ comment.created }}
+								</div>
+							</div>
+						</div>
           {% endfor %}
         {% endif %}
       {% endfor %}
