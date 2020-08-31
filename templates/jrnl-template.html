@@ -119,6 +119,7 @@
 
   <script type="text/javascript" src="{{ static_url }}vendors/jquery.js"></script>
   <script src="{{ static_url }}vendors/autocolumn.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="{{ static_url }}vendors/jquery-qrcode.js" type="text/javascript" charset="utf-8"></script>
 
   <template id="page_template">
     <div class="page">
@@ -190,6 +191,32 @@
           if (pageContentIndex < pageContents.length) {
             buildPages(pageContents[pageContentIndex], 0);
           }
+          else {
+            var videos = document.getElementsByTagName("video");
+            for (let i = 0 ; i < videos.length ; i++) {
+                const video = videos[i];           
+                var qrElem = $("<div class='qrcode-demo'></div>");
+                $(video).parent().append(qrElem);
+                var logoImg = new Image;
+                logoImg.src = "/Users/phoenix/Documents/Projects/jrnl/PDF-builder/static/images/timeline-images/logo.png";
+                logoImg.onload = function() {
+                    console.log('loaded', this);
+                    $(qrElem).qrcode({
+                        size: 300,
+                        fill: '#000',
+                        text: 'https://jrnl.com',
+                        mode: 4,
+                        image: this,
+                        label: '111',
+                        fontcolor: '#F1C40F',
+                        ecLevel:'H',
+                        minVersion: 1,
+                        maxVersion: 40,
+                        render: 'canvas'
+                    });
+                }
+            }
+          }
         }
       }
 
@@ -205,14 +232,18 @@
           }
         });
 
-        $("video").bind("loadstart", function(){
-            $(this).removeAttr("controls");
-            console.log($(this));
-            loadedVideoCount ++;
-            if (loadedCount === count && loadedVideoCount === videoCount) {
-                buildPages(pageContents[0], 0);
-            }
-        })
+        $("source").remove();
+
+        var videos = document.getElementsByTagName("video");
+        for (let i = 0 ; i < videos.length ; i++) {
+            const video = videos[i];
+            video.addEventListener('loadeddata', function() {
+                loadedVideoCount ++;
+                if (loadedCount === count && loadedVideoCount === videoCount) {
+                    buildPages(pageContents[0], 0);
+                }
+            });
+        }
       });
      
     });
