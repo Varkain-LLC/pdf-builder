@@ -209,8 +209,10 @@ section {
 
 .journal-comments-text {
   word-break: break-word;
-  padding-left: 20px;
-  font-size: 2.5vw;
+  padding: 20px;
+	font-size: 2.5vw;
+	border: 1px solid #CCC;
+	border-radius: 5px;
 }
 
 .one-margin {
@@ -356,4 +358,31 @@ section {
 .life-recording {
   font-family: Dosis;
   letter-spacing: 1px;
+}
+
+.journal-comment-container {
+	display: flex;
+	flex-direction: row;
+	padding: 0;
+	margin-bottom: 20px;
+}
+
+.journal-comment-user-container {
+	padding: 5px;	
+}
+
+.journal-comment-user-container > img { 
+	width: 7vw;
+	height: 7vw;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.journal-comment-content-container {
+	flex: 1
+}
+
+.journal-comment-content-info {
+	margin-top: 5px;
+	font-size: 2.2vw;
 }
