@@ -137,7 +137,7 @@
                         {
                             "id": "36105",
                             "commenting": true,
-                            "content": "<p class=\"align-left\"><span style=\"font-family: Vollkorn, serif;\">asdfasdf</span></p><p class=\"align-left\"><span style=\"font-family: Vollkorn, serif;\">asdfasdfasdf</span><span style=\"font-family: Abril Fatface, cursive;\">asdfasdfadfadfadf</span>😂 🤣 😄 😘 🤔 🙂 😣 😣&nbsp;</p>",
+                            "content": "<p class=\"align-left\"><br></p>↵<figure><figure><video controls src=\"https://jrnl.s3.amazonaws.com/dev/entry_files/66122/45035/2020/08/21/file_example_MP4_480_1_5MG_9b94b88b-d753-4a48-b5a8-4fe4a488caac.mp4\" caption=\"\" style='position:relative; cursor: default; width: 100%;'><source  src=\"https://jrnl.s3.amazonaws.com/dev/entry_files/66122/45035/2020/08/21/file_example_MP4_480_1_5MG_9b94b88b-d753-4a48-b5a8-4fe4a488caac.mp4\" caption=\"\" type='video/mp4'></source><source  src=\"https://jrnl.s3.amazonaws.com/dev/entry_files/66122/45035/2020/08/21/file_example_MP4_480_1_5MG_9b94b88b-d753-4a48-b5a8-4fe4a488caac.mp4\" caption=\"\" type='video/ogg'></source></video><figcaption></figcaption></figure></figure>↵<p class=\"align-left\"><br></p>",
                             "entry_date": "Monday, June 29, 2020",
                             "title": "Word counter"
                         },
