@@ -224,26 +224,19 @@
         const count = $("img").length;
         const videoCount = $("video").length;
         let  loadedCount = 0, loadedVideoCount = 0;
+
+        if (count === 0) {
+            buildPages(pageContents[0], 0);
+        }
         
         $("img").load(() => {
           loadedCount ++;
-          if (loadedCount === count && loadedVideoCount === videoCount) {
+          if (loadedCount === count) {
             buildPages(pageContents[0], 0);
           }
         });
 
         $("source").remove();
-
-        var videos = document.getElementsByTagName("video");
-        for (let i = 0 ; i < videos.length ; i++) {
-            const video = videos[i];
-            video.addEventListener('loadeddata', function() {
-                loadedVideoCount ++;
-                if (loadedCount === count && loadedVideoCount === videoCount) {
-                    buildPages(pageContents[0], 0);
-                }
-            });
-        }
       });
      
     });
@@ -401,7 +394,7 @@
           {{ entry.no_img_content|safe }}
         {% endif %}
         </div>
-        {% if entry.commenting is true %}
+        {% if entry.commenting is true and json_obj.comments is true %}
           {% for comment in journal.comments[entry.id] %}
             {% if loop.first %}
               <div class="three-margin journal-comments-title-text">Comments:</div>
