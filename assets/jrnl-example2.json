@@ -181,6 +181,7 @@
     "document_logo_src":"",
     "document_back_cover":"",
     "photos":true,
+    "comments": false,
     "document_subtitle":"",
     "document_date":"",
     "export_format":"6X9",
@@ -190,5 +191,6 @@
     "document_cover_image":null,
     "version":1,
     "custom_introduction":"",
-    "quantity":1
+    "quantity":1,
+    "preview": false
  }
