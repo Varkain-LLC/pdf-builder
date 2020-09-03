@@ -200,7 +200,7 @@
                 var qrElem = $("<div class='qrcode-demo'></div>");
                 $(video).parent().append(qrElem);
                 var logoImg = new Image;
-                logoImg.src = "/Users/phoenix/Documents/Projects/jrnl/PDF-builder/static/images/timeline-images/logo.png";
+                logoImg.src = "{{ static_url }}images/timeline-images/logo.png";
                 logoImg.onload = function() {
                     console.log('loaded', this);
                     $(qrElem).qrcode({
