@@ -237,13 +237,6 @@ section {
     padding-bottom: 20px;
 }
 
-.page:nth-child(2n) .subtitle {
-    text-align: left !important;
-}
-
-.page:nth-child(2n+1) .subtitle {
-    text-align: right !important;
-}
 .page:nth-child(2n) .page-number {
   left: 40px;
   text-align: left;
@@ -385,4 +378,20 @@ section {
 .journal-comment-content-info {
 	margin-top: 5px;
 	font-size: 2.2vw;
+}
+
+.left-page .subpage {
+    padding-right: 3vw;
+}
+
+.left-page .subtitle {
+    text-align: left !important;
+}
+
+.right-page .subpage {
+    padding-left: 3vw;
+}
+
+.right-page .subtitle {
+    text-align: right !important;
 }
