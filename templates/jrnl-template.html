@@ -146,6 +146,8 @@
             _page = page_template.content.cloneNode(true);
             $page = $(_page);
 
+            $page.children('.page').addClass(contentPageCount % 2 === 0 ? 'right-page' : 'left-page');
+
             // fun stuff, like adding page numbers to the footer
             $page.find(".footer .page-number").append(page);
             $(targetElement).parent().append($page);
