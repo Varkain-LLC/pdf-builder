@@ -395,3 +395,45 @@ section {
 .right-page .subtitle {
     text-align: right !important;
 }
+
+.qrcode-demo.video {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+
+.pdf-content-media-content-files {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pdf-content-media {
+    display: flex;
+    align-items: center;
+}
+
+.file-date, .file-type {
+    font-family: "open sans", sans-serif;
+    font-size: 0.5rem;
+    font-weight: normal;
+    color: #000000;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.file-size, .file-name {
+    font-family: "open sans", sans-serif;
+    font-size: 0.5rem;
+    font-weight: 600;
+    color: #000000;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.pdf-content-media > img {
+    width: 2.9375rem;
+    height: 2.5rem;
+    object-fit: contain;
+    margin-right: 0.9375rem;
+}
