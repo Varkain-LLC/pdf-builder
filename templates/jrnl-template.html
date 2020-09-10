@@ -126,6 +126,36 @@
       <div class="subpage"></div>
     </div>
   </template>
+  <template id="pdf_content_template">
+    <div class="pdf-content-media-content-files">
+      <div class="pdf-content-media">
+        <img src="" alt="audiowave" class="bnw-img">
+        <div class="pdf-content-media-desc">
+          <p class="file-name">${ file_name }</p>
+          <p class="file-size">${secondsToHms(audio_duration)}</p>
+          <p class="file-type">Audio File</p>
+          <p class="file-date">Uploaded on ${created_date}</p>
+        </div>
+      </div>
+      <div class="qrcode-demo audio">
+      </div>
+    </div>
+  </template>
+  <template id="media_document_template">
+    <div class="pdf-content-media-content-files">
+      <div class="pdf-content-media">
+        <img src="${docFileURL}" alt="file" class="bnw-img">
+        <div class="pdf-content-media-desc">
+          <p class="file-name">${ file_name }</p>
+          <p class="file-size">${ docFileSize }</p>
+          <p class="file-type">PDF File</p>
+          <p class="file-date">Uploaded on ${created_date}</p>
+        </div>
+      </div>
+      <div class="qrcode-demo docfile">
+      </div>
+    </div>
+  </template>
   <script>
   $(function(){
       var content_height = $('.subpage').height() - 20;	// the height of the content, discluding the header/footer
@@ -263,23 +293,14 @@
 					const created_date = $(audio).attr("created_date");
 					const parent = $(audio).parent();
 					const waveUrl = "{{ static_url }}images/audiowave.png"
-					const elem = $(`
-						<div class="pdf-content-media-content-files">
-							<div class="pdf-content-media">
-								<img src="${waveUrl}" alt="audiowave" class="bnw-img">
-								<div class="pdf-content-media-desc">
-									<p class="file-name">${ file_name }</p>
-									<p class="file-size">${secondsToHms(audio_duration)}</p>
-									<p class="file-type">Audio File</p>
-									<p class="file-date">Uploaded on ${created_date}</p>
-								</div>
-							</div>
-							<div class="qrcode-demo audio">
-							</div>
-						</div>
-					`);
+          _template = pdf_content_template.content.cloneNode(true);
+          $template = $(_template);
+          $($template.children()[0]).find('.bnw-img').attr('src', waveUrl);
+          $($template.children()[0]).find('.file-name').text(file_name);
+          $($template.children()[0]).find('.file-size').text(secondsToHms(audio_duration));
+          $($template.children()[0]).find('.file-date').text(`Uploaded on ${created_date}`);
 
-					$(parent).append(elem);
+					$(parent).append($template);
 
 					$(audio).remove();
 				}
@@ -295,23 +316,14 @@
 					const created_date = $(docFile).attr("created_date");
 					const parent = $(docFile).parent();
 					const docFileURL = "{{ static_url }}images/file.png"
-					const elem = $(`
-						<div class="pdf-content-media-content-files">
-							<div class="pdf-content-media">
-								<img src="${docFileURL}" alt="file" class="bnw-img">
-								<div class="pdf-content-media-desc">
-									<p class="file-name">${ file_name }</p>
-									<p class="file-size">${ docFileSize }</p>
-									<p class="file-type">PDF File</p>
-									<p class="file-date">Uploaded on ${created_date}</p>
-								</div>
-							</div>
-							<div class="qrcode-demo docfile">
-							</div>
-						</div>
-					`);
-
-					$(parent).append(elem);
+          _template = media_document_template.content.cloneNode(true);
+          $template = $(_template);
+          $($template.children()[0]).find('.bnw-img').attr('src', docFileURL);
+          $($template.children()[0]).find('.file-name').text(file_name);
+          $($template.children()[0]).find('.file-size').text(docFileSize);
+          $($template.children()[0]).find('.file-date').text(`Uploaded on ${created_date}`);
+					
+					$(parent).append($template);
 
 					$(docFile).remove();
 				}
