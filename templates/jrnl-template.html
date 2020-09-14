@@ -163,7 +163,7 @@
       var pageContentIndex = 0;
       var pageContents = ['intro', 'aam', 'journals'];
 
-			function drawQRCode(qrElem) {
+      function drawQRCode(qrElem, link) {
         var logoImg = new Image;
         logoImg.src = "{{ static_url }}images/timeline-images/logo.png";
         logoImg.onload = function() {
@@ -171,7 +171,7 @@
             $(qrElem).qrcode({
                 size: 80,
                 fill: '#000',
-                text: 'https://jrnl.com',
+                text: link,
                 mode: 4,
                 image: this,
                 label: '111',
@@ -248,8 +248,9 @@
           else {
 						const qrCodes = $(".qrcode-demo");
 						for (let i = 0 ; i < qrCodes.length ; i++ ) {       
-                var qrElem = qrCodes[i]
-								drawQRCode(qrElem);
+                var qrElem = qrCodes[i];
+                var entry_link = $(qrElem).attr("entry_link");
+								drawQRCode(qrElem, entry_link);
 						}
           }
         }
@@ -275,7 +276,7 @@
 					const entry_link = $(video).attr("entry_link");
 					const parent = $(video).parent();
 					const image = $(`<img src="${ video_play_poster}"/>`);
-					var qrElem = $("<div class='qrcode-demo video'></div>");
+					var qrElem = $(`<div class='qrcode-demo video' entry_link='${entry_link}'></div>`);
 					$(parent).append(image).css("position", "relative");
 					$(parent).append(qrElem);
 
@@ -298,7 +299,8 @@
           $($template.children()[0]).find('.bnw-img').attr('src', waveUrl);
           $($template.children()[0]).find('.file-name').text(file_name);
           $($template.children()[0]).find('.file-size').text(secondsToHms(audio_duration));
-          $($template.children()[0]).find('.file-date').text(`Uploaded on ${created_date}`);
+          $($template.children()[0]).find('.file-date').text(`Uploaded on ${created_date}`);          
+          $($template.children()[0]).find('.qrcode-demo').attr('entry_link', entry_link);
 
 					$(parent).append($template);
 
@@ -322,6 +324,7 @@
           $($template.children()[0]).find('.file-name').text(file_name);
           $($template.children()[0]).find('.file-size').text(docFileSize);
           $($template.children()[0]).find('.file-date').text(`Uploaded on ${created_date}`);
+          $($template.children()[0]).find('.qrcode-demo').attr('entry_link', entry_link);
 					
 					$(parent).append($template);
 
