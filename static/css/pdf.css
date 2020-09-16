@@ -400,6 +400,8 @@ section {
     position: absolute;
     right: 20px;
     bottom: 20px;
+    background-color: #fff;
+    padding: 1px;
 }
 
 .pdf-content-media-content-files {
