@@ -390,7 +390,7 @@
             <span id='intro-pagenumber'>1</span>
         </div>
         {% endif %}
-        {% if json_obj.table_of_contents.aam %}
+        {% if json_obj.table_of_contents.aam and json_obj.all_about_me != '' %}
           {% set item = json_obj.table_of_contents.aam %}
           <div class="table-of-contents-body">
             {{ item.name }}
@@ -438,7 +438,7 @@
   </div>
 {% endif %}
 
-{% if json_obj.table_of_contents.aam and json_obj.all_about_me %}
+{% if json_obj.table_of_contents.aam and json_obj.all_about_me != '' %}
   {% set item = json_obj.table_of_contents.aam %}
   <div class="page">
     <div class="subpage">
