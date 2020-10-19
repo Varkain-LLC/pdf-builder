@@ -1,5 +1,7 @@
 import base64
 import json
+import subprocess
+import sys
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -23,11 +25,37 @@ def send_devtools(driver, cmd, params={}):
     return response.get('value')
 
 
-def get_pdf_from_html(path, chromedriver='./chromedriver', print_options={}):
+def get_pdf_from_html_terminal(path, pdf_file_path):
+    if sys.version_info[0] == 2:
+        return subprocess.call([
+            "/opt/google/chrome/chrome",
+            "--no-sandbox",
+            "--headless",
+            "--disable-gpu",
+            "--disable-dev-shm-usage",
+            "--print-to-pdf={}".format(pdf_file_path),
+            path,
+        ], stdout=subprocess.DEVNULL)
+    return subprocess.run([
+        "/opt/google/chrome/chrome",
+        "--no-sandbox",
+        "--headless",
+        "--disable-gpu",
+        "--disable-dev-shm-usage",
+        "--print-to-pdf={}".format(pdf_file_path),
+        path,
+    ], stdout=subprocess.DEVNULL)
+
+
+def get_pdf_from_html(
+    path, chromedriver='./chromedriver', print_options={},
+    pdf_file_path=None
+):
+    if pdf_file_path:
+        return get_pdf_from_html_terminal(path, pdf_file_path)
     webdriver_options = Options()
     webdriver_options.add_argument('--timeout {timeout}'.format(
         timeout=5*60*1000))  # 5 minutes
-    webdriver_options.add_argument("--remote-debugging-port=9222")
     webdriver_options.add_argument('--headless')
     webdriver_options.add_argument('--disable-gpu')
     webdriver_options.add_argument('--no-sandbox')

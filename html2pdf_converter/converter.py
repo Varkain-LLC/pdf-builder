@@ -97,11 +97,12 @@ class HtmlToPdfConverter:
             file.write(rendered_html)  # Write HTML String to temp html
             return file.name
 
-    def get_pdf_file(self, temp_html_file_path):
+    def get_pdf_file(self, temp_html_file_path, output_file=None):
         """Get pdf file"""
         html_path = 'file://' + os.getcwd() + str('/' + temp_html_file_path)
         return get_pdf_from_html(
-            path=html_path, chromedriver=self.get_chromium_driver())
+            path=html_path, chromedriver=self.get_chromium_driver(),
+            pdf_file_path=output_file)
 
     def write_pdf_file(self, temp_html_file_path, output_file):
         with open(output_file, 'wb') as file:
@@ -125,10 +126,13 @@ class HtmlToPdfConverter:
             output_file = get_pdf_name(self.assets_dir, output_file)
 
         if os.path.isfile(str('./' + temp_html_file_path)):
-            self.write_pdf_file(
-                temp_html_file_path=temp_html_file_path,
-                output_file=output_file
-            )
+            if output_file:
+                self.get_pdf_file(temp_html_file_path, output_file)
+            else:
+                self.write_pdf_file(
+                    temp_html_file_path=temp_html_file_path,
+                    output_file=output_file
+                )
 
         return output_file
 
