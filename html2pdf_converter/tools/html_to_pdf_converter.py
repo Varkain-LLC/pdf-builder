@@ -35,7 +35,7 @@ def get_pdf_from_html_terminal(path, pdf_file_path):
             "--disable-dev-shm-usage",
             "--print-to-pdf={}".format(pdf_file_path),
             path,
-        ], stdout=subprocess.DEVNULL)
+        ])
     return subprocess.run([
         "/opt/google/chrome/chrome",
         "--no-sandbox",
