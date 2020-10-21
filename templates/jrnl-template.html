@@ -336,9 +336,15 @@
       // handleAudioFiles();
       // handleDocumentFiles();
       $(document).ready(() => { 
-        const count = $("img").length;
+        let count = 0;
         const videoCount = $("video").length;
         let  loadedCount = 0, loadedVideoCount = 0;
+
+        for (let i = 0 ; i < $("img").length ; i++) {
+            if ($($("img")[i]).attr("src")) {
+                count++;
+            }
+        }
 
         if (count === 0) {
             buildPages(pageContents[0], 0);
