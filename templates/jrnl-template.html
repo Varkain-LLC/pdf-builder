@@ -157,6 +157,8 @@
     </div>
   </template>
   <script>
+  let stack_count = 0;
+  let stack_status = {};
   $(function(){
       var content_height = $('.subpage').height() - 20;	// the height of the content, discluding the header/footer
       var page = 1; // the beginning page number to show in the footer
@@ -186,6 +188,12 @@
 
       // console.log(content_height);
       function buildPages(name, contentPageCount){
+				stack_count ++;
+        if (stack_count > 100) {
+          stack_status = { name: name, contentPageCount: contentPageCount };
+          return ;
+        }
+
         var targetId = "#book-content-" + name,
             targetElement = $(targetId);
         if(targetElement.contents().length > 0){
@@ -252,6 +260,7 @@
                 var entry_link = $(qrElem).attr("entry_link");
 								drawQRCode(qrElem, entry_link);
 						}
+						stack_status = null;
           }
         }
       }
@@ -335,19 +344,42 @@
       // handleVideoFiles();
       // handleAudioFiles();
       // handleDocumentFiles();
+			const startbuilding = () => {
+        stack_status = {
+          name: pageContents[0],
+          contentPageCount: 0,
+        }
+        while(true){
+          buildPages(stack_status.name, stack_status.contentPageCount);
+          console.log('one stack end', stack_status);
+          if (stack_status?.name && stack_status?.contentPageCount) {
+            stack_count = 0;
+          }
+          else {
+            break;
+          }
+        }
+      }
+
       $(document).ready(() => { 
-        const count = $("img").length;
+        let count = 0;
         const videoCount = $("video").length;
         let  loadedCount = 0, loadedVideoCount = 0;
 
+        for (let i = 0 ; i < $("img").length ; i++) {
+            if ($($("img")[i]).attr("src")) {
+                count++;
+            }
+        }
+
         if (count === 0) {
-            buildPages(pageContents[0], 0);
+            startbuilding();
         }
         
         $("img").load(() => {
           loadedCount ++;
           if (loadedCount === count) {
-            buildPages(pageContents[0], 0);
+            startbuilding();
           }
         });
 
