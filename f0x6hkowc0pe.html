@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arvo">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Khula">
+  <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap"
+      rel="stylesheet"
+    />
+  <link
+    href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap"
+    rel="stylesheet"
+  />
+  <link href="static/css/pdf.css" rel="stylesheet"/>
+
+
+  <style>
+    .page {
+      width: 6in;
+      height: 9in;
+      min-height: 9in;
+      padding: 0.2in;
+      margin: 0.1in auto;
+      background: white;
+      position: relative;
+    }
+
+    .subpage {
+      height: 8.6in;
+      min-height: 8.6in;
+      max-height: 8.6in;
+      position: relative;
+    }
+
+    @page {
+      size: 6in 9in;
+      margin: 0;
+    }
+
+    @media print {
+      .page {
+        margin: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+        position: initial;
+        page-break-after: always;
+      }
+    }
+  </style>
+
+
+
+
+
+  <style>
+    .watermark { opacity: 0.1; }
+  </style>
+
+
+  <script type="text/javascript" src="static/vendors/jquery.js"></script>
+  <script src="static/vendors/autocolumn.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="static/vendors/jquery-qrcode.js" type="text/javascript" charset="utf-8"></script>
+
+  <template id="page_template">
+    <div class="page">
+      <div class="subpage"></div>
+    </div>
+  </template>
+  <template id="pdf_content_template">
+    <div class="pdf-content-media-content-files">
+      <div class="pdf-content-media">
+        <img src="" alt="audiowave" class="bnw-img">
+        <div class="pdf-content-media-desc">
+          <p class="file-name">${ file_name }</p>
+          <p class="file-size">${secondsToHms(audio_duration)}</p>
+          <p class="file-type">Audio File</p>
+          <p class="file-date">Uploaded on ${created_date}</p>
+        </div>
+      </div>
+      <div class="qrcode-demo audio">
+      </div>
+    </div>
+  </template>
+  <template id="media_document_template">
+    <div class="pdf-content-media-content-files">
+      <div class="pdf-content-media">
+        <img src="${docFileURL}" alt="file" class="bnw-img">
+        <div class="pdf-content-media-desc">
+          <p class="file-name">${ file_name }</p>
+          <p class="file-size">${ docFileSize }</p>
+          <p class="file-type">PDF File</p>
+          <p class="file-date">Uploaded on ${created_date}</p>
+        </div>
+      </div>
+      <div class="qrcode-demo docfile">
+      </div>
+    </div>
+  </template>
+  <script>
+  let stack_count = 0;
+  let stack_status = {};
+  $(function(){
+      var content_height = $('.subpage').height();	// the height of the content, discluding the header/footer
+      var page = 1; // the beginning page number to show in the footer
+      var pageContentIndex = 0;
+      var pageContents = ['intro', 'aam', 'journals'];
+
+      function drawQRCode(qrElem, link) {
+        var logoImg = new Image;
+        logoImg.src = "static/images/timeline-images/logo.png";
+        logoImg.onload = function() {
+            console.log($(qrElem));
+            $(qrElem).qrcode({
+                size: 80,
+                fill: '#000',
+                text: link,
+                mode: 4,
+                image: this,
+                label: '111',
+                fontcolor: '#F1C40F',
+                ecLevel:'H',
+                minVersion: 1,
+                maxVersion: 40,
+                render: 'canvas'
+            });
+        }
+      }
+
+      // console.log(content_height);
+      function buildPages(name, contentPageCount){
+				stack_count ++;
+        if (stack_count > 100) {
+          stack_status = { name: name, contentPageCount: contentPageCount };
+          return ;
+        }
+
+        var targetId = "#book-content-" + name,
+            targetElement = $(targetId);
+        if(targetElement.contents().length > 0){
+            // add page number to table of contents
+            if (contentPageCount === 0) {
+              $(`#${name}-pagenumber`).text(page);
+            }
+            // when we need to add a new page, use a jq object for a template
+            // or use a long HTML string, whatever your preference
+            _page = page_template.content.cloneNode(true);
+            $page = $(_page);
+
+            $page.children('.page').addClass(contentPageCount % 2 === 0 ? 'right-page' : 'left-page');
+
+            // fun stuff, like adding page numbers to the footer
+            $page.find(".footer .page-number").append(page);
+            $(targetElement).parent().append($page);
+            
+            const targetSelector = `#${$(targetElement).parent().attr("id")} .page:last .subpage`;
+            contentPageCount ++;
+            // here is the columnizer magic
+            targetElement.columnize({
+              columns: 1,
+              keepHtml: true,
+              target: targetSelector,
+              overflow: {
+                height: content_height,
+                id: targetId,
+                doneFunc: function(e){
+                    const title = targetElement.children().first().attr('title');
+                    if (title) {
+                        targetElement.prepend($(`
+                        <h3 class="subtitle">
+                            ${title}
+                        </h3>`));
+                    }
+
+                    $(targetSelector).append(`
+                      <div class="watermark">PREVIEW</div>
+                      <div style="position: absolute; bottom: 0;" class="page-number"> ${page} </div>
+                    `);
+
+                    page ++;
+
+                    buildPages(name, contentPageCount);
+                  }
+              }
+            });
+        } else {
+          if (contentPageCount % 2 === 1) {
+            _page = page_template.content.cloneNode(true);
+            $page = $(_page);
+            $(targetElement).parent().append($page);
+          }
+
+          pageContentIndex ++;
+          if (pageContentIndex < pageContents.length) {
+            buildPages(pageContents[pageContentIndex], 0);
+          }
+          else {
+						const qrCodes = $(".qrcode-demo");
+						for (let i = 0 ; i < qrCodes.length ; i++ ) {       
+                var qrElem = qrCodes[i];
+                var entry_link = $(qrElem).attr("entry_link");
+								drawQRCode(qrElem, entry_link);
+						}
+						stack_status = null;
+          }
+        }
+      }
+			
+      // Handle video / audio / document files
+      function secondsToHms(d) {
+          d = Number(d);
+          var h = Math.floor(d / 3600);
+          var m = Math.floor(d % 3600 / 60);
+          var s = Math.floor(d % 3600 % 60);
+
+          var hDisplay = h > 0 ? h + (h == 1 ? " hr, " : " hrs, ") : "";
+          var mDisplay = m > 0 ? m + (m == 1 ? " m, " : " ms, ") : "";
+          var sDisplay = s > 0 ? s + (s == 1 ? " s" : " s") : "";
+          return hDisplay + mDisplay + sDisplay; 
+      }
+      const handleVideoFiles = () => {
+          const videos = $("video");
+          for (let i = 0 ; i < videos.length ; i++) {
+              const video = videos[i];
+              const video_play_poster = $(video).attr("video_play_poster");
+              const entry_link = $(video).attr("entry_link");
+              const parent = $(video).parent();
+              const image = $(`<img src="${ video_play_poster}"/>`);
+              var qrElem = $(`<div class='qrcode-demo video' entry_link='${entry_link}'></div>`);
+              $(parent).append(image).css("position", "relative");
+              $(parent).append(qrElem);
+
+              $(video).remove();
+          }
+      }
+
+      const handleAudioFiles = () => {
+          const audios = $("audio");
+          for (let i = 0 ; i < audios.length ; i++) {
+              const audio = audios[i];
+              const entry_link = $(audio).attr("entry_link");
+              const file_name = $(audio).attr("file_name");
+              const audio_duration = $(audio).attr("audio_duration");
+              const created_date = $(audio).attr("created_date");
+              const parent = $(audio).parent();
+              const waveUrl = "static/images/audiowave.png"
+              _template = pdf_content_template.content.cloneNode(true);
+              $template = $(_template);
+              $($template.children()[0]).find('.bnw-img').attr('src', waveUrl);
+              $($template.children()[0]).find('.file-name').text(file_name);
+              $($template.children()[0]).find('.file-size').text(secondsToHms(audio_duration));
+              $($template.children()[0]).find('.file-date').text(`Uploaded on ${created_date}`);          
+              $($template.children()[0]).find('.qrcode-demo').attr('entry_link', entry_link);
+
+              $(parent).append($template);
+
+              $(audio).remove();
+          }
+      }
+
+      const handleDocumentFiles = () => {
+          const documents = $("q");
+          for (let i = 0 ; i < documents.length ; i++) {
+              const docFile = documents[i];
+              const entry_link = $(docFile).attr("entry_link");
+              const file_name = $(docFile).attr("name");
+              const docFileSize = $(docFile).attr("formatted_size");
+              const created_date = $(docFile).attr("created_date");
+              const parent = $(docFile).parent();
+              const docFileURL = "static/images/file.png"
+              _template = media_document_template.content.cloneNode(true);
+              $template = $(_template);
+              $($template.children()[0]).find('.bnw-img').attr('src', docFileURL);
+              $($template.children()[0]).find('.file-name').text(file_name);
+              $($template.children()[0]).find('.file-size').text(docFileSize);
+              $($template.children()[0]).find('.file-date').text(`Uploaded on ${created_date}`);
+              $($template.children()[0]).find('.qrcode-demo').attr('entry_link', entry_link);
+              
+              $(parent).append($template);
+
+              $(docFile).remove();
+          }
+      }
+
+      // handleVideoFiles();
+      // handleAudioFiles();
+      // handleDocumentFiles();
+			const startbuilding = () => {
+        stack_status = {
+          name: pageContents[0],
+          contentPageCount: 0,
+        }
+        while(true){
+          buildPages(stack_status.name, stack_status.contentPageCount);
+          console.log('one stack end', stack_status);
+          if (stack_status?.name && stack_status?.contentPageCount) {
+            stack_count = 0;
+          }
+          else {
+            break;
+          }
+        }
+      }
+
+      $(document).ready(() => { 
+        /*
+        const videoCount = $("video").length;
+        let  loadedCount = 0, loadedVideoCount = 0;
+
+        var imgs = document.images,
+            len = imgs.length,
+            counter = 0;
+
+        [].forEach.call( imgs, function( img ) {
+            if(img.complete)
+              incrementCounter();
+            else
+              img.addEventListener( 'load', incrementCounter, false );
+        } );
+
+        function incrementCounter() {
+            counter++;
+            if ( counter === len ) {
+              console.log('startbuilding');
+                startbuilding();
+            }
+        }
+        
+        $("source").remove();
+        */
+      });
+     
+    });
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="subpage">
+    <div class='content' style="position: relative; top: 50%; transform: translateY(-50%);">
+      <h5 class="document-title">
+        edit book
+      </h5>
+      <p class="document-date"></p>
+      <img src="static/images/timeline-images/logo.png" class="center logo-img" alt="logo"/>
+    </div>
+    <div class="watermark">PREVIEW</div>
+  </div>
+</div>
+<div class="page"><div class="subpage"><div class="watermark">PREVIEW</div></div></div>
+
+<div class="page">
+  <div class="subpage">
+    <div class="table-of-contents">
+      <h3>Table of Contents</h3>
+        
+        
+        
+          
+          <div class="table-of-contents-body">
+            Journals
+            </br>
+            <span id='journals-pagenumber'>3</span>
+          </div>
+        
+        <div class="end-line"></div>
+    </div>
+    <img src="static/images/timeline-images/logo.png" alt="logo" class="center logo-img" />
+    <div class="watermark">PREVIEW</div>
+  </div>
+</div>
+<div class="page"><div class="subpage"><div class="watermark">PREVIEW</div></div></div>
+
+
+
+
+
+
+  
+  <div class="page">
+    <div class="subpage">
+      <div class="vertical-align-center">
+          <h3 class="table-content-title">Journals</h3>
+          <div class='logo-img-container'>
+            <div class='line left-3-margin'></div>
+            <img src="static/images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
+            <div class='line right-3-margin'></div>
+          </div>
+      </div>
+      <div class="watermark">PREVIEW</div>
+    </div>
+  </div>
+  <div class="page"><div class="subpage"><div class="watermark">PREVIEW</div></div></div>
+  <div id="journals">
+  <div id="book-content-journals">
+    
+      <div class="two-margin journal-text">
+        
+      </div>
+      
+        <h3 class="subtitle right-align-text">Thursday, November 04, 2010</h3>
+        <div title="Thursday, November 04, 2010" class="two-margin journal-title-text">Analise gave herself a haircut - with Antonio's help</div>
+        <div title="Thursday, November 04, 2010" class="two-margin journal-text">
+        
+          <p>So, I'm pregnant. Pregnancy alone is exhausting, but keeping up with 3 year old (almost 4) twins while pregnant is practically debilitating. The kids are normally so well behaved, so when I just couldn't keep my eyes open any longer, I told them to behave and I was going to lie down a little bit. I told them to come get me if they needed anything! They were coloring and being so good, so I felt comfortable doing it. Boy, was I wrong!!
+</p>
+<p>I hadn't been lying down for long when Antonio came in the room and said, "Mommy, you have too much hair." I looked at him and noticed he had a pair of scissors in his hand. I replied, "No I don't." His response..."Sissy did."
+</p>
+<p>I flew out of the bed! I rushed into the next room and she had mutilated her hair! And apparently, Antonio helped! I immediately started crying and yelling, asking her why she would cut her beautiful hair. I just kept asking her why over and over.
+</p>
+<p>I truly couldn't believe the mess she had made with her hair. I called Holly, crying and asked if she could try to fix it. (I'm not sure what I was thinking, exactly. It isn't like she put the hair back on her head!) She said she would squeeze us in and we could go down in an hour or so.
+</p>
+<p>I took a few quick pictures of her haircut to document the mess she made. When I went to take a picture of her, she started smiling. Mean, upset Mom that I am, I told her "Don't smile! You are in trouble!"
+</p>
+<p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/12/10/1_1c2c52d3-8e35-4b5e-b424-60fa90a2450e.jpg"><br><br>
+</p>
+<p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/12/10/2_ecb965cf-dda0-43b3-bfc6-f5da8156233a.jpg">
+</p>
+<p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/12/10/3_244fcc8a-496c-4bc6-90e7-33ea81bf68ba.jpg">
+</p>
+<p>We headed to Holly's and she attempted to clean up the choppy mess she had made in the back. Unfortunately, there wasn't really anything she could do with the front. While she was cutting it, Analise fell asleep in the chair. I had to stand next to her and hold her head up while Holly finished. Thankfully, at this point, I was slightly less hysterical.
+</p>
+<p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/12/10/4_79c37004-b2e5-431c-ad69-2a92ba2455b5.jpg">
+</p>
+<p>After the "fix" I went and bought a bunch of thick headbands to help cover the mess. Thankfully, it works. Well, to a degree.
+</p>
+<p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/12/10/5_4fb1b767-c54e-4844-826d-71033ebed53b.jpg">
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, July 28, 2015</h3>
+        <div title="Tuesday, July 28, 2015" class="two-margin journal-title-text">Analise</div>
+        <div title="Tuesday, July 28, 2015" class="two-margin journal-text">
+        
+          <p>Analise is such a sweet girl. She is more drama than any one little girl should be, but I just love her!
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, August 27, 2015</h3>
+        <div title="Thursday, August 27, 2015" class="two-margin journal-title-text">Analise and Antonio</div>
+        <div title="Thursday, August 27, 2015" class="two-margin journal-text">
+        
+          <p>Found out that both of my kiddos are getting Bravo Bobcat Awards on Monday. Man, my kids rock!
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, August 31, 2015</h3>
+        <div title="Monday, August 31, 2015" class="two-margin journal-title-text">Bravo Bobcats</div>
+        <div title="Monday, August 31, 2015" class="two-margin journal-text">
+        
+          <p>So proud of these two!
+</p>
+<p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/09/11/Bravo_Bobcats_c2db8575-981d-4347-a545-23f0672db52c.jpeg"><br>
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Friday, September 04, 2015</h3>
+        <div title="Friday, September 04, 2015" class="two-margin journal-title-text">Isaiah</div>
+        <div title="Friday, September 04, 2015" class="two-margin journal-text">
+        
+          <p>Can't wait to watch Isaiah play soccer tonight!! I know he's going to do awesome. It is so hard to believe he is 4 and old enough for organized sports. Love my little man.
+</p>
+<p><br>*Updated: Tonight ended up only being a short practice and uniform pickup. Next week is the first official "game". Can't wait!
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, September 05, 2015</h3>
+        <div title="Saturday, September 05, 2015" class="two-margin journal-title-text">Furniture Shopping with kids</div>
+        <div title="Saturday, September 05, 2015" class="two-margin journal-text">
+        
+          <p>Always an adventure. They did pretty good today though. No complaints. And free hotdogs. The best part though, we got some nice new furniture.
+</p>
+<p>When we got home Isaiah said, "Where is it?" I guess he thought the new furniture would beat us home and be set up by the time we got here. That would have been nice.
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, September 09, 2015</h3>
+        <div title="Wednesday, September 09, 2015" class="two-margin journal-title-text">Analise's hair cut</div>
+        <div title="Wednesday, September 09, 2015" class="two-margin journal-text">
+        
+          <p>Analise got a hair cut last night. She got somewhere between 4-6 inches 
+taken off. It looks really cute and she is excited for it to not be so 
+hot on her neck.
+</p>
+<p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/09/14/Analise_haircut_24577ea1-0108-466b-98de-d70f3208fe0c.jpeg">
+</p>
+<p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/09/14/Analise_haircut2_d8366e49-3287-49a4-9aec-769ee00ae256.jpeg">
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, September 09, 2015</h3>
+        <div title="Wednesday, September 09, 2015" class="two-margin journal-title-text">Falling Asleep</div>
+        <div title="Wednesday, September 09, 2015" class="two-margin journal-text">
+        
+          <p>As I've gotten older, some days it can take me a long time to fall asleep. I don't know if it is distractions (phone, tv, etc) or just too much on my mind, but unless I'm completely exhausted it generally takes me a while to fall asleep. I love that it isn't the case for my kids. </p><p>Tonight, Isaiah was sitting on the couch next to me, telling me a story and then all of a sudden he was quiet. </p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/3224/2017/06/21/amy1_edited5_1d08758d-c230-4951-acf1-dba618e7ca42.jpg" /><p>So adorable. Just love this boy.<br /> </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, September 10, 2015</h3>
+        <div title="Thursday, September 10, 2015" class="two-margin journal-title-text">Proud of Antonio</div>
+        <div title="Thursday, September 10, 2015" class="two-margin journal-text">
+        
+          <p>I have a special, different relationship with each of my kids. I love each one of them as much as the other, but the relationship I have with each is different. </p><p>Antonio is special. He is my first son. He is so smart and funny and determined and competitive! He has so many traits that I just love. Every day he makes me proud, even the days he makes me crazy. </p><p>His 3rd grade teacher at Floyd Elementary, Ms. Sprague uses Class Dojo (an app) that monitors her students progress throughout the day. They get positive points for a variety of things they do well and negative points when there are issues. So far this year, (we're a month in) he hasn't gotten any negative points. I'm not surprised by this at all as he prides himself on succeeding, especially in school. But I just love checking the app throughout the day and seeing the positive points he earns. It brings a huge smile to my face and pride to my heart to know others recognize how awesome he is. </p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/3223/2017/06/21/amy2_edited2_6c97dd7e-7979-40cc-9e5a-53e1f4421151.png" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Friday, September 11, 2015</h3>
+        <div title="Friday, September 11, 2015" class="two-margin journal-title-text">Isaiah's First Soccer Game</div>
+        <div title="Friday, September 11, 2015" class="two-margin journal-text">
+        
+          <p>Isaiah's first game was tonight. It was kind of a rough start, as he had fallen asleep on the way home from Grandpa's house about an hour before the game. Dressing him was interesting, as I had to do it while he was still sleeping. He just didn't want to wake up! When we got there, he didn't want to play or even be there. Thankfully, he was able to get himself awake enough to play, after much prodding and promising of fun after, and when the game time actually started he was ready to go. And he did a great job! </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/09/14/Isaiah_before_soccer_a6f96075-70c1-454f-b56f-751a42d54006.jpeg" /><p> Before the game</p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/09/14/Isaiah_before_soccer2_12426c3c-74f5-406f-8d6f-9f010d4dc6d9.jpeg" /><p> </p><p>During the game: </p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/09/14/Isaiah_soccer_during_5dd78f58-f85e-4794-a851-e95900677eb3.jpeg" /><p> </p><p>After the game: </p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/09/14/Isaiah_soccer_df0d83da-73b1-4c7a-ad61-85bd72cca35f.jpeg" /><p> </p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/09/14/Isaiah_soccer2_1662c2ef-1ad5-480e-b1bf-93b743deb37a.jpeg" /><p> </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, September 12, 2015</h3>
+        <div title="Saturday, September 12, 2015" class="two-margin journal-title-text">Antonio's first football game</div>
+        <div title="Saturday, September 12, 2015" class="two-margin journal-text">
+        
+          <p>Antonio had his first football game this morning. We arrived on time and everything!! This is no small feat, considering we had to be at the field by 7:45 a.m. and I was flying solo. Ben was in Cedar City running a half marathon so unfortunately he had to miss the game. But the kids and I managed to get up and out on time, even eating breakfast first!
+</p>
+<p>The game was almost unbearably hot! With the morning sun right in our faces, and the reflection off the aluminum bleachers, I was drenched in sweat before the game even began. At some point during the second quarter, friends (okay, sort of friends...I know them but don't really hang out with them) invited me down to share their shade. I was immensely grateful!
+</p>
+<p>The boys did a great job during the game. I can't really say, personally, if Antonio did a good job as I had an extremely difficult time spotting him the entire time. The team's jerseys didn't arrive in time for the game so they were all out there in their white practice jerseys. They all looked the same. I could tell if it wasn't him if the boy had on a bright undershirt or bright cleats, but otherwise, I was lost.
+</p>
+<p>He told me he thought he did a good job, and that speaks volumes as he is usually pretty hard on himself. So we will take it as a very successful first game. The Pahrump Valley Mighty Mite Trojans won the game 20-0!
+</p>
+<p><span></span>
+</p>
+<p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/09/14/Antonio_first_football_game2_7ba50a0d-1a8f-4cb4-aa60-ae6208638c63.jpg">
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, September 24, 2015</h3>
+        <div title="Thursday, September 24, 2015" class="two-margin journal-title-text">Isaiah scored!!!</div>
+        <div title="Thursday, September 24, 2015" class="two-margin journal-text">
+        
+          <p>Tonight, at Isaiah's soccer game he was completely cracking me up. Considering he is so shy in so many social settings, he totally shocks me on the soccer field! He is funny, loud, talkative, aggressive-ish...anything but shy! Tonight, he was all of those things. Yelling "NO!" if the other team scored. Yelling "YEAH!!!" and fist pumping the air if his team scored. He would run and then roll on the ground before hopping back up and continuing on. I couldn't stop laughing at how silly he was being.
+</p>
+<p>Near the very end of the game, I believe it was the last play, the ball was kicked off by the other team, he stole it, it got kicked away from him but he managed to stop it, turn it around and went in for the score! He scored his first goal!! He did a fist pump and turned and looked at me with his arms raised. Of course, I was yelling what a great job he did. The game was ending so he ran to me for a big hug. It was the best thing ever! He was so excited. I just love that little guy and watching him play soccer is some of the best entertainment ever.
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, October 01, 2015</h3>
+        <div title="Thursday, October 01, 2015" class="two-margin journal-title-text">Photo of my cutie</div>
+        <div title="Thursday, October 01, 2015" class="two-margin journal-text">
+        
+          <img src="https://jrnl.s3.amazonaws.com/entry_images/13/54800/2017/08/25/amy1_edited_6d054b01-4c05-4376-a521-f790ab35019d.jpg" /><p>Isaiah passed out on the floor. Such a cutie.</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, October 19, 2015</h3>
+        <div title="Monday, October 19, 2015" class="two-margin journal-title-text">Monday morning hell</div>
+        <div title="Monday, October 19, 2015" class="two-margin journal-text">
+        
+          <p>If it could go wrong, this morning it did. Okay, it wasn't really that bad, but it definitely wasn't great!
+</p>
+<p>I got up about 10-15 minutes earlier than normal. Not that that was exceedingly early, but it was earlier, so that meant I should have been ready to go earlier, right? Wrong!!
+</p>
+<p>I'm honestly not even sure what happened to the time this morning. Before I knew it, we were running late. But before we could get everyone in the car and on the road, Antonio couldn't find his hat for his reward day. That caused tears and me to run back inside to see if I could help him find it. No luck.
+</p>
+<p>While we were inside doing that, Analise accidentally knocked over the cup of cereal Antonio had in the car. Yes, spilled cheerios in the car! :(
+</p>
+<p>After another quick breakfast grab we made it out of the house. We were running late enough that I had to take Analise and Antonio to school before taking Isaiah to the babysitter. While Isaiah was glad to get to wave bye to the kids at school, he was then very sad to find out that he had to go to the babysitter.
+</p>
+<p>We are having a rough time this year with the babysitter and he was not excited to go. So I had to leave my crying baby at the sitters. It hurts my heart so much to have to leave him, especially when I know he isn't happy. I know he is in good hands, but I hate knowing how much he doesn't like it. I only hope he loves school next year. Otherwise we could be in for some rough mornings. :(
+</p>
+<p>I think I need a do-over. So far, this Monday sucks!<span></span><br>
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, October 29, 2015</h3>
+        <div title="Thursday, October 29, 2015" class="two-margin journal-title-text">Family Pumpkin Carving</div>
+        <div title="Thursday, October 29, 2015" class="two-margin journal-text">
+        
+          <p>Tonight we carved pumpkins as a family. Well, I watched and took pictures while Ben and the kids did the carving. I'm not quite as talented, even at drawing a face on a pumpkin as Ben. And...I hate having the pumpkin guts on my hands!</p><p>It was fun, and there were lots of laughs. Some zingers from tonight.</p><p>Ben was explaining how sugar bugs work...how the bacteria in your mouth poop and it eats away at your teeth. Isaiah interjects and says, &quot;Dad. Quit making stuff up.&quot; It was hilarious. :)</p><p>And then smarty pants Antonio says to me, &quot;You have the scariest pumpkin on your neck!&quot; What a turkey.</p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/10/30/family_pumpkin_f4cb01b9-fa10-491e-9169-e10e5d6e3a81.jpg" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, October 31, 2015</h3>
+        <div title="Saturday, October 31, 2015" class="two-margin journal-title-text">Girl Time</div>
+        <div title="Saturday, October 31, 2015" class="two-margin journal-text">
+        
+          <p>Analise and I got to spend a little girl time together this afternoon. I had a nail appointment scheduled (the first one in a really long time) and she begged to go along. I figured, why not. I told her there was no guarantee that she'd get her nails done too, but we would ask.</p><p>Luckily, Mrs. Kim had time to polish her nails as well and she even added butterflies to them to match her dress for Halloween. She was one happy girl!</p><p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/11/03/Girl%27s_Day_aa14cc18-1877-4647-87c9-c05d39dc3729.JPG"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, October 31, 2015</h3>
+        <div title="Saturday, October 31, 2015" class="two-margin journal-title-text">Trick or Treat</div>
+        <div title="Saturday, October 31, 2015" class="two-margin journal-text">
+        
+          <p>This year for Halloween, all the kids chose their own costumes. </p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/235309/2017/08/25/amy2_edited_c992e5e9-ee42-4d88-b5ed-00b64a98f76f.jpg" /><p>Analise wanted to be Cinderella (the new one from the movie). Antonio wanted to be a ninja and Isaiah wanted to be a ninja turtle. &quot;The red one!&quot; (Raphael)</p><p>I must admit, they all looked extremely cute in their costumes.</p><p>We hit all our usual spots this year, plus one extra. We went to visit Grandma Mary and Grandma Opal first, as always. Then we went to Nick and Charese Moore's house. Isaiah was terrified of all their spooky decorations!</p><p>Next we went to the Wombaker's house (a new one for us). Then we headed to Aunt Becki and Uncle Ben's house. We visited there for a while and Aunt Becki told us that Uncle Ben is having some issues with his heart. He is having multiple tests done, but he doesn't have enough blood pumping. Scary!! Analise got in a bit of trouble with Aunt Becki for not listening and had to sit by her on the couch. She did a good job of holding in her emotions for most of the time, but then she cried on me for a little bit.</p><p>After Ben and Becki's we stopped by Bob and Joan Hammond's house and then by the Lindberg's house. After that we headed to Janelle and Sergio's house. They were nice enough to feed us dinner. It was delicious!</p><p>All in all, it was a successful evening of trick or treating. The kids have more candy than they could possibly eat and we all got to bed at a decent time. Add to that, we got to fall back!! Woohoo for an extra hour of sleep!</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, November 02, 2015</h3>
+        <div title="Monday, November 02, 2015" class="two-margin journal-title-text">Jem and the Holograms</div>
+        <div title="Monday, November 02, 2015" class="two-margin journal-text">
+        
+          <p>Jem and the Holograms was one of my favorite shows as a little girl. I always hated when we went out to eat after church on Sundays because I would miss it! I bought several VHS copies as I grew up and shared those with Analise when she was really little. </p><p>Then, The Hub (a channel on DirecTV and Dish Network) brought back the show. Analise and I enjoyed watching it together! </p><p>Now, there has been a full-feature film of Jem and the Holograms. Of course, the movie isn't exactly like the cartoon, but that is okay. Analise and I went to see the movie today. I'm not sure which one of us was more excited. </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/11/04/Jem_a02a42d9-d14c-4f3a-9b1d-90fa4035d24f.JPG" /><p>Our tickets<br /><br />After the movie, we headed to Skinny Fats for a light dinner. That is one of my favorite places and Analise likes it too. Though, this time, her chicken strips didn't taste awesome. I had the &quot;Slow Boat to China&quot;. Yum! </p>&nbsp;<img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/11/04/Jem3_6ee1739f-b32a-404c-9795-6be94612b243.JPG" /><p><br />Our dinner. </p><p>It was a truly fun day with my girl. She thanked me many times for taking her and spending the day with her. During dinner we bought the soundtrack to the movie through iTunes and we danced along to it on the way home. We also made a quick stop at Payless for some jazz shoes and new boots for Analise. </p><p>Just love my sweet girl. Here are a couple more pics from our time together. </p><p>&nbsp;</p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/11/04/Jem1_043c179b-c129-4fc8-91c2-0b8156a3e4db.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/11/04/Jem2_b5029833-45f3-4411-b12f-47a43560c837.JPG" /><p> </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, November 03, 2015</h3>
+        <div title="Tuesday, November 03, 2015" class="two-margin journal-title-text">Analise's growing pains</div>
+        <div title="Tuesday, November 03, 2015" class="two-margin journal-text">
+        
+          I picked the kids up from school today and the minute Analise saw me, she came to me in tears and started crying. I asked what was wrong and she said she was having growing pains.&nbsp;<div><br /><div>My poor, sweet girl. I hate that she gets pains in her legs just like I used too. Thankfully I had some Tylenol in my car that I could give her before Acro.&nbsp;</div></div><div><br /></div><div>I went through growing pains when I was a child too. They are so painful.&nbsp;</div>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, November 05, 2015</h3>
+        <div title="Thursday, November 05, 2015" class="two-margin journal-title-text">Not enough time</div>
+        <div title="Thursday, November 05, 2015" class="two-margin journal-text">
+        
+          Isaiah is such a sweet boy. He didn't want to go to Tonya's today. He wanted to stay home with me, because "we don't ever get enough mommy zaya time." And he's right, we don't.&nbsp;<div><br /></div><div>I hate that I'm missing this time with him. I hate that I was able to stay home with the twins until they were in school and can't with him. But staying home with them about broke us. We have a ton of debt, totally our fault and not theirs, but we just can't afford for me to stay home. And, I love my job. I love the stuff I get to work on. I enjoy learning something new and different every day. But I do miss my baby.&nbsp;</div><div><br /></div><div>So tomorrow, I'm working from home. And even though I will be working, I look forward to my time with Isaiah.&nbsp;</div>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, November 07, 2015</h3>
+        <div title="Saturday, November 07, 2015" class="two-margin journal-title-text">Antonio's first playoff game</div>
+        <div title="Saturday, November 07, 2015" class="two-margin journal-text">
+        
+          <img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/11/10/image_e83ed25d-4137-4bd6-b191-94ad19746429.jpg" alt=""><div>Sunflower seeds making getting up early worth it!</div><div><br /></div><div><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/11/10/image_78b91fe0-2d98-40ad-a3c3-48420614cf9d.jpg" alt=""><br /></div><div><br /></div><div>My beautiful, sassy girl.&nbsp;</div><div><br /></div><div><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/11/10/image_5d996c43-770d-49b7-8444-f9063f01ef76.jpg" alt=""><br /></div><div><br /></div><div>Go Trojans!</div><div><br /></div><div><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/11/10/image_c5bf7e26-d808-41c1-84bb-03e2c4f4e253.jpg" alt=""><br /></div><div><br /></div><div>And, they won!!</div><div><br /></div><div>It was a hard fought win! I'm so proud of my boy, he had some great blocks! It made getting up at 5 am worth it. &nbsp;</div><div><br /></div>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, November 11, 2015</h3>
+        <div title="Wednesday, November 11, 2015" class="two-margin journal-title-text">Tomorrowland</div>
+        <div title="Wednesday, November 11, 2015" class="two-margin journal-text">
+        
+          <p>Ben, the kids and I watched Tomorrowland tonight. Because the kids don't have school tomorrow (Veteran's Day), we let them stay up late and we all watched a movie together.</p><p>I was really impressed with the movie. I thought it was very interesting and the kids really seemed to love it. It even kept Isaiah's attention. He kept asking, &quot;What about Casey?!&quot; He was afraid she was going to get left behind in some of the &quot;action&quot; scenes.</p><p>The kids all also fought over who was going to sit by me. Melts a Mom's heart when her kids are fighting over snuggling time with me. I love it!</p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/11/11/Amy_and_Analise_de3d70d1-1b08-45d7-9e8d-89f3a06e6d92.jpg" /><p><br />Me and Sis.</p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/11/11/Cuddling_with_kids_18e1de13-c9a7-45cc-ab54-775a8b3f65aa.jpg" /><p><br />Cuddling with the kids. (Isaiah was trying to push Antonio out of the picture)</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Sunday, November 15, 2015</h3>
+        <div title="Sunday, November 15, 2015" class="two-margin journal-title-text">Isaiah the soccer star</div>
+        <div title="Sunday, November 15, 2015" class="two-margin journal-text">
+        
+          Isaiah had soccer closing ceremonies tonight. He was so very excited to get a trophy. And while I'm on the fence about participation trophies, I love how excited he was.&nbsp;<div><img src="https://jrnl.s3.amazonaws.com/user_images/13/2015/11/18/image_a148bc4f-936d-484f-8b48-5c9a6bb11f86.jpg" alt=""><br /></div><div>Nothing beats that smile of his. It just melts me!</div>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, November 23, 2015</h3>
+        <div title="Monday, November 23, 2015" class="two-margin journal-title-text">Sick kiddo</div>
+        <div title="Monday, November 23, 2015" class="two-margin journal-text">
+        
+          <p>I hate when my kids are sick. :( Isaiah was sick last night. I'm relatively certain his issue stemmed from too much drainage and a runny nose, but nevertheless he was throwing up at 1:30 a.m. Ben had consoled him initially when he was getting sick in his bathroom and then brought him to bed with us.</p><p>I couldn't fall back asleep right away as he was making noises showing his discomfort and I was rubbing his back trying to soothe him. It wasn't very long after he laid down in our bed that he was making noises like he was going to be sick again. Ben rushed him to the bathroom (he is closer) and he was getting sick again. Knowing I had to be up around 5 a.m., I tried to stay in bed and fall back asleep but he was crying for me.</p><p>When I went into the bathroom to see if he was okay, he was crying and he said to me, &quot;Mooooom. I just like you.&quot; It made me giggle a little and I told him I liked him too. Then he was telling me that it was the worst day ever and he didn't want to be sick. I finally convinced him to get in the shower with Ben and that it would make him feel a little better. After much debate, he conceded and I was able to head back to bed.</p><p>I was up by 5:25 and was getting ready as quick as my exhausted body would allow me to, so I could be out the door by around 5:50 a.m. I succeeded. I'm not sure how, but I made it.</p><p>Thankfully, Isaiah woke up feeling better (at 9:30 a.m.).</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, December 10, 2015</h3>
+        <div title="Thursday, December 10, 2015" class="two-margin journal-title-text">My funny boy</div>
+        <div title="Thursday, December 10, 2015" class="two-margin journal-text">
+        
+          <p>As is our nightly routine, Isaiah was watching Daniel Tiger before bed. He was in our bed watching it and Ben was flossing and brushing his teeth. </p><p>I had just come out of the bathroom from brushing my own teeth and climbed into bed. <br /> </p><p>Moments later, Daniel Tiger said, &quot;corn. That's right. Do you see the corn?&quot; To which Isaiah responded, &quot;It's right there in front of your face.&quot; I'm not sure he meant it as snarky as it came out, but it sure was funny!!<br /> </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Friday, February 05, 2016</h3>
+        <div title="Friday, February 05, 2016" class="two-margin journal-title-text">Silly boy</div>
+        <div title="Friday, February 05, 2016" class="two-margin journal-text">
+        
+          <p>I just love this silly, funny boy. These were the faces he was making at me while face timing tonight. </p><p><br /><br /></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/02/05/IMG_20160204_193301_dd831ae7-edd5-4cd2-8ef0-636732b51864.jpeg" /><p><br />He was trying to make a bunny face. I just love this silly guy. I can't believe he'll be 9 tomorrow!!</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, February 06, 2016</h3>
+        <div title="Saturday, February 06, 2016" class="two-margin journal-title-text">Birthday Bowling and Dairy Queen</div>
+        <div title="Saturday, February 06, 2016" class="two-margin journal-text">
+        
+          <p>While I was away working, Ben took the kids to celebrate their birthday with some Draft Picks bowling (and dinner) and Dairy Queen. Pretty sure we're going to have to do a &quot;redo&quot; when I'm back home. </p><p><br /><br /></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/02/10/IMG_20160209_162850_9b868389-229c-4a8f-b3c0-6dc29193cc4f.jpeg" /><p><br /><br /><br /></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/02/10/IMG_20160209_162859_e48fabc3-163a-4236-acc0-6efd3a12c885.jpeg" /><p><br /><br /><br /></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/02/10/IMG_20160209_162908_3a760448-8ac3-41f9-820a-aac926c83e75.jpeg" /><p><br /><br /><br /></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/02/10/IMG_20160209_162802_99de575b-fef4-46bb-bf38-d19530321210.jpeg" /><p><br /><br /></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, February 06, 2016</h3>
+        <div title="Saturday, February 06, 2016" class="two-margin journal-title-text">FaceTime</div>
+        <div title="Saturday, February 06, 2016" class="two-margin journal-text">
+        
+          <p>I love FaceTime! Technology is seriously amazing. It lets me see these cute kiddos when I'm away. As much as I hate being away from them, this makes it bearable. </p><p>(Ignore the message over Analise's face when I took the screenshot) </p><p><br /><br /></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/02/10/IMG_20160209_162453_47e38020-e947-4586-b4c0-c54882174ff0.jpeg" /><p><br /><br /><br /></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/02/10/IMG_20160209_162504_6d4dac3f-90d6-4aef-bb33-1b74b007c8a8.jpeg" /><p><br />(Darn autocall ruined my picture!)<br /><br /><br /></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/02/10/IMG_20160209_162534_beb25e0a-ab96-41f5-87b0-bd6ebc0cefc2.jpeg" /><p><br /><br /><br /></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/02/10/IMG_20160209_162545_710753f1-e6bf-4ede-a503-e8b422bd2360.jpeg" /><p><br />I just love these kids! I'm one lucky mommy. I know I say it a lot, but it's true!</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, February 18, 2016</h3>
+        <div title="Thursday, February 18, 2016" class="two-margin journal-title-text">Tough kid</div>
+        <div title="Thursday, February 18, 2016" class="two-margin journal-text">
+        
+          <p>Antonio is such a tough kid. And also extremely dedicated to school. His tooth is really bothering him, on the bottom left side of his mouth. It is loose, but the teeth next to it keep him from being able to wiggle it backward, only forward. </p><p>This morning, his jaw was a little swollen and his tooth was really bothering him. He took some medicine and was determined to tough it out. I, on the other hand, am very nervous about it. I'm afraid of infection. I tried to see if I could get him into the dentist. He could get in today at 2:15, but that would make him be absent from school (leaving before 1:45 makes you absent for the day). </p><p>I called to check on him, and was able to talk to him. He said it doesn't hurt as bad and he doesn't want to leave school to go to the dentist. So, we are going to let him tough it out and just hope no infection is involved. Fingers crossed. </p><p>I just love that kid and his determination not to miss school. <br /> </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, February 22, 2016</h3>
+        <div title="Monday, February 22, 2016" class="two-margin journal-title-text">Antonio and his teeth</div>
+        <div title="Monday, February 22, 2016" class="two-margin journal-text">
+        
+          <p>We ended up taking Antonio to the dentist on Friday morning (well, Ben took him). I knew there was a reason why his jaw was swollen beyond a loose tooth. And I was right.</p><p>He had an infection in his jaw and it was so swollen, the dentist couldn't pull his tooth yet. So she made an appointment for this coming Friday, letting him be on the antibiotics for a week to get the infection under control. </p><p>We also found out she is going to pull both of his incisors, even though only one is loose and causing issues. It is so they will grow back in evenly. </p><p>The appointment is at 7:30 a.m. and we are hopeful he will be finished in time for us to rush back to school so he isn't considered absent. </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, February 23, 2016</h3>
+        <div title="Tuesday, February 23, 2016" class="two-margin journal-title-text">My readers</div>
+        <div title="Tuesday, February 23, 2016" class="two-margin journal-text">
+        
+          <p>Even though I had to force them to read on Sunday morning, I loved that they did it. And I love that Isaiah wanted to participate too. </p><p>  <br /> <br /> </p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/02/23/IMG_20160223_142307_08ee6ef3-d92d-446c-b62f-139bff177c43.jpeg" /><p> <br />  <br /> <br /> </p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/02/23/IMG_20160223_142315_5df7cbb9-5a62-4f79-b55f-f995017278a9.jpeg" /><p> <br /> I just love these cuties so much. 			<br /> <br /> <br /> </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, April 18, 2016</h3>
+        <div title="Monday, April 18, 2016" class="two-margin journal-title-text">Isaiah's first "official" haircut</div>
+        <div title="Monday, April 18, 2016" class="two-margin journal-text">
+        
+          <p>Isaiah got his first official haircut yesterday. When I say &quot;official&quot; I mean Mommy or Daddy didn't do it. He did such a good job. </p><p>We went to Sports Clips, a place we have been once before but that time only Antonio and Ben got haircuts. This time, it was Antonio and Isaiah. </p><p>We did a cut with the hair longer on the top. It turned out great. I'm so proud of how well he did sitting still and letting her touch him without flinching. And it turned out great. He looks super cute, even more so than normal. </p><p><br /></p><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2249894/2016/04/18/b1ed5e9baca2b459ae49d0a852592d09_bbec761e-5f41-409a-b382-5abfb53bd7df.jpeg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2249894/2016/04/18/8114131bb9871f952f30a29f2fc74163_e940b85e-46ab-443b-9018-d840fd70d442.jpeg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2249894/2016/04/18/06d39eb492414bff7a85c45bcf5820d1_4553ee6f-66c3-4bd3-a8ad-74b0322993e5.jpeg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2249894/2016/04/18/cb3003e18300ab7977a4772fcc8cb046_5302930f-1da7-4d2e-8c19-be7e12d03f60.jpeg" /><p></p><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, April 30, 2016</h3>
+        <div title="Saturday, April 30, 2016" class="two-margin journal-title-text">Beach Time!</div>
+        <div title="Saturday, April 30, 2016" class="two-margin journal-text">
+        
+          <p>When we arrived in California for the Knotts competition, we arrived on Saturday afternoon. Analise had traveled down on Friday with a cheer friend to spend the day riding rides with her family. We waited until Antonio's baseball game ended on Saturday to head down. We arrived around 4 p.m., picked Analise up from the park, got checked in and then headed to the beach. I love the beach. I would love to live closer to the beach so I could hear the ocean, and spend my evenings taking walks along the shore. </p><p>Anyways, we were going to pick up Subway on the way to the beach and have a picnic, but every Subway we passed (7 of them!) were on the other side of the street with no easy way to get to and get back on our way. So, we decided to have a little snack and then grab dinner when we were finished playing at the beach. We headed toward Huntington Beach, found a spot to park and headed to the water to play. </p><p>The kids loved it! They played in the water, despite the fact that it was much cooler than I would prefer (I was in pants, a sweatshirt and cuddled under a blanket!) and windy! But that didn't deter them. They had a great time in the water and building sand castles. </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_7874_1d0ee56f-706b-41d1-9268-838c1d8ae188.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_6587_6175740f-b511-4a49-9be4-8b667f7b0401.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_6604_261ce75e-36f4-4e84-9df7-dde29d757c59.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_6607_403dfd99-302c-4877-b45a-64353978522d.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_6612_af074bfc-9530-4ee6-acc6-f48b5a4962dc.JPG" /><p> </p><p><br /> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_6634_849c5005-f687-4afd-ba77-78804064f2ad.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_6656_4688b0ae-f7ba-40d2-a009-9472e40c45e0.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_6659_8fda48d9-6956-4d11-8bf0-36c9eb154316.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_6666_b48d683a-9eaa-42b7-974d-ceae386452a8.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_6669_8652117a-6435-45ea-a99f-05edbf615bed.JPG" /><p> </p><p><br /> </p><p>Once the kids were sufficiently soaked and frozen, we headed for dinner. We stopped at a Rally's! I love Rally's! We had burgers, fries and milk shakes. A perfect way to end a perfect day. </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Sunday, May 01, 2016</h3>
+        <div title="Sunday, May 01, 2016" class="two-margin journal-title-text">Knotts and Competition</div>
+        <div title="Sunday, May 01, 2016" class="two-margin journal-text">
+        
+          <p>Analise's team did a great job at the Knotts Competition. They pulled in first place! So proud of my girl. It makes me so sad that she doesn't want to participate in cheer anymore. That girl is a natural! I'm hopeful that one of these days we will move to Las Vegas and she will want to pick it up again. </p><p>The kids had a blast at Knotts Berry Farms after the competition. Ben rode one crazy-scary ride by himself and then he and the twins rode rides together while I hung out with Isaiah. The twins went on a few kiddie rides with Isaiah too, making him happy. </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_6674_fb75be3f-01bf-4f2c-a55d-f3d8f6d32382.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_6671_7f5b640f-b0fc-441f-bdca-aa9aee7dce1d.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_6676_ba4c2053-27ea-4f13-86bb-fcf26695eac1.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_7952_ceae33f4-1ba2-40d8-9e75-70af32e2a507.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_7959_bc9c49fa-5e25-4c90-92d0-cc07dff53d0f.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_7958_2e7dc88e-6fea-49a4-87a5-9d2e1be516e1.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_6678_71eebdcf-d94c-4d4d-bca6-9efc212c0260.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_7961_50468321-2c8f-4d3a-b608-53e613a7b799.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_7963_98afadb7-cb9e-44ea-a5f5-f9746c8dd450.JPG" /><p> </p><p>My favorite part had to be that Isaiah was finally willing to hug the characters and take a picture with them. Just another sign my boy is growing up. </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_7904_5760ffa6-6537-4881-a6f5-0c66f5c3114e.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_7912_825c4700-0435-4606-8f28-08d681e7ae81.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_7905_7c322d18-b260-47b6-89c6-f7f10b3710fb.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/06/01/IMG_7924_6553e1de-b3c4-468c-93b1-01fbdd62451d.JPG" /><p> </p><p>Overall it was a very fun trip! We will have to do it again sometime, when we don't have to worry about a cheer competition right in the middle of it. </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Sunday, May 08, 2016</h3>
+        <div title="Sunday, May 08, 2016" class="two-margin journal-title-text">Isaiah's Birthday party</div>
+        <div title="Sunday, May 08, 2016" class="two-margin journal-text">
+        
+          <p>Isaiah and Olivia celebrated their 5th birthday at Pump It Up with a fun, little party. I had planned Isaiah's party and was trying to work around multiple schedules including cheerleading and baseball and the schedules of friends and family so those we wanted at the party could attend. Desiree, who has been busy herself with kids' sports and school schedules, work and building a home and preparing to move, asked if she could just piggy-back on Isaiah's party for Olivia. That was fine with me because they were going to attend anyway, and having someone else cover a little of the costs was helpful. </p><p><br /> </p><p>Attending the party were my three kids; Analise, Antonio and Isaiah, as well as Desiree's three kids;  Alina, Aydon and Olivia. Also in attendance were friends Jaycee Hayes (who rode in with Armando and Desiree), Kamden Moore (Isaiah's best friend who rode in with us, thrilling Isaiah beyond belief), Blake and Dax Jones, as well as Hudson and Easton Jones. It wasn't an overly large party, but all involved had a nice time.<br /> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/05/20/IMG_6847_b02130b1-e184-46c6-8ba0-8f43937d8c19.JPG" /><p>(Dax isn't pictured) </p><p>Isaiah had a white cake with white whipped frosting. On the cake was Spiderman and a picture of Isaiah. He was very excited that his picture was on the cake too. And my boy sure loves him some cake! I think he gets that from his Momma. </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/05/20/IMG_6841_700a5097-1ede-4b62-8db9-51b0d60427e2.JPG" /><p> </p><p>The party was a huge success. Now I just need to get used to the fact that my baby is 5! </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/05/20/IMG_6881_d7e6ec03-2144-4453-9166-5590851b568b.JPG" /><p> </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, May 14, 2016</h3>
+        <div title="Saturday, May 14, 2016" class="two-margin journal-title-text">Antonio's playoff game</div>
+        <div title="Saturday, May 14, 2016" class="two-margin journal-text">
+        
+          <p>We beat the Tigers! </p><p>It was such a great game that ended up going in to extra innings due to a tie when the original time limit was up. We had a great last inning at bat and were able to hold them, allowing us to go on to the next game in the playoffs. </p><p>Antonio had a great game and I'm always so proud of him! </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, May 14, 2016</h3>
+        <div title="Saturday, May 14, 2016" class="two-margin journal-title-text">Analise's last cheer competition</div>
+        <div title="Saturday, May 14, 2016" class="two-margin journal-text">
+        
+          <p>She didn't win, but she did great. I'm so proud of her. </p><p>Analise had the most family support at her last competition. Her Grandparents, Janelle and Sergio, came and brought Alina to watch her last competition. Uncle Reyes came as well as Aunt Jessica. </p><p>I love watching Analise compete. She did a great job, I only noticed one bobble. We ended up not winning, by less than one point. She was very disappointed, but I was so very proud of her!<br /> </p><p>I'll be sad next year when competition season begins and I don't get to watch her kick butt on the mat, but I'm looking forward to watching her play soccer and basketball. </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, May 18, 2016</h3>
+        <div title="Wednesday, May 18, 2016" class="two-margin journal-title-text">My beautiful girl and her new hair cut</div>
+        <div title="Wednesday, May 18, 2016" class="two-margin journal-text">
+        
+          <p>Analise had been dying to have her hair cut! She wanted it cut for several months, but I told her she had to wait until cheer was over, so I wouldn't struggle to get it up in a high pony tail for competitions. The season ended and 4 days later, she got it chopped! Went from long with no bangs, to short with bangs. And my oh my, she is such a gorgeous girl!
+</p>
+<p><img id="entry_image_2096" src="https://jrnl.s3.amazonaws.com/entry_images/13/2016/07/01/ig_1252542136338146458_50137360_801ff308-7eff-44c5-8bfd-b77be7c997a5.jpg" />
+</p>
+<p>Look at this cutie and her new hair cut!!
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, May 31, 2016</h3>
+        <div title="Tuesday, May 31, 2016" class="two-margin journal-title-text">Isaiah and the zipline</div>
+        <div title="Tuesday, May 31, 2016" class="two-margin journal-text">
+        
+          <p>We went to Katie's house last night for a Memorial Day cookout. Katie fed us delicious burgers, corn on the cob, baked beans (I didn't have any of those...yuck!), chips and dip, watermelon and ice cream for dessert. Katie and her boys were there, as were Aunt Lois and &quot;Mom&quot;. Her nephew Will stopped by for a little while too. The food was yummy and the company was even better.</p><p>It is always great spending time with Katie and her family. She is such a good hostess and an even better friend. The kids played very well together, playing on the slip and slide, having a water balloon fight and riding on the zipline. As they were playing, and I watched Isaiah on the zipline, I couldn't help but ask myself, when the heck did he get so big? He was riding it by himself, with no support. He did great, even if I held my breath the entire time he rode it. I just can't believe he is 5 and on his way to Kindergarten. Seriously kid, slow down!!</p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2281394/2016/05/31/bc44053f22b21d721693fa8c35fc6631_4ba74e70-90c1-4253-a91e-3409636a53dc.jpeg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2281394/2016/05/31/b542536632b7d023f54ced5c3d0fa3e7_bd278f4d-cb47-4963-9204-e560c4260ed7.jpeg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2281394/2016/05/31/ad064d9ed7debc1410e892382bb5b691_2e9a381d-62ee-44b4-9339-1cd2fdae025e.jpeg" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, July 04, 2016</h3>
+        <div title="Monday, July 04, 2016" class="two-margin journal-title-text">Nugget Fireworks...best seat around</div>
+        <div title="Monday, July 04, 2016" class="two-margin journal-text">
+        
+          <p>Tonight we watched the fireworks show that the Nugget put on from Preferred RV's pool. When we originally got to the pool, it was completely crowded. Lots of people, and they were being rather loud. I wasn't excited about trying to get in the pool. We decided to go eat the pizza we brought for dinner at a picnic table on the grassy area and decided we could just watch the fireworks from there.
+</p>
+<p>However, at about 8:40ish, everyone seemed to clear out of the pool. So we decided to go ahead and get in the pool. We got in and were just in time to head out to the deep end and enjoy the show. We floated on noodles and relaxed in the pool to watch the show. It definitely wasn't the best show we've ever seen, but it definitely scored bonus points because of where we got to watch them from. Then, after the fireworks show, we played a little pool volleyball and Isaiah practiced swimming without his vest with Analise's help and then mine.
+</p>
+<p>He did amazing! He swam almost the entire length of the pool without his vest. I'm so proud of his determination to learn how to swim without it. And he was very proud of himself as well! He just keeps getting bigger on me! I'm not sure how this is happening so incredibly fast.
+</p>
+<p><img id="entry_image_3664" src="https://jrnl.s3.amazonaws.com/entry_images/13/2016/07/05/ig_1286716421782630175_50137360_9180a81f-d995-43c4-a59b-db9f9481c6ce.jpg" />
+</p>
+<p>Our view of the fireworks tonight. Great view and so much fun!
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, July 05, 2016</h3>
+        <div title="Tuesday, July 05, 2016" class="two-margin journal-title-text">Analise and Antonio - Camp with Dominque</div>
+        <div title="Tuesday, July 05, 2016" class="two-margin journal-text">
+        
+          <p>Analise and Antonio are in their second week of a camp with Dominque Maloy. They work really hard, and have been doing a great job. They make me so very proud of them.
+</p>
+<p>Yesterday, Dominique did a little shout out to each of the kids who went to camp. Here is what she had to say about my amazing kiddos.
+</p>
+<p>ANTONIO Veloz- You have been bringing focus thats outta this wrld dude!! Way to step up today and wrk/o with the heavy weights!
+</p>
+<p>ANALISE Veloz- You are a coaches dream... Following directions with absolute effort and attention. Thank you for being so helpful and so consistent.
+</p>
+<p><br />
+</p>
+<p>I'm so very proud of you two!! Having a strong work ethic and dedication to what you're doing is very important. I know you two are going to go so very far in this life.
+</p>
+<p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/07/05/dominique2_65e81da7-1a13-490a-a9dd-af4c99cf8a5e.jpg" />
+</p>
+<p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/07/05/dominique_24baf6a8-f5d0-4818-bf68-7ac39fc4acbf.jpg" />
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, July 07, 2016</h3>
+        <div title="Thursday, July 07, 2016" class="two-margin journal-title-text">Travel to KY</div>
+        <div title="Thursday, July 07, 2016" class="two-margin journal-text">
+        
+          <p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/07/28/IMG_8384_88228821-0aac-44cd-a676-a798865669d6.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/07/28/IMG_8383_406ecbb5-06c1-472d-978f-d6f78b456dd0.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/07/28/IMG_8385_45fd1f37-62be-4834-b6d1-ca2e578ab71f.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/07/28/IMG_8386_f97c1a01-f38d-468e-827b-d9d82cf1fde2.JPG" /><p> </p><p><br /> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/07/28/IMG_8389_c65d5477-9731-4788-9e20-56f0b9411927.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/07/28/IMG_8391_0c244203-6a90-4f8a-8795-76571e058046.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/07/28/IMG_8393_a541741f-2a96-49ee-881d-d45128d241b7.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/07/28/IMG_8399_a7d6f7d6-43f0-4552-bbfa-6e69556720a6.JPG" /><p> </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, July 11, 2016</h3>
+        <div title="Monday, July 11, 2016" class="two-margin journal-title-text"></div>
+        <div title="Monday, July 11, 2016" class="two-margin journal-text">
+        
+          <p>Zonked in Aunt Beth's bed. </p><p><img id="entry_2320651_entry_image_15408" src="https://jrnl.s3.amazonaws.com/entry_images/13/2320651/2016/08/05/image00_6a873966-842d-4423-afbd-4c21918b8402.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, August 08, 2016</h3>
+        <div title="Monday, August 08, 2016" class="two-margin journal-title-text"></div>
+        <div title="Monday, August 08, 2016" class="two-margin journal-text">
+        
+          <p>First day of school 2016-2017.&nbsp;I can't believe the twins are in 4th grade. And even more difficult to believe is that my baby is in Kindergarten!</p><p><img id="entry_2323094_entry_image_16074" src="https://jrnl.s3.amazonaws.com/entry_images/13/2323094/2016/08/08/image00_4625f2b7-c70a-4ec0-bab3-90b7995c1c3c.jpg"></p><p><img id="entry_2323094_entry_image_16075" src="https://jrnl.s3.amazonaws.com/entry_images/13/2323094/2016/08/08/image01_f22ad029-fe03-459a-917b-3f846770ea12.jpg"></p><p><img id="entry_2323094_entry_image_16076" src="https://jrnl.s3.amazonaws.com/entry_images/13/2323094/2016/08/08/image02_e8bdbed0-d795-45aa-a9f3-d0cf2c0a49a9.jpg"></p><p><img id="entry_2323094_entry_image_16077" src="https://jrnl.s3.amazonaws.com/entry_images/13/2323094/2016/08/08/image03_69a8ae60-7756-48f3-a346-120a024a430b.jpg"></p><p><img id="entry_2323094_entry_image_16078" src="https://jrnl.s3.amazonaws.com/entry_images/13/2323094/2016/08/08/image04_ce2c61f5-059f-41f4-b046-2d4e4cc15686.jpg"></p><p><img id="entry_2323094_entry_image_16079" src="https://jrnl.s3.amazonaws.com/entry_images/13/2323094/2016/08/08/image05_e1198241-6971-4c3f-9752-a096a5244b92.jpg"></p><p><img id="entry_2323094_entry_image_16080" src="https://jrnl.s3.amazonaws.com/entry_images/13/2323094/2016/08/08/image06_47b8797e-1af4-4da9-89f1-5867dc8c1000.jpg"></p><p><img id="entry_2323094_entry_image_16081" src="https://jrnl.s3.amazonaws.com/entry_images/13/2323094/2016/08/08/image07_11d37329-a436-4e98-b63b-f0144108ddb3.jpg"></p><p><img id="entry_2323094_entry_image_16082" src="https://jrnl.s3.amazonaws.com/entry_images/13/2323094/2016/08/08/image08_31e86461-f0fd-43a8-bc81-aa3a454187d8.jpg"></p><p>I managed to hold in my tears until I was walking down the hallway after leaving Isaiah. I hope he has a great first day and an amazing year!! I hope they all do!&nbsp;</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, August 08, 2016</h3>
+        <div title="Monday, August 08, 2016" class="two-margin journal-title-text"></div>
+        <div title="Monday, August 08, 2016" class="two-margin journal-text">
+        
+          <p>I survived my first day of Kindergarten!</p><p><img id="entry_2323384_entry_image_16106" src="https://jrnl.s3.amazonaws.com/entry_images/13/2323384/2016/08/08/image00_02779da4-6fe6-46c0-ab21-b69ca4df87c8.jpg"></p><p><img id="entry_2323384_entry_image_16107" src="https://jrnl.s3.amazonaws.com/entry_images/13/2323384/2016/08/08/image01_53d58f0f-0ca2-4cea-a0ce-7d30ce9bd181.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Friday, August 19, 2016</h3>
+        <div title="Friday, August 19, 2016" class="two-margin journal-title-text"></div>
+        <div title="Friday, August 19, 2016" class="two-margin journal-text">
+        
+          <p>Super Summer Theater. We had a great time watching Bring It On with our friends. The musical is definitely different than the movie, but we loved it. My favorite part had to be &quot;Cheer Face.&quot; </p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2331433/2016/08/20/image00_c89d7247-990a-4115-a6ec-27c73c54499c.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2331433/2016/08/20/image01_73eb43ed-fad1-484c-be88-bd1888db3f4a.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2331433/2016/08/20/image02_ee85e3f7-b776-415a-9815-9e77c9607952.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2331433/2016/08/20/image03_9ad304e9-39a3-464a-ba9a-b8dd86a9a4cf.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2331433/2016/08/20/image04_5d939769-cf77-45cd-bae5-89e3782bd4ee.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2331433/2016/08/20/image05_cd33df90-1443-411b-a259-a455adddb5ed.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2331433/2016/08/20/image06_12e46f2c-1594-437d-8267-3e75749bb2f5.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2331433/2016/08/20/image07_aadaf299-7924-4b77-b437-2b82403ecb4c.jpg" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, August 22, 2016</h3>
+        <div title="Monday, August 22, 2016" class="two-margin journal-title-text">Isaiah sweetness</div>
+        <div title="Monday, August 22, 2016" class="two-margin journal-text">
+        
+          <p>Today Isaiah asked me what God looked like. I told him I didn't know. He said, "Can we text Aunt Carol and ask her?"&nbsp;</p><p><br /></p><p>I told him no, but that I wish we could. He said, "Yeah, I wish we could call her and ask her what Heaven is like." &nbsp;</p><p><br /></p><p>It's so hard for me not to cry when asks and says these sweet, innocent things. He is such a special boy and I love him so very much!</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Friday, August 26, 2016</h3>
+        <div title="Friday, August 26, 2016" class="two-margin journal-title-text"></div>
+        <div title="Friday, August 26, 2016" class="two-margin journal-text">
+        
+          <p>Isaiah's homework. He drew himself and his friend Kamden Moore. <br>He and Kamden are best buddies! And Isaiah did a really great job of drawing his friend. Spiky hair and glasses. :)</p><p><img id="entry_2338823_entry_image_20297" src="https://jrnl.s3.amazonaws.com/entry_images/13/2338823/2016/08/29/image00_1354c1c5-aa6e-4701-8221-c39fe3453d67.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, August 30, 2016</h3>
+        <div title="Tuesday, August 30, 2016" class="two-margin journal-title-text"></div>
+        <div title="Tuesday, August 30, 2016" class="two-margin journal-text">
+        
+          <p>Isaiah got Bravo Bobcat today for being responsible.&nbsp;So proud of him!</p><p><img id="entry_2339511_entry_image_20386" src="https://jrnl.s3.amazonaws.com/entry_images/13/2339511/2016/08/30/image00_fbd43137-1bb0-4258-b029-8d5df6748316.jpg"></p><p><img id="entry_2339511_entry_image_20387" src="https://jrnl.s3.amazonaws.com/entry_images/13/2339511/2016/08/30/image01_2f1d0dd6-d1b9-4a55-ab34-eca30022b22b.jpg"></p><p><img id="entry_2339511_entry_image_20388" src="https://jrnl.s3.amazonaws.com/entry_images/13/2339511/2016/08/30/image02_654a0d32-e97b-4504-bd7b-a1a16ce52c5a.jpg"></p><p><img id="entry_2339511_entry_image_20389" src="https://jrnl.s3.amazonaws.com/entry_images/13/2339511/2016/08/30/image03_2250ae16-9d55-4434-97f5-da6f4139df53.jpg"></p><p><img id="entry_2339511_entry_image_20390" src="https://jrnl.s3.amazonaws.com/entry_images/13/2339511/2016/08/30/image04_aa25b88c-6207-4927-9785-478850c439cb.jpg"></p><p><img id="entry_2339511_entry_image_20392" src="https://jrnl.s3.amazonaws.com/entry_images/13/2339511/2016/08/30/72e36e9b03e786dfef0c354f888c2bdb_5d59e4f3-6c94-4b39-9bc4-f46351e727e4.jpeg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, September 10, 2016</h3>
+        <div title="Saturday, September 10, 2016" class="two-margin journal-title-text">Fall sports season has officially begun!</div>
+        <div title="Saturday, September 10, 2016" class="two-margin journal-text">
+        
+          <p>Analise and Isaiah both had their first games at 9 am. I watched Analise first, then headed to Isaiah's game. I watched him score a goal and then at his halftime headed back to watch the rest of Analise's game. She did awesome as a defender! <br />
+</p>
+<p>Then we all headed to Vegas for Antonio's game. He didn't get to play much but they won 27-0! We hope next week he'll get to play more!
+</p>
+<p><img id="entry_2347170_entry_image_23443" src="https://jrnl.s3.amazonaws.com/entry_images/13/2347170/2016/09/12/image00_092ee6ad-8f9f-4fbe-9f1f-ada7bb541039.jpg" />
+</p>
+<p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/09/12/IMG_7196_1d3b24c0-4afa-4c5d-baee-170c1b4ec463.JPG" />
+</p>
+<p><img id="entry_2347170_entry_image_23444" src="https://jrnl.s3.amazonaws.com/entry_images/13/2347170/2016/09/12/image01_b557df90-c876-411b-82df-a4f8e11856a9.jpg" />
+</p>
+<p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/09/12/IMG_7261_a96429e6-871d-4b60-a549-30647e793cbf.JPG" />
+</p>
+<p><img id="entry_2347170_entry_image_23445" src="https://jrnl.s3.amazonaws.com/entry_images/13/2347170/2016/09/12/image02_59a8d808-6504-4886-86e5-fdfe63831951.jpg" />
+</p>
+<p>I got my nails done in football and soccer as a show of support. Analise loves them. The boys think they look &quot;good.&quot;
+</p>
+<p><img id="entry_2347170_entry_image_23446" src="https://jrnl.s3.amazonaws.com/entry_images/13/2347170/2016/09/12/image03_d297ab78-b9e0-4f17-a32d-111a8a1b6a38.jpg" />
+</p>
+<p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2016/09/12/IMG_7222_ef3643bf-78ad-4772-afb1-505a69a9a783.JPG" />
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, September 12, 2016</h3>
+        <div title="Monday, September 12, 2016" class="two-margin journal-title-text">Isaiah - Soccer</div>
+        <div title="Monday, September 12, 2016" class="two-margin journal-text">
+        
+          <p>Your turn to sit out during Saturday's game.
+</p>
+<p><img id="entry_2347218_entry_image_23450" src="https://jrnl.s3.amazonaws.com/entry_images/13/2347218/2016/09/12/image00_c2f9c5fb-9934-4535-9332-d9aabb651cf4.jpg" />
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Friday, September 16, 2016</h3>
+        <div title="Friday, September 16, 2016" class="two-margin journal-title-text">School Picture Day</div>
+        <div title="Friday, September 16, 2016" class="two-margin journal-text">
+        
+          <p>School Picture ready at the Veloz House this morning. These kids are so very adorable, if I do say so myself. And, of course, we just had to take a silly face picture to go along with the smiling one. </p><p><img id="entry_2349663_entry_image_23713" src="https://jrnl.s3.amazonaws.com/entry_images/13/2349663/2016/09/16/image00_254ed3b6-550e-48fe-934e-ff8fcc34f06d.jpg"></p><p><img id="entry_2349663_entry_image_23714" src="https://jrnl.s3.amazonaws.com/entry_images/13/2349663/2016/09/16/image01_8447ff30-86ae-4876-8472-683c204150d8.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, October 29, 2016</h3>
+        <div title="Saturday, October 29, 2016" class="two-margin journal-title-text">While the Mom is away the kids will...use power tools!</div>
+        <div title="Saturday, October 29, 2016" class="two-margin journal-text">
+        
+          <p>While I'm at the Family Roots Expo in St. George, the kids are helping Ben create Christmas presents. Gotta love power tools. I love that they're excited about helping and that Ben is patient and willing to let them help. </p><p><img id="entry_2377619_entry_image_27902" src="https://jrnl.s3.amazonaws.com/entry_images/13/2377619/2016/10/29/image00_1b621839-e634-4f90-9536-7399002bb988.jpg"></p><p><img id="entry_2377619_entry_image_27903" src="https://jrnl.s3.amazonaws.com/entry_images/13/2377619/2016/10/29/image01_1efb3a81-1e72-401a-a2e3-6426279cb090.jpg"></p><p><img id="entry_2377619_entry_image_27904" src="https://jrnl.s3.amazonaws.com/entry_images/13/2377619/2016/10/29/image02_b2545b56-a782-4b3c-ba1f-78cf202d5a08.jpg"></p><p><img id="entry_2377619_entry_image_27905" src="https://jrnl.s3.amazonaws.com/entry_images/13/2377619/2016/10/29/image03_cbe9a8fc-bd3f-4adb-9796-f6fa6f0d6c3e.jpg"></p><p><img id="entry_2377619_entry_image_27906" src="https://jrnl.s3.amazonaws.com/entry_images/13/2377619/2016/10/29/image04_5fd90dd3-5dd7-49b0-a0f5-315130c9373f.jpg"></p><p><img id="entry_2377619_entry_image_27907" src="https://jrnl.s3.amazonaws.com/entry_images/13/2377619/2016/10/29/image05_c0dcd3e5-615f-4ff3-8316-00fe3076f9e9.jpg"></p><p><img id="entry_2377619_entry_image_27908" src="https://jrnl.s3.amazonaws.com/entry_images/13/2377619/2016/10/29/image06_693e1c70-314a-4a2f-a091-6bf836005c86.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Sunday, October 30, 2016</h3>
+        <div title="Sunday, October 30, 2016" class="two-margin journal-title-text"></div>
+        <div title="Sunday, October 30, 2016" class="two-margin journal-text">
+        
+          <p>Pumpkin carving!! Time snuck up on us this year so we were limited to one pumpkin the night before Halloween. <br>We had a little trouble deciding on how to carve it. Antonio drew the mouth he wanted on a piece of paper. Isaiah was 10% certain he wanted a triangle nose. Analise had a little trouble articulating how she wanted the eyes. While they didn't end up exactly how she wanted I think she was okay with the Gina product. <br>The funniest part to me was Isaiah's refusal to use his hands to clean out the pumpkin. We finally got him to stick a hand in to push out the nose. <br>The kids are too funny sometimes!</p><p><img id="entry_2380309_entry_image_28572" src="https://jrnl.s3.amazonaws.com/entry_images/13/2380309/2016/11/02/image00_135e4e27-0f87-4eb8-a8b6-9c9d58e3263b.jpg"></p><p><img id="entry_2380309_entry_image_28573" src="https://jrnl.s3.amazonaws.com/entry_images/13/2380309/2016/11/02/image01_1b941a9f-0f8b-4412-8ede-5d052b6421ba.jpg"></p><p><img id="entry_2380309_entry_image_28574" src="https://jrnl.s3.amazonaws.com/entry_images/13/2380309/2016/11/02/image02_42f279e9-6287-4d19-8f65-d2855d17faca.jpg"></p><p><img id="entry_2380309_entry_image_28575" src="https://jrnl.s3.amazonaws.com/entry_images/13/2380309/2016/11/02/image03_76e35b9d-7b2b-43c9-9b0d-489bf016b82d.jpg"></p><p><img id="entry_2380309_entry_image_28576" src="https://jrnl.s3.amazonaws.com/entry_images/13/2380309/2016/11/02/image04_f9eee7ca-2ceb-47b6-8ebd-773b2e3c9c87.jpg"></p><p><img id="entry_2380309_entry_image_28577" src="https://jrnl.s3.amazonaws.com/entry_images/13/2380309/2016/11/02/image05_a9b1453e-bef1-4da7-851e-9b18c5bdbf69.jpg"></p><p><img id="entry_2380309_entry_image_28578" src="https://jrnl.s3.amazonaws.com/entry_images/13/2380309/2016/11/02/image06_41d99e50-fb04-4568-8fa2-854b7c620ab0.jpg"></p><p><img id="entry_2380309_entry_image_28579" src="https://jrnl.s3.amazonaws.com/entry_images/13/2380309/2016/11/02/image07_ebe4b107-e44c-434a-b86c-b7d65d6c7d0b.jpg"></p><p><img id="entry_2380309_entry_image_28580" src="https://jrnl.s3.amazonaws.com/entry_images/13/2380309/2016/11/02/image08_467988bb-88da-458f-9d86-e94fe7a8cbd4.jpg"></p><p><img id="entry_2380309_entry_image_28581" src="https://jrnl.s3.amazonaws.com/entry_images/13/2380309/2016/11/02/image09_f40c8dc1-8e55-4f8a-a7a9-9fa05058827a.jpg"></p><p><img id="entry_2380309_entry_image_28582" src="https://jrnl.s3.amazonaws.com/entry_images/13/2380309/2016/11/02/image10_d9d58545-65ea-400b-9d04-62234a916b9a.jpg"></p><p><img id="entry_2380309_entry_image_28583" src="https://jrnl.s3.amazonaws.com/entry_images/13/2380309/2016/11/02/image11_b0163f09-e5dd-4951-bdf1-a95c783a817c.jpg"></p><p><img id="entry_2380309_entry_image_28584" src="https://jrnl.s3.amazonaws.com/entry_images/13/2380309/2016/11/02/image12_7bfeb68f-b3b4-4d7b-a5a1-3dcbc6c6d063.jpg"></p><p><img id="entry_2380309_entry_image_28585" src="https://jrnl.s3.amazonaws.com/entry_images/13/2380309/2016/11/02/image13_a7ba710f-d483-4783-b857-4c9a73d711ec.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, October 31, 2016</h3>
+        <div title="Monday, October 31, 2016" class="two-margin journal-title-text"></div>
+        <div title="Monday, October 31, 2016" class="two-margin journal-text">
+        
+          <p>We took the kids Trick or Treating tonight. <br>We had Serenity (Tink) Lewis with us as her mom was out of town and she needed someone to go with. She and Analise are good friends and we were happy to have her tag along. </p><p>The kids had fun. We hit all our usual stops plus the Englund's and Sarah Kent's house. Lance gave the kids quite the scare and Sarah gave us cupcakes (yummy)! <br>Ben gave the girls a scare outside of the Lindberg's house. It was pretty funny!<br>Overall, it was a fun night!</p><p><img id="entry_2379883_entry_image_28510" src="https://jrnl.s3.amazonaws.com/entry_images/13/2379883/2016/11/01/image00_c7708260-a0c0-4fd8-96f1-1a715a5fe56c.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, November 02, 2016</h3>
+        <div title="Wednesday, November 02, 2016" class="two-margin journal-title-text"></div>
+        <div title="Wednesday, November 02, 2016" class="two-margin journal-text">
+        
+          <p>These two are major snuggle bunnies. It may look like Isaiah has Antonio in a head lock, but it was a full on cuddle. No wonder they always are practically on top of us when they come to our bed!!</p><p><img id="entry_2380307_entry_image_28571" src="https://jrnl.s3.amazonaws.com/entry_images/13/2380307/2016/11/02/image00_d2eaf601-8ec1-4ceb-bd76-ba8250b7c9ec.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Sunday, November 06, 2016</h3>
+        <div title="Sunday, November 06, 2016" class="two-margin journal-title-text"></div>
+        <div title="Sunday, November 06, 2016" class="two-margin journal-text">
+        
+          <p>Saturday I was solo with my kiddos. We had a full day!! <br>It started with Isaiah's soccer game at 9, where I played coach. </p><p>At 11, Analise had her game. It was a little rough since they had also had a game Friday night so they were all dragging a little. </p><p>Right after soccer we headed to Vegas for Antonio's game. They lost in a game that is being disputed because of players on the other team being overweight. </p><p>After the game we headed to watch Trolls! I think I was more excited than the kids. It was fantastic! We all loved it!! And of course, we all had to take pictures as Trolls after. </p><p>Then it was haircuts for the boys and dinner with Ben, Armando and Zo. It was a great Saturday!</p><p><img id="entry_2383815_entry_image_29085" src="https://jrnl.s3.amazonaws.com/entry_images/13/2383815/2016/11/07/image00_b8aaca00-2e25-4c7c-a872-b588955c9745.jpg"></p><p><img id="entry_2383815_entry_image_29086" src="https://jrnl.s3.amazonaws.com/entry_images/13/2383815/2016/11/07/image01_637a001a-5ca7-4899-98e1-528b42fe2982.jpg"></p><p><img id="entry_2383815_entry_image_29087" src="https://jrnl.s3.amazonaws.com/entry_images/13/2383815/2016/11/07/image02_ae383232-7c17-4ee2-a6b3-6a7780b4e578.jpg"></p><p><img id="entry_2383815_entry_image_29088" src="https://jrnl.s3.amazonaws.com/entry_images/13/2383815/2016/11/07/image03_c339861f-8e45-4547-a273-aed465ae9658.jpg"></p><p><img id="entry_2383815_entry_image_29089" src="https://jrnl.s3.amazonaws.com/entry_images/13/2383815/2016/11/07/image04_cc1f08a9-fe9e-4ee7-96b0-97a92d418c8d.jpg"></p><p><img id="entry_2383815_entry_image_29090" src="https://jrnl.s3.amazonaws.com/entry_images/13/2383815/2016/11/07/image05_d76d4f26-2273-4b8e-af72-d9fcfb660289.jpg"></p><p><img id="entry_2383815_entry_image_29091" src="https://jrnl.s3.amazonaws.com/entry_images/13/2383815/2016/11/07/image06_5d66145d-1106-41d8-af80-598506a514cc.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Sunday, November 13, 2016</h3>
+        <div title="Sunday, November 13, 2016" class="two-margin journal-title-text">One on One time</div>
+        <div title="Sunday, November 13, 2016" class="two-margin journal-text">
+        
+          <p>Love getting to spend a little one-on-one time with this cutie.&nbsp;</p><p></p><p><img id="entry_2387358_entry_image_30380" src="https://jrnl.s3.amazonaws.com/entry_images/13/2387358/2016/11/13/51fe11e2b405e8a16d6700f65ecf0caf_1bb5809b-4209-4d94-a9e1-6accc3d04233.jpeg"></p><p>We skipped out on soccer Closing Ceremonies and hung out at home and watched Race. It was a great movie! But just getting to hang out and talk to this cutie was the best part.&nbsp;</p><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Sunday, November 13, 2016</h3>
+        <div title="Sunday, November 13, 2016" class="two-margin journal-title-text">Funny</div>
+        <div title="Sunday, November 13, 2016" class="two-margin journal-text">
+        
+          <p>Isaiah is so funny! We're watching a movie and someone got shot (probably not the most appropriate movie with kids) and Isaiah says, out of nowhere, O. M. G!</p><p><br /></p><p>It was pretty funny!</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, November 15, 2016</h3>
+        <div title="Tuesday, November 15, 2016" class="two-margin journal-title-text"></div>
+        <div title="Tuesday, November 15, 2016" class="two-margin journal-text">
+        
+          <p>The many silly faces of Isaiah Howard Veloz. I cannot put into words how much I truly love this boy. </p><p><img id="entry_2391465_entry_image_30926" src="https://jrnl.s3.amazonaws.com/entry_images/13/2391465/2016/11/18/image00_dfbb361a-24bd-4ece-b8ed-4720104d61ff.jpg"></p><p><img id="entry_2391465_entry_image_30927" src="https://jrnl.s3.amazonaws.com/entry_images/13/2391465/2016/11/18/image01_8956eadf-b8e1-4c29-b7c1-dc5058986f16.jpg"></p><p><img id="entry_2391465_entry_image_30928" src="https://jrnl.s3.amazonaws.com/entry_images/13/2391465/2016/11/18/image02_d6c7aad6-c272-4aac-868c-817e3c0b31b8.jpg"></p><p><img id="entry_2391465_entry_image_30929" src="https://jrnl.s3.amazonaws.com/entry_images/13/2391465/2016/11/18/image03_ea053c8d-68c8-43a7-a512-1d3fe2843b6a.jpg"></p><p><img id="entry_2391465_entry_image_30930" src="https://jrnl.s3.amazonaws.com/entry_images/13/2391465/2016/11/18/image04_09b1f96b-1f60-4f47-9f6c-ce00b1fe11b6.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, November 22, 2016</h3>
+        <div title="Tuesday, November 22, 2016" class="two-margin journal-title-text"></div>
+        <div title="Tuesday, November 22, 2016" class="two-margin journal-text">
+        
+          <p>This beautiful girl is 100% a Daddy's girl and I am 100% okay with that. She is such a beautiful, kind-hearted, sensitive, loving girl. I'm lucky to call her mine. </p><p><img id="entry_2394424_entry_image_31212" src="https://jrnl.s3.amazonaws.com/entry_images/13/2394424/2016/11/22/image00_b6d6f7cf-b6bd-4b19-8807-cd6d8fd74cb7.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, December 03, 2016</h3>
+        <div title="Saturday, December 03, 2016" class="two-margin journal-title-text">Breakfast with Santa</div>
+        <div title="Saturday, December 03, 2016" class="two-margin journal-text">
+        
+          <p>Breakfast with Santa at Floyd Elementary is always a good time. <br />Pancakes, sausage, milk, hot cocoa, coffee, candy canes, and Santa and Mrs. Clause. <br />Analise asked for an iPad and a snow globe, Antonio asked for an iPad and Isaiah asked for Captain America boots (brown boots) and a Captain America jacket. <br />We are one step closer to Christmas and these kids couldn't be happier. </p><p><img id="entry_2404250_entry_image_34903" src="https://jrnl.s3.amazonaws.com/entry_images/13/2404250/2016/12/03/image00_b11134d5-4b92-419b-88e1-e0742f0b474e.jpg"></p><p><img id="entry_2404250_entry_image_34904" src="https://jrnl.s3.amazonaws.com/entry_images/13/2404250/2016/12/03/image01_91b3d808-eb2a-4748-8f64-2980d22b15d0.jpg"></p><p><img id="entry_2404250_entry_image_34905" src="https://jrnl.s3.amazonaws.com/entry_images/13/2404250/2016/12/03/image02_ef6ebc5f-f932-4fa6-942f-a298f9e59489.jpg"></p><p><img id="entry_2404250_entry_image_34906" src="https://jrnl.s3.amazonaws.com/entry_images/13/2404250/2016/12/03/image03_b1c0a304-21f0-4a64-aeef-7862422d86db.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, December 19, 2016</h3>
+        <div title="Monday, December 19, 2016" class="two-margin journal-title-text">School Artwork</div>
+        <div title="Monday, December 19, 2016" class="two-margin journal-text">
+        
+          <p>Some of Isaiah's Kindergarten Christmas artwork. </p><p><img id="entry_2464037_entry_image_48934" src="https://jrnl.s3.amazonaws.com/entry_images/13/2464037/2017/01/31/image00_89c3bf2d-b977-4023-933f-8d008978490e.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Sunday, January 15, 2017</h3>
+        <div title="Sunday, January 15, 2017" class="two-margin journal-title-text"></div>
+        <div title="Sunday, January 15, 2017" class="two-margin journal-text">
+        
+          <p>Such a special friendship. I love how caring Analise is! </p><p><img id="entry_2459800_entry_image_48174" src="https://jrnl.s3.amazonaws.com/entry_images/13/2459800/2017/01/27/image00_234ecd0a-94e9-4555-8253-3172edbe2d18.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Sunday, January 15, 2017</h3>
+        <div title="Sunday, January 15, 2017" class="two-margin journal-title-text">Hudson's Birthday Party</div>
+        <div title="Sunday, January 15, 2017" class="two-margin journal-text">
+        
+          <p>Today was Hudson Jones' 3rd birthday party.<br /><br />Ben, the kids and I went to the party held at Jungle Jumpers. It was a smaller scale version of Pump It Up. The kids had a fun time playing. Analise hauled Hudson around like he was a little monkey attached to her most of the day. Antonio played a lot with Easton and some with Dax and Isaiah mostly did his own thing, although he played with Blake more than usual, and there was even a hand-holding moment that I may or may not have encouraged. They were super cute!</p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/01/16/IMG_9658_968c0756-72a4-455a-b7a3-9d8f12205ddf.JPG" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/01/16/IMG_9662_dc1e0593-5c1a-46e6-9532-cf772609ecd8.JPG" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/01/16/IMG_9677_ad04b928-6c8f-48c7-ad0d-8ea949c05a33.JPG" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/01/16/IMG_9672_31c51a6b-beab-4c52-aa7e-8ab86ef040b2.JPG" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/01/16/IMG_9683_95e56866-3334-42c3-a388-167b5b1c56f2.JPG" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, January 16, 2017</h3>
+        <div title="Monday, January 16, 2017" class="two-margin journal-title-text">What do I smell?</div>
+        <div title="Monday, January 16, 2017" class="two-margin journal-text">
+        
+          <p>Isaiah is such a funny boy! We were at the movies yesterday and he was being a bit of a cranky monster. Earlier in the day we had gone to Hudson Jones' 3rd birthday party (The party was held a little late. His actual birthday is Dec. 24) and after, we surprised the kids with a trip to the movies. For whatever reason, Isaiah did not want to go. We didn't give him a choice and so he went with us. I took the kids to see Monster Trucks while Ben went to watch Why Him? (a more grownup movie). <br /><br />Anyway, we were about half-way through the movie and had finished eating our popcorn, when I decided I needed something sweet. I pulled a candy bar from my purse that I had bought on Saturday as a fundraiser. I was eating the first little square of chocolate, when Isaiah whispers to me, &quot;What do I smell?&quot; I replied, &quot;I don't know, what does it smell like?&quot; He took a big sniff and said, &quot;It smells like chocolate.&quot; I giggled and asked him if he wanted a piece. He said, &quot;A piece of what?&quot; I said, &quot;Of my chocolate.&quot; He gave me a big grin and a head nod. <br /><br />All I could do was shake my head and giggle at him. Such a funny boy.<br /><br />The movie was good. At least, I liked it. Antonio thought it was great and Analise thought it was okay. I got a fair-weathered response from Isaiah, but I'm sure it was more because he was still being cranky. He kept his eyes on the movie the entire time, other than when he was stealing my chocolate, so he couldn't have hated the movie! The cranky remained the rest of the day until bed time.<br /><br />I only saw him for a few moments this morning and he seemed to be in better spirits. I hope he's in a better mood tonight than he was last night.</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, January 23, 2017</h3>
+        <div title="Monday, January 23, 2017" class="two-margin journal-title-text">It's the little things</div>
+        <div title="Monday, January 23, 2017" class="two-margin journal-text">
+        
+          <p>You know, it's the little things that will sometime completely make your day.</p><p>   Isaiah is an incredibly picky child.</p><p>   Almost every night the answer to asking if he wants dinner is &quot;that's disgusting!&quot; Even if he has never ever tried it. </p><p>  Tonight, I made a recipe I saw on FB (slow cooker Mongolian beef) and thought it looked good. I was making some stuff for lunches this week at the same time so I had white rice and brown rice going. </p><p>  As I was dishing up dinner Isaiah asked what it was. I told him it was Meat with rice (making it simple). He asked, &quot;is it white rice cause I hate white rice.&quot; I told him I made him brown rice. His response was &quot;good.&quot;</p><p>   As we were eating dinner he asked if he could have more meat because he loved it. </p><p>  I about choked and almost made Ben choke when I grabbed his arm and asked him if he heard him. </p><p>  He ate seconds (3x as much as I originally gave him). He asked if there were leftovers if he could have them for dinner tomorrow if he didn't like dinner.</p><p>   I can't even begin to say how excited this made me. Isaiah told me I did a good job with the challenge. When I asked if the challenge was to fix something he actually liked, his response was &quot;Yep!&quot; </p><p>   He's so funny. And I'm glad I finally found something he truly liked! Definitely made my day.</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, January 25, 2017</h3>
+        <div title="Wednesday, January 25, 2017" class="two-margin journal-title-text">Isaiah has a dream </div>
+        <div title="Wednesday, January 25, 2017" class="two-margin journal-text">
+        
+          <p>Isaiah's Martin Luther King Jr. project from Kindergarten. <br />I love my sweet boy!</p><p><img id="entry_2457220_entry_image_47815" src="https://jrnl.s3.amazonaws.com/entry_images/13/2457220/2017/01/25/image00_a7d13cce-a08d-455a-8cd4-6d4bdd3e2729.jpg"></p><p>His dream is "that no one will fight."</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, January 25, 2017</h3>
+        <div title="Wednesday, January 25, 2017" class="two-margin journal-title-text"></div>
+        <div title="Wednesday, January 25, 2017" class="two-margin journal-text">
+        
+          <p>When your baby brings home a candy bar and a cereal necklace/headband, you pose for a picture now matter how terrible you look. <br />Love my babies. </p><p><img id="entry_2457222_entry_image_47816" src="https://jrnl.s3.amazonaws.com/entry_images/13/2457222/2017/01/25/image00_60703eeb-5729-463c-8ccb-0bf0fcbf8e7c.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Friday, January 27, 2017</h3>
+        <div title="Friday, January 27, 2017" class="two-margin journal-title-text"></div>
+        <div title="Friday, January 27, 2017" class="two-margin journal-text">
+        
+          <p>Such a sweet boy! I just love him. <br>(This heart is for Dad and Mom)</p><p><img id="entry_2459784_entry_image_48173" src="https://jrnl.s3.amazonaws.com/entry_images/13/2459784/2017/01/27/image00_62dea5e0-56c1-40f2-bcbd-def8111f2c55.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, January 28, 2017</h3>
+        <div title="Saturday, January 28, 2017" class="two-margin journal-title-text">Harry Potter</div>
+        <div title="Saturday, January 28, 2017" class="two-margin journal-text">
+        
+          <p>Watching Harry Potter with these cuties!</p><p><img id="entry_2460205_entry_image_48209" src="https://jrnl.s3.amazonaws.com/entry_images/13/2460205/2017/01/28/image00_90047299-3461-4059-ac6f-f9e9e99758f9.jpg"></p><p><img id="entry_2460205_entry_image_48210" src="https://jrnl.s3.amazonaws.com/entry_images/13/2460205/2017/01/28/image01_6abe6e74-37b4-4e93-b4d6-23f5c033c9f0.jpg"></p><p><img id="entry_2460205_entry_image_48211" src="https://jrnl.s3.amazonaws.com/entry_images/13/2460205/2017/01/28/2e96d89addcf9b5d2799e9061481cb06_4e694176-b86a-42d1-a3b2-199f262c323d.jpeg"></p><p>Antonio has been reading the books. In this picture, we're on the second movie, Harry Potter and the Chamber of Secrets.&nbsp;</p><p>He is excited to watch the movies after reading each book. And he's reading the books very quickly.&nbsp;</p><p>I love that he loves to read and is enjoying the books.&nbsp;</p><p>Analise has watched the movies already and will read the books when she is at the right reading level.&nbsp;</p><p>I am a lucky duck! I have some super smart kiddos.&nbsp;</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, January 28, 2017</h3>
+        <div title="Saturday, January 28, 2017" class="two-margin journal-title-text"></div>
+        <div title="Saturday, January 28, 2017" class="two-margin journal-text">
+        
+          <p>This kid! He slays me! </p><p><img id="entry_2464017_entry_image_48928" src="https://jrnl.s3.amazonaws.com/entry_images/13/2464017/2017/01/31/image00_ae3fec3f-e22b-467a-9720-93cc8e72b50e.jpg"></p><p><img id="entry_2464017_entry_image_48929" src="https://jrnl.s3.amazonaws.com/entry_images/13/2464017/2017/01/31/image01_60758444-9ffc-4bd8-9784-6d89be85c5dc.jpg"></p><p><img id="entry_2464017_entry_image_48930" src="https://jrnl.s3.amazonaws.com/entry_images/13/2464017/2017/01/31/image02_206a28ff-4b13-4b7d-8da9-ab4080b69e46.jpg"></p><p>He was helping his Sissy clean her room. Great helper!&nbsp;</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Sunday, January 29, 2017</h3>
+        <div title="Sunday, January 29, 2017" class="two-margin journal-title-text">Clipping toenails = TORTURE!</div>
+        <div title="Sunday, January 29, 2017" class="two-margin journal-text">
+        
+          <p>Isaiah absolutely HATES having his toenails clipped. You would think I was a terrorist trying to torture the truth out to him.&nbsp;</p><p>It takes both Ben and I to hold him down. My arms are sore right now because we just had to hold him down to&nbsp;clip them.&nbsp;</p><p>Honestly, I'm not sure who it is more torturous for, him or us!</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, January 31, 2017</h3>
+        <div title="Tuesday, January 31, 2017" class="two-margin journal-title-text">One on one</div>
+        <div title="Tuesday, January 31, 2017" class="two-margin journal-text">
+        
+          <p>Spent some one on one time with this cutie tonight while the other two were at basketball practice. He is so funny and smart! I love taking to him and listening to him tell me stories. He is my baby. He completes my heart. I love him so much! I'm such a lucky Momma!</p><p><img id="entry_2464015_entry_image_48925" src="https://jrnl.s3.amazonaws.com/entry_images/13/2464015/2017/01/31/image00_bea87c21-c03f-4743-81d8-72c197e7d2ee.jpg"></p><p><img id="entry_2464015_entry_image_48926" src="https://jrnl.s3.amazonaws.com/entry_images/13/2464015/2017/01/31/image01_1c0d6fce-d9e2-4b8c-bd31-522cadd0934f.jpg"></p><p><img id="entry_2464015_entry_image_48927" src="https://jrnl.s3.amazonaws.com/entry_images/13/2464015/2017/01/31/image02_020c75bd-23da-4aec-9beb-a9b27537bf4c.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, January 31, 2017</h3>
+        <div title="Tuesday, January 31, 2017" class="two-margin journal-title-text">Spelling Bee</div>
+        <div title="Tuesday, January 31, 2017" class="two-margin journal-text">
+        
+          <p>Antonio competed in the grade-level spelling bee today. I'm so proud of him. He got runner-up this year, which was disappointing for him. </p><p>But,&nbsp;he lost well. He told Lilly she did a good job and there were no tears. I'm very proud of him. He got out on insulin. It was a seventh grade word, and we stopped studying after sixth grade. Now its time to study the seventh and eight grade words to get ready for the district bee next week. </p><p><img id="entry_2464024_entry_image_48931" src="https://jrnl.s3.amazonaws.com/entry_images/13/2464024/2017/01/31/image00_844a91e3-db99-481b-9378-d6bb6819e256.jpg"></p><p><img id="entry_2464024_entry_image_48932" src="https://jrnl.s3.amazonaws.com/entry_images/13/2464024/2017/01/31/image01_ea937ddd-a266-4503-90c2-568ca8294db0.jpg"></p><p><img id="entry_2464024_entry_image_48933" src="https://jrnl.s3.amazonaws.com/entry_images/13/2464024/2017/01/31/image02_a8caba16-92c7-4e4d-a468-e0dcd9f2a0f9.jpg"></p><p>I waited until tonight to tell him I won't be able to be at the district spelling bee. It's the same day I leave for Salt Lake City. There were tears. I felt horrible but the good consolation is that I'm not missing Birthday this year. And, Daddy will be there so he'll be able to give me updates.&nbsp;</p><p>I already have my fingers crossed that he wins. And if he doesn't win, I hope he does amazing and is proud of himself.</p><p>I love this boy so much! I know I say it a lot, but I'm truly a lucky Momma!</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, February 01, 2017</h3>
+        <div title="Wednesday, February 01, 2017" class="two-margin journal-title-text"></div>
+        <div title="Wednesday, February 01, 2017" class="two-margin journal-text">
+        
+          <p>These have been the best 10 years of my life. I never knew I could love someone as much as I love my kids. <br />Almost 10 years ago, these two precious babies made me a mom. And I'm so glad they chose me. </p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image00_847bdab7-f1c6-4c4e-b571-b107de33bacf.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image01_a36a12d5-d391-43a3-b233-c4acb7043cfa.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image02_60a8b717-c0d1-47ba-8258-f5c6917fa078.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image03_14d5a36c-253b-45ff-aadc-d85b62d7fe61.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image04_4e15dc4c-50c0-4747-98a7-ded32be979a5.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image05_b4f3e3c5-3c9c-4c4e-9334-61bd6670a1fc.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image06_32011c75-9910-45d2-9a9b-cd91d3fe026c.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image07_1ec8d860-c902-4dc2-bfa3-fd4bdee1999a.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image08_e732f122-a71a-4e0a-af4c-e5fe99770cb0.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image09_a701daaa-2370-4ce2-9619-b2031fb6265d.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image10_e6e5caf8-b962-4dba-be80-ef083b3cb724.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image11_3a3ac954-5495-4d43-b4ac-98ff3465c7ce.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image12_6937a034-5464-440b-bbef-f588e19f38a8.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image13_6664bc07-ccc9-433a-bdd4-08ddbd56399c.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image14_dc114684-ba1c-44e0-9411-f8ce34f55896.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image15_2a2ea3b1-0345-49c7-aed6-d2f845d9df04.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image16_ada04b60-efeb-440e-beaa-705e9fe11ffc.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image17_e41acb00-7408-406b-8045-8e9a1cc5ffab.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image18_9985c24c-f779-4b57-950c-8eca2f49661b.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image19_de299ea4-b182-4653-9d83-f5395760422b.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image20_e8019358-6e20-4ad7-8f06-31f8d025946a.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image21_ef34ab28-bfd1-418f-b4e6-be5e69b5f4bd.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image22_96d14952-cbf0-4177-90cd-1a413ea6aa19.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2465441/2017/02/01/image23_e4c8379a-30a3-41ef-a9f0-dfa012afb53a.jpg" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, February 02, 2017</h3>
+        <div title="Thursday, February 02, 2017" class="two-margin journal-title-text">Field trip to Death Valley</div>
+        <div title="Thursday, February 02, 2017" class="two-margin journal-text">
+        
+          <p>Analise and Antonio left this morning for a field trip to Death Valley with their class. They have been so very excited about it, talking for weeks about how much fun it is going to be.<br /><br />Last night, I helped them get ready for it. I bought them sunscreen, chapstick and snacks and helped them get it all together so they wouldn't forget anything. <br /><br />I can't wait until they get home tonight so I can hear all about it! </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, February 04, 2017</h3>
+        <div title="Saturday, February 04, 2017" class="two-margin journal-title-text">10th birthday - First party night a success</div>
+        <div title="Saturday, February 04, 2017" class="two-margin journal-text">
+        
+          <p>Last night was the first night of the weekend birthday party. Both kids had basketball games. From there, Antonio, Analise, Isaiah, Carter Nygaard, Serenity (Tink) Lewis, Jackson and Travis Floyd, and Kamden Moore along with Katie and I all headed to the pool. </p><p>We made a quick stop at Little Caesars for some pizza, breadsticks and soda and then we headed to Preferred RV. </p><p>We ate dinner in the dining room area there and then headed out for the kids to swim. Katie and I opted out and instead sat and visited while the kids swam. They all had a great time and everyone got along beautifully! </p><p>After swimming we headed back to our house for homemade ice cream cake. It was my first time making it and I was afraid it wouldn't turn out but it was great! </p><p>Once cake and presents from Jackson and Travis were opened, Jackson, Travis, Carter and Antonio headed to Katie's house for a sleepover. Kamden and Tink stayed here for a sleepover. Everyone played for a little bit until just before 11 and then went to bed. </p><p>Kamden and Isaiah woke up at 6, ready to play Minecraft again. They didn't want to be up alone so I joined them in the game room. I cuddled under a blanket on the couch while they played. I have to say it was a successful start to our party weekend. On to round two!</p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8466_1df31068-0288-49c8-9d4c-ba63b219a975.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8468_2a0060d2-102c-408f-81b9-e35a3f9d4dad.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8471_d6d37bca-16b1-4f85-95ae-b97c5be13b16.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8473_42e66f30-4afc-4b37-b518-46f46f04e803.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8476_14b97888-3611-4287-a479-b80134cf2f8c.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8477_36b4fe3a-4ad9-4051-a6b6-62bdc563833f.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8478_efe1b513-00e7-42c4-94e7-d12d484d5ccb.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8479_50c73dc2-cc7e-4543-b6bd-9bdb481f9fa9.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8480_addbb7e1-8657-4e9b-a956-30fde9afd3b9.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8486_bc2ff407-211a-4608-9f6f-faf62bb4b26a.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8489_ecab5b6b-a5d5-46e7-b6d5-a132e663dfc1.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8490_61631e02-8657-4fe7-be2e-8d04354aba8d.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8491_efcb8ea5-164a-4c46-a43d-86efa8e97b01.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8493_ecb90a35-8097-4160-a055-dda3966fdbf0.JPG" /><p> </p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8494_d1bbbfc4-d98b-4cc9-8ba6-f310fbd38d2b.JPG" /><p> </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, February 04, 2017</h3>
+        <div title="Saturday, February 04, 2017" class="two-margin journal-title-text">Isaiah and Gus</div>
+        <div title="Saturday, February 04, 2017" class="two-margin journal-text">
+        
+          <p>Isaiah made a groundhog puppet at school this week. He named him Gus. Because, "It starts with (g sound) G and I didn't&nbsp;want to name him groundhog cause he is a groundhog!"</p><p></p><p><img id="entry_2468916_entry_image_49487" src="https://jrnl.s3.amazonaws.com/entry_images/13/2468916/2017/02/04/e19f7a9237a2c07ae3da610b7e2f266e_2b6e7219-eb40-42a5-a45a-a5fd6d6b31c4.jpeg"></p><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Sunday, February 05, 2017</h3>
+        <div title="Sunday, February 05, 2017" class="two-margin journal-title-text">10th Birthday party...day 2</div>
+        <div title="Sunday, February 05, 2017" class="two-margin journal-text">
+        
+          <p>Man, it was rough getting up this morning! Isaiah and Kamden were up at 6 a.m. After staying up until 11! I drug myself up with them and hung out on the couch in the game room while they played Minecraft. Ben and the girls were up by 7, and Ben was nice enough to make me a cup of coffee. <br /><br />When I finally felt alive, it was time to get moving. From about 8 a.m. until 2 p.m., I spent my time preparing dinner for the party, cleaning up the house, fixing lunch and decorating the cake. <br /><br />About the cake…have you ever had a moment where you feel completely inadequate? As I was decorating the cake, I was feeling like it wasn’t good enough. It wasn’t as pretty or fancy as a big store bought cake, the bottom layer broke in half when I was getting it out the pan and I was frustrated and wanted to cry.<br /><br />But I was able to pull through. I salvaged the bottom layer and was able to push it together and glue it with the frosting. The decorations on it weren’t what you’d see from a fancy cake place, but all the kids loved it. They each, separately told me how great it looked. That made me feel so much better! I don't know if they knew I was feeling insecure about the cake, but they made my day telling me how much they loved it.<br /><br />We went to the bowling alley a little before 4 p.m. We got all of the setup done and were ready to go when everyone got there. We had about 22 kids, divided over four lanes. It took a while to bowl just one game, but everyone had a great time. After bowling, we headed back to our house for dinner, cake, presents and playing.<br /><br />Everyone had an amazing time! The kids were happy and everyone got along so amazing. Tomorrow is their actual birthday (Sunday, February 5th) and we are having a Super Bowl party. It will be a great way to end their birthday weekend. I honestly hope this is a party they will remember for their entire lives. I don’t think I’ll forget it!</p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8512_5f9da369-f004-463d-8c1a-a36ae19343a1.JPG" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8527_b15aa9d0-294d-4b05-a22e-800afb7d0f7a.JPG" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2469491/2017/02/05/125b3e56d3086c5dc8f4ea1cae0dbd6e_d3949546-2f09-4866-bcfa-d73c3c171431.jpeg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8532_4622ef4d-77fb-44b4-8ded-2d6e46d371df.JPG" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8540_36fa2057-4d34-4778-9a96-d87dda605e3a.JPG" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8546_ac6cd8f7-b605-41c2-b711-fcbac6fc7092.JPG" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8547_cd90c8e4-f135-4cc0-8da4-11a8954aa29d.JPG" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8553_2f863197-b89c-416d-8b48-6cd95dd2ad30.JPG" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8555_dae4e8e8-f7b3-4a80-929d-8d39b1792224.JPG" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8558_47576c2b-6e13-44c2-ac1c-432f896c3877.JPG" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8561_94c8e6f6-1967-441f-818f-39648520aee5.JPG" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/user_images/13/2017/02/05/IMG_8587_b87d2ae7-49f7-4803-b74b-b570348336f2.JPG" /><p></p><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Sunday, February 05, 2017</h3>
+        <div title="Sunday, February 05, 2017" class="two-margin journal-title-text">Analise and the scratchy bush</div>
+        <div title="Sunday, February 05, 2017" class="two-margin journal-text">
+        
+          <p>Analise had a run in with a bush outside when she and her friends were playing and got some scratches on her legs.
+</p>
+<p>She was crying about it hurting so I put some antibiotic cream on it.
+</p>
+<p>She claimed the Cream was stinging and was crying. I jokingly told her friends to blow on them and they immediately started to blow on the sting. It was just a what she needed to giggle and then get up and go back to playing.
+</p>
+<p><img id="entry_2469879_entry_image_49661" src="https://jrnl.s3.amazonaws.com/entry_images/13/2469879/2017/02/05/3dca39b3968a9105d3ef8d56f2f76163_e935f134-5704-4dec-b931-1063a8ed4a0f.jpeg" />
+</p>
+<p><img id="entry_2469879_entry_image_49662" src="https://jrnl.s3.amazonaws.com/entry_images/13/2469879/2017/02/05/566918331db89649c33c412223e305b2_957c0fc7-440e-4408-afb8-965030a1aa1d.jpeg" />
+</p>
+<p><img id="entry_2469879_entry_image_49663" src="https://jrnl.s3.amazonaws.com/entry_images/13/2469879/2017/02/05/4dec3a1719e3b9d14bf87afcb80b67a8_89dac747-12d4-41b6-ab25-9ab5851768a7.jpeg" />
+</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, February 06, 2017</h3>
+        <div title="Monday, February 06, 2017" class="two-margin journal-title-text">10th birthday - Day 3</div>
+        <div title="Monday, February 06, 2017" class="two-margin journal-text">
+        
+          <p>Today was our last birthday party celebration, and it was a good end to the weekend. <br /><br />Analise still had Tink and Alyssa over from the sleepover so the day was spent playing. Analise was a little cranky, from lack of sleep I think, but overall she was okay. They spent most of the day playing outside. It was a gorgeous day!</p><p>We made cupcakes for today's party. The kids helped decorate some of them. I think they turned out great. </p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2470729/2017/02/13/d4e227f63c11b58fa1c5ef1a38588249_f2c112b3-bde5-4a8d-b7f2-b48e094a54e7.jpeg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2470729/2017/02/13/a296f15ad24a8b4060312d872c1eb016_fe9b6f78-7788-4166-b8d3-ac9e5ad9cbcb.jpeg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2470729/2017/02/13/76263981ac3a1b86df3e739ad8b63b68_59d83bd7-c1be-4ec8-8e93-39cdebb78c33.jpeg" /><p></p><p><br />Around 3 p.m., all our friends came over for a Super Bowl party. Ben's family ended up backing out and not coming, but that's okay. It means I got my spot on the couch. But we had a ton of leftover food! Oh well, Ben won't have to cook much this week. <br /><br />The game was pretty unbelievable. The Atlanta Falcons were playing the New England Patriots. Atlanta scored three times before the Patriots scored, and the Patriots only scored a field goal at first. They went into the 4th quarter with the Falcons leading 28-9. The Patriots had an unbelievable 4th score 19 unanswered points to tie the game and put it into overtime. <br /><br />They won the toss and got the ball and drove in for a touchdown to win the game. I couldn't believe that they won!<br /><br />The kids had a wonderful weekend and so did we. I'm pretty exhausted now, but happy I was able to celebrate my kids' birthday so big! I hope they never forget this birthday and more importantly, I hope they know how much I love them! </p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, February 07, 2017</h3>
+        <div title="Tuesday, February 07, 2017" class="two-margin journal-title-text"></div>
+        <div title="Tuesday, February 07, 2017" class="two-margin journal-text">
+        
+          <p>Some last minute district spelling bee prep. As long as his nerves don't get the better of him, my boy has got this!! I'm so nervous for him and hate that I'm going to miss it. He is the champion in my book, no matter what the outcome!</p><p><img id="entry_2472365_entry_image_50285" src="https://jrnl.s3.amazonaws.com/entry_images/13/2472365/2017/02/07/image00_8690f998-fe9c-40c7-b7c0-b5d1627263d5.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, February 08, 2017</h3>
+        <div title="Wednesday, February 08, 2017" class="two-margin journal-title-text">District Spelling Bee</div>
+        <div title="Wednesday, February 08, 2017" class="two-margin journal-text">
+        
+          <p>Antonio competed at the district spelling bee yesterday. I had to miss it as I was traveling to Salt Lake City all day.&nbsp;</p><p>Ben was able to go, thankfully, but not without a little help. He had already planned the day off, but then Analise woke up sick. Thankfully, Uncle Reyes works from home and said she could come and lay on his couch while Ben attended.&nbsp;</p><p>Antonio did amazing, finishing in third place. He misspelled allegiance. He left out the second a. Not because he didn't know how to spell it, but because he just got ahead of himself and thought he said it. I'm so very very proud of him. He has no idea how proud!&nbsp;</p><p>I know he was disappointed in himself for losing but I couldn't be more proud!&nbsp;</p><p>Ben sent me this picture before he started. I just love it. I know how nervous he was.&nbsp;</p><p><img id="entry_2473709_entry_image_50431" src="https://jrnl.s3.amazonaws.com/entry_images/13/2473709/2017/02/08/446ecbafdad76a6a38a1566fa510887d_dc45b793-39b7-49e0-8aba-af8a4ad184a0.jpeg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, February 11, 2017</h3>
+        <div title="Saturday, February 11, 2017" class="two-margin journal-title-text"></div>
+        <div title="Saturday, February 11, 2017" class="two-margin journal-text">
+        
+          <p>I miss these cuties so very much! Traveling for work is tough when I don't get to snuggle with my babies at least a few minutes each day. I'm super thankful for FaceTime!</p><p><img id="entry_2476997_entry_image_51032" src="https://jrnl.s3.amazonaws.com/entry_images/13/2476997/2017/02/11/image00_aab51ce9-4dab-4496-9686-575031878e80.png"></p><p><img id="entry_2476997_entry_image_51034" src="https://jrnl.s3.amazonaws.com/entry_images/13/2476997/2017/02/11/image01_c9614de5-a7c3-4ed4-86bf-8608ec5737f9.png"></p><p><img id="entry_2476997_entry_image_51035" src="https://jrnl.s3.amazonaws.com/entry_images/13/2476997/2017/02/11/image02_d8f97350-329b-41a3-b912-29b7e5c09607.png"></p><p><img id="entry_2476997_entry_image_51037" src="https://jrnl.s3.amazonaws.com/entry_images/13/2476997/2017/02/11/image03_62fd3473-e660-41d6-a42b-054b89e77dc4.png"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, February 18, 2017</h3>
+        <div title="Saturday, February 18, 2017" class="two-margin journal-title-text">Date night with Antonio</div>
+        <div title="Saturday, February 18, 2017" class="two-margin journal-text">
+        
+          <p>Antonio and I had a date night tonight. He came with me to the office after lunch with everyone. They were in Vegas for a dentist appointment. We met for lunch at Dairy Queen. </p><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2488641/2017/02/20/6f94f7a91b9d995ddb852650151bcb3e_96f00676-7d81-4941-ad93-2e799e8c808f.jpeg" /><p></p><p>After lunch, Antonio came back and toughed it out for the rest of the work day with me. He read some Harry Potter, played on his iPad and then watched a movie. Thanks to my dual monitor I was able to work while he watched the movie. </p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2488641/2017/02/20/469c0ac4330ca4963a04f97014ca254e_f6b4ab18-a380-4e69-ac3b-78882da154c2.jpeg" /><p></p><p>After work, we went shoe shopping. It took a few stores to find the right pair, but we found it. After shopping, we went to Game Works to play video games. It is always so much fun to spend time alone with Antonio. I truly love our relationship. </p><p>After games we went and had some pizza. It was yummy and we sat and talked instead of playing on phones. It was great to have time together with no electronics. </p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2488641/2017/02/20/37b94f206d9ebf3e213c02cdf260c887_80dcdd6b-d74a-49ad-9c88-010bb8a97ee3.jpeg" /><p></p><p>Then we were on our way home. It was the best Friday I've had in a long time. </p><p>And I must say, I was incredibly proud of his patience during the four hours at my office. </p><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, March 07, 2017</h3>
+        <div title="Tuesday, March 07, 2017" class="two-margin journal-title-text">80s day at school</div>
+        <div title="Tuesday, March 07, 2017" class="two-margin journal-text">
+        
+          <p>This week is a dress up week at school. I didn't get a picture of yesterday's day, which was fishing/camping/hat day. Analise and Antonio wore fishing hats and Isaiah wore his new Seahawks hat. That's what we wear fishing and camping.</p>
+<p>Today was 80's day. I didn't find out it was 80s day until mid-day on Sunday, leaving me no time to prepare. So, we did the best we could. Mohawks and Ninja Turtle shirts for the boys, with sweatbands. And Analise is in jeans, high tops, a jean jacket and a side pony. I think that's 80s. I just remember bright colors that didn't totally match, or dresses. So...it works, I think. :)</p>
+<img src="https://jrnl.s3.amazonaws.com/entry_images/13/2508553/2017/03/07/image00_32646914-9f83-4001-9eec-2499624c9e9d.jpg" />
+<p><br /></p>
+<img src="https://jrnl.s3.amazonaws.com/entry_images/13/2508553/2017/03/07/image01_90aba7cc-529b-4e8a-a2e8-e22e14c51025.jpg" />
+<p><br /></p>
+<img src="https://jrnl.s3.amazonaws.com/entry_images/13/2508553/2017/03/07/image02_dd0356b4-cd55-41d2-ac2b-3155c9198d0d.jpg" />
+<p>On the way to school, these kids were cracking me up! They wanted me to put on some &quot;funky 80s music&quot;, &quot;Like Disco&quot; Antonio chimed in. I turned to look at him and laughed. He said, &quot;What, was disco the 70s?&quot; Then, he asked me if we even had radios in the 80s. I laughed so hard and told him, yes. He said, &quot;Well I didn't know! You didn't have phones!&quot; I said, &quot;Yes we did!&quot; At first he was shocked, answering with &quot;You did?!&quot; I said it wasn't a cell phone, but it pulled in to the house. He then said, &quot;Oh, I knew that! I meant cell phones.&quot; </p>
+<p>It was a laugh riot all the way to school. I guess I officially understand what it's like to feel old! At least I haven't been asked if I had a pet dinosaur when I was growing up...yet!</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Friday, March 10, 2017</h3>
+        <div title="Friday, March 10, 2017" class="two-margin journal-title-text">You're going to be so excited!</div>
+        <div title="Friday, March 10, 2017" class="two-margin journal-text">
+        
+          <p>We have the best surprise coming up for you guys. Daddy and I have been talking about this for a long time, and I finally convinced him that we should get a puppy.</p><p>We've found the perfect one. We are going to name her Luna. Her Mom's name is Magic and I couldn't help but think of Harry Potter. Especially since Antonio has been reading it lately. </p><p>Hermoine is just too long of a name for a dog, plus ending in the &quot;e&quot; sound may be confusing to Missy. So, I was thinking about other females in the books and I thought of Luna Lovegood. She is a good friend to Harry, and a trusted companion. She is kind and gentle. So, Luna she will be. :)</p><p>And isn't she so adorable?! We get to bring her home on March 31st. I cannot wait to surprise you and see your reactions to her!</p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2514799/2017/03/13/d8a7ef4921249c5b01b79f1cc92b07ff_0be3a6d2-fe42-4ac1-99f0-c13b681515d0.jpeg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2514799/2017/03/13/79ee23f2dbbfdf21713a784ae70cd4b0_5aae77c3-c4ee-4d25-a1da-bfb211750d42.jpeg" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, March 18, 2017</h3>
+        <div title="Saturday, March 18, 2017" class="two-margin journal-title-text">Drips and Sips</div>
+        <div title="Saturday, March 18, 2017" class="two-margin journal-text">
+        
+          <p>Last night, Analise and I attended a Drips and Sips class. We painted the branches heart painting with the moon. She did an awesome job! I'm so proud of her. She was so very happy to be there. I'm glad we got to go and have fun together. </p><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2519324/2017/03/18/f993979c03ac8100bb8b4d40b61ac0d2_809af0ed-bdd2-4714-9c4f-96557052b531.jpeg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2519324/2017/03/18/4095a3934c571672def5b24e00a3789b_ddd83373-09eb-41a3-a5a7-da1543b73309.jpeg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2519324/2017/03/18/73cb8ad17771ca842c24d7d0099f80a7_aa137e5c-ea27-4c04-91c0-2a1ea02c8350.jpeg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2519324/2017/03/18/da24cdca48528f81716ee9b75642a4f2_3d03e38d-cc9d-4ce7-ab91-6a24478f898c.jpeg" /><p></p><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, March 18, 2017</h3>
+        <div title="Saturday, March 18, 2017" class="two-margin journal-title-text">Baseball season. Here we come!</div>
+        <div title="Saturday, March 18, 2017" class="two-margin journal-text">
+        
+          <p>Opening ceremonies for these cuties. Love them! Let's go Reds!! Play ball!</p><p><img id="entry_2520850_entry_image_66281" src="https://jrnl.s3.amazonaws.com/entry_images/13/2520850/2017/03/19/image00_b08b0241-5d95-417f-885c-d1ab16626694.jpg"></p><p><img id="entry_2520850_entry_image_66282" src="https://jrnl.s3.amazonaws.com/entry_images/13/2520850/2017/03/19/image01_18f447d3-6a84-405b-b024-2f0ce08e0393.jpg"></p><p><img id="entry_2520850_entry_image_66283" src="https://jrnl.s3.amazonaws.com/entry_images/13/2520850/2017/03/19/image02_98f9fb08-7a9e-42b9-aa1f-4b9a57163536.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, April 01, 2017</h3>
+        <div title="Saturday, April 01, 2017" class="two-margin journal-title-text">Beauty and the Beast</div>
+        <div title="Saturday, April 01, 2017" class="two-margin journal-text">
+        
+          <p>I took Analise to see Beauty and the Beast tonight. She had been DYING to see it! She was so angry that I went last weekend with my friends for Sarah's birthday to see it. </p><p>I promised her I would take her soon, so tonight it finally happened. We came in to Vegas a little early (I had worked from home today to be with Luna). We ate dinner together at 5 Guys Burgers and Fries. We headed to Target for some shopping and then we went to the movies. </p><p>We got there a little early and she was rather impatient waiting for it to start. But once it did, she was enthralled. The smile on her face could not be matched. I'm so glad I got to go with her to experience that. I love my sweet girl!</p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2538663/2017/04/04/329188eea5b616b79bac270cafe63965_23881337-5dcf-4c18-80d8-9be6c37a2ccb.jpeg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2538663/2017/04/04/c8f69c964702804ace1f255351c62428_179a7ff1-c6cf-4d7b-80c7-9da658bb3f50.jpeg" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, April 10, 2017</h3>
+        <div title="Monday, April 10, 2017" class="two-margin journal-title-text">Trip to Vegas and haircuts</div>
+        <div title="Monday, April 10, 2017" class="two-margin journal-text">
+        
+          <p>Today, after Ben left for his school field trip to Catalina, the kids and I slept a little longer and then headed to Vegas to watch the new Smurfs movie (Smurfs and the lost village). </p><p>The movie was really cute and we all enjoyed it. We took a couple selfies together after the movie.  </p><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2544353/2017/04/10/eaadd40833e7deb68f70d9550ebba0dc_1cb20cb9-0e18-4bd1-a7c1-6d3b19d502e4.jpeg" /><p></p><p></p><p>After the movie we went to get a &quot;feel better soon&quot; gift for our friend Blake Jones. She had her tonsils removed on Friday and is having a rough recovery. </p><p>We took her flowers, a balloon on a stick that said feel better soon, and a purple stuffed dog. We surprised her with our quick visit and I think she was pleased with her gift. She definitely had a smile on her face!</p><p>After a very quick visit, we headed to Sports Clips for a haircut for Antonio. I don't think he thinks I do a good enough job. He settled for the base cost haircut and was happy with the cut. </p><p>We came home after that and made a stop at Smiths for some essentials (donuts, ice cream...you know, the basics) and the headed to the house and did a little cleaning, chatted with Ben on the phone and then took a little break. After the break, I gave Isaiah a hair cut. He cried the entire time because he was sad. A baby bird fell out of its nest by our back porch. It was so small it didn't even have feathers yet. It was going to die, a combination of the fall and not being warm enough or able to eat. Isaiah was super sad that it was going to die and couldn't stop crying for over an hour. </p><p>He and Antonio took a quick shower together and then we had some leftovers for dinner. We cuddled up on the couch together to watch Army Dog before the kids enjoyed some ice cream and then headed to bed. </p><p>It was a long Sunday and we're mostly ready for a week of school before Spring Break. But more ready for the break!</p><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2544353/2017/04/10/143e4babe572d04603ae9df1e07f53b6_36bbe053-08e3-4f66-815b-09626c1db74b.jpeg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2544353/2017/04/10/972ea597c6ac3b86fd6c0597686e8ff5_e40d983e-0882-416b-b0ad-542ca456d4d2.jpeg" /><p></p><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, April 24, 2017</h3>
+        <div title="Monday, April 24, 2017" class="two-margin journal-title-text">Isaiah funnies</div>
+        <div title="Monday, April 24, 2017" class="two-margin journal-text">
+        
+          <p>Some Isaiah funnies from tonight. We were at dinner and Isaiah had ordered some chicken. It was really hot and burned his tongue a little. When Ben asked if he could have a bite he said, "Yeah, if you're prepared to burn your tongue off!"&nbsp;</p><p><br /></p><p>Then on the drive home, somehow the discussion of being buried or cremated came up and Isaiah said, "I want to be ashed." I tried to hold in my laughter as I explained it was called cremated not ashed and that it was something he could decide on when he was older.&nbsp;</p><p><br /></p><p>This boy is just so funny!</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, April 26, 2017</h3>
+        <div title="Wednesday, April 26, 2017" class="two-margin journal-title-text"></div>
+        <div title="Wednesday, April 26, 2017" class="two-margin journal-text">
+        
+          <p>Luna was on wakeup duty. She loves giving the kids kisses in the morning. And a bite or two to Isaiah. </p><p><img id="entry_2569716_entry_image_85662" src="https://jrnl.s3.amazonaws.com/entry_images/13/2569716/2017/05/04/image00_6633242f-7bc5-4364-ae4a-8be3abc3cf91.jpg"></p><p><img id="entry_2569716_entry_image_85663" src="https://jrnl.s3.amazonaws.com/entry_images/13/2569716/2017/05/04/image01_85288dc9-d4d8-4391-a4b4-48a6abb377a2.jpg"></p><p><img id="entry_2569716_entry_image_85664" src="https://jrnl.s3.amazonaws.com/entry_images/13/2569716/2017/05/04/image02_1dc2c7d3-b265-471b-aeff-4f104723e166.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Friday, April 28, 2017</h3>
+        <div title="Friday, April 28, 2017" class="two-margin journal-title-text"></div>
+        <div title="Friday, April 28, 2017" class="two-margin journal-text">
+        
+          <p>Olivia's painting party for her 6th birthday</p><p><img id="entry_2569720_entry_image_85665" src="https://jrnl.s3.amazonaws.com/entry_images/13/2569720/2017/05/04/image00_6002580b-8b55-44e0-8388-6a7f24b16e57.jpg"></p><p><img id="entry_2569720_entry_image_85666" src="https://jrnl.s3.amazonaws.com/entry_images/13/2569720/2017/05/04/image01_2cd6522e-0485-44b8-b52a-0ecdc66f70eb.jpg"></p><p><img id="entry_2569720_entry_image_85667" src="https://jrnl.s3.amazonaws.com/entry_images/13/2569720/2017/05/04/image02_ab85dcac-cd70-4e5a-8e1e-b00a60f6efc1.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, May 04, 2017</h3>
+        <div title="Thursday, May 04, 2017" class="two-margin journal-title-text"></div>
+        <div title="Thursday, May 04, 2017" class="two-margin journal-text">
+        
+          <p>Birthday party prep for Isaiah's 6th birthday. It's coming up so fast!</p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2569722/2017/05/04/image00_f01dfaa4-3305-4858-acd3-74641c5f41d5.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2569722/2017/05/04/image01_b31d7d1b-eb98-4265-b625-41bd0b4b0e21.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2569722/2017/05/04/image02_9f4daba1-5b76-4ee5-9bb9-d7873eb455db.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2569722/2017/05/04/image03_5b1ebbed-b78b-4d4d-a0a5-3d137ed5a3a2.jpg" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, May 04, 2017</h3>
+        <div title="Thursday, May 04, 2017" class="two-margin journal-title-text"></div>
+        <div title="Thursday, May 04, 2017" class="two-margin journal-text">
+        
+          <p>Little cuddle bugs. </p><p><img id="entry_2569713_entry_image_85661" src="https://jrnl.s3.amazonaws.com/entry_images/13/2569713/2017/05/04/image00_282f583a-7ff3-4b56-8a2f-449c95674022.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Friday, May 05, 2017</h3>
+        <div title="Friday, May 05, 2017" class="two-margin journal-title-text"></div>
+        <div title="Friday, May 05, 2017" class="two-margin journal-text">
+        
+          <p>Family Literacy Picnic at Floyd. We enjoyed some Panda Express, a little bit of reading and quality time together. The kids were grateful that I was there and I was super grateful that work was flexible with me and let me work from home. </p><p><img id="entry_2573197_entry_image_87007" src="https://jrnl.s3.amazonaws.com/entry_images/13/2573197/2017/05/08/image00_3a095294-a731-4cd7-996b-25ffa7cd966f.jpg"></p><p><img id="entry_2573197_entry_image_87008" src="https://jrnl.s3.amazonaws.com/entry_images/13/2573197/2017/05/08/image01_ad14c278-5c40-4c30-be6a-b656f5ab40fd.jpg"></p><p><img id="entry_2573197_entry_image_87009" src="https://jrnl.s3.amazonaws.com/entry_images/13/2573197/2017/05/08/image02_42324506-8f32-4ae8-a5f6-5f5495c4024d.jpg"></p><p><img id="entry_2573197_entry_image_87010" src="https://jrnl.s3.amazonaws.com/entry_images/13/2573197/2017/05/08/image03_905bed94-a6cc-489d-a085-759a5176d11a.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Sunday, May 07, 2017</h3>
+        <div title="Sunday, May 07, 2017" class="two-margin journal-title-text">Celebrating Isaiah's 6th birthday</div>
+        <div title="Sunday, May 07, 2017" class="two-margin journal-text">
+        
+          <p>Today we had Isaiah's 6th birthday party. We had friends and family at our house to celebrate at Isaiah's Baseball party. </p><p>He asked for a Baseball party about two months ago and I began the preparations and finding ideas for the party. Birthday parties are a lot of work! I'm starting to understand a little more why I didn't ever have any growing up. My parents were just too darn busy to throw a party. Add to that the fact that all the costs of a party add up to be rather expensive. We definitely couldn't afford a party like we throw when I was growing up! </p><p>I'm just so happy that I can afford to throw parties for my kids. </p><p>For our Baseball party we had a Concessions area that included chips, cracker jacks, popcorn popped in a real popper, Red Vines, punch, soda, and baby ruth candy bars. We served Nachos and Hot Dogs along with chips, dip, veggies and fruit.</p><p>For the cake we did a cake that looked like a baseball and then cupcakes shaped like a glove with a baseball in the middle. Ben was amazing with the cake! I had a major fail on my first attempt and the cake just didn't want to come out of the pan. I spoke to a friend for some tips and our second cake turned out so much better!</p><p>Ben did the decorating as I'm just not that talented. I told him I wasn't domestic when I was near tears on Thursday night with my cake disaster! </p><p>I think the cake turned out great and Isaiah was really happy with it.</p><p>Ben made a corn hole game and I made the corn bags with baseball fabric. They turned out pretty cute, if I do say so myself. Ben also made a baseball game where you throw through the holes to mark either a single, double, triple or home run. The kids played the games and spent a good deal of time jumping on the trampoline. </p><p>Overall, it was a great party and I'm so happy that Isaiah was happy!</p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2572160/2017/05/07/IMG_8787_cad6934c-0a8d-4143-a84f-ff6905417a36.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2572160/2017/05/07/IMG_8790_60753b30-93da-4a83-b2a7-0128a1a07484.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2572160/2017/05/07/IMG_8793_5b718c6e-8997-4bee-80b5-60af11517afd.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2572160/2017/05/07/IMG_8798_26f02fe1-6522-4a2f-ab0b-a2971e09c21b.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2572160/2017/05/07/IMG_8799_37745fa9-86e5-4fa6-8e80-ac5390c7fb52.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2572160/2017/05/07/IMG_8698_adeec790-e673-4ba0-80c8-5d9bb459281a.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2572160/2017/05/07/IMG_8760_602b5986-3663-4d1c-8268-37eeef8bd195.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2572160/2017/05/07/IMG_8771_cdaf053c-bc81-4021-9ba7-0b98ead40e03.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2572160/2017/05/07/IMG_8773_5bd260fb-84e2-42bc-8ed9-8f35239cedf8.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2572160/2017/05/07/IMG_8684_5e226312-436d-4449-9b92-c66ed7c086fa.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2572160/2017/05/07/IMG_8687_f27c38b6-4e23-4edd-9903-26280ec23654.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2572160/2017/05/07/IMG_8801_9c923c85-9ed0-4f49-8cf0-5e5ecb1a89bd.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2572160/2017/05/07/IMG_8802_7036b63f-bdf9-48b4-ba95-683d071ed5f6.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2572160/2017/05/07/IMG_8804_444c6240-ed6d-4768-ad6f-380f09b94602.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2572160/2017/05/07/IMG_8806_1fcfe95b-0f66-4298-bb10-18ab270f7ee5.JPG" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, May 08, 2017</h3>
+        <div title="Monday, May 08, 2017" class="two-margin journal-title-text">6 years!</div>
+        <div title="Monday, May 08, 2017" class="two-margin journal-text">
+        
+          <p>Six years of funny, silly, happy moments with this smiley boy. I don't know how we got so lucky, but I am thankful for every single second with this little guy.</p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image00_2efb01cc-b17a-4b3c-bd10-b8973c7a0d00.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image01_fbd0e669-38d2-4b28-b564-a6a51125ee0f.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image02_02b23ba1-b9e3-4731-be1a-a448c4aaadcc.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image03_42a29a29-5e23-4c8c-a960-fd78d622018c.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image04_8ed13d70-0d30-4f13-8858-ca22f7c6ffe1.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image05_662642e7-bf44-4384-8525-ea2baea06aa2.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image06_59150bcc-bc35-403d-8808-d7f590863370.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image07_a1d1f288-ec43-44ce-b965-10c0e14f976d.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image08_bce03ec8-92d8-49cb-8470-2d8b187d1c77.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image09_a275316c-d7f4-477e-a294-5b65359ee3cc.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image10_bcba7f23-0d94-47d8-a232-12e4f8b1aefd.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image11_a6ff4cb5-a1b2-41c4-9a72-0a18d9c668c3.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image12_a1bf2fc3-e94f-4b60-98d2-882e781f0dca.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image13_207050a9-b707-4baf-83ae-e68ebaa49047.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image14_3f5409fd-a49d-41f5-84f5-b2f410eaf886.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image15_29f14422-d780-410c-9ea3-a822ed6c6799.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image16_df33dae8-d9b7-4e2e-b198-49c4d1928963.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image17_4e42053c-cb9f-4644-a49b-c2ba98c52931.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image18_9d017833-2379-4914-816f-3789d779276a.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image19_e082ec86-50c5-44d2-a409-abd15ad7f938.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image20_db8369a0-68fc-4241-8eae-059223a29a89.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image21_e6970dc5-dc69-44b4-b5e4-774a2418169d.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image22_995c5b9f-2f5c-4e1f-848e-80f9edaf5260.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/image23_4a87a0c0-4518-4a45-b616-80628740a486.jpg" /><p></p><p></p><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2574176/2017/05/08/53e40b7120c39493a811de9bbb5b19e4_8a41865d-0b9a-4880-b107-82cf09916954.jpeg" /><p></p><p>Happy birthday, Isaiah!</p><p></p><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, May 13, 2017</h3>
+        <div title="Saturday, May 13, 2017" class="two-margin journal-title-text"></div>
+        <div title="Saturday, May 13, 2017" class="two-margin journal-text">
+        
+          <p>Early Mother's Day pedicure with my girl. We got matching (or at least really close to matching) toes. <br />She always cracks me up when she gets a pedicure with her uncontrollable laughter when they're scrubbing the bottom of her feet. Reminds me of her Aunt Carol. Although, Carol would have just kicked them!</p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2581283/2017/05/15/image00_447d02db-684e-41e0-94dd-b1e1f33ff018.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2581283/2017/05/15/image01_b07dbb9d-9b72-4631-8e68-6a2798255311.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2581283/2017/05/15/image02_c7719ef5-f046-4b82-9805-0f10cb71667b.jpg" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, May 16, 2017</h3>
+        <div title="Tuesday, May 16, 2017" class="two-margin journal-title-text">Kindergarten completion</div>
+        <div title="Tuesday, May 16, 2017" class="two-margin journal-text">
+        
+          <p>This little Monkey graduated from Kindergarten today!! I honestly can't believe it. I'm so proud of how great he did and how smart is. I'm also so sad that he is growing up so fast. All my babies are. And I hate it!</p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588960/2017/05/22/image00_97781b3e-c38e-4480-89e0-66663ae48de5.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588960/2017/05/22/image01_07a67f0a-8b2a-49ff-8647-c15f2f25eb8d.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588960/2017/05/22/image02_5dc14159-ff5d-4219-8616-88b853542e85.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588960/2017/05/22/image03_67811619-cb66-48c8-9756-ec8c047280f2.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588960/2017/05/22/image04_77978d9e-2d9c-4dc0-8639-009e540ac038.jpg" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, May 18, 2017</h3>
+        <div title="Thursday, May 18, 2017" class="two-margin journal-title-text">Field day 2017</div>
+        <div title="Thursday, May 18, 2017" class="two-margin journal-text">
+        
+          <p>This was Isaiah's first Field Day. They always have this in the last (half) day of school. He had a great time! His class was the Kindergarten winner!<br />These pictures came from Katie and Mrs. Englund. <br />I love that they think of me and send me pictures of the fun things going on at school that I sometimes miss. </p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588992/2017/05/22/image00_0e226358-95c4-4405-8b3c-e66be8ff442c.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588992/2017/05/22/image01_56eeb5ed-6bee-4f9e-a0d7-f6f8b402c37e.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588992/2017/05/22/image02_bc8992fa-c841-476f-a689-026af357cab2.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588992/2017/05/22/image03_a6b35ed1-3b6d-4160-ba1b-824e85d33907.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588992/2017/05/22/image04_80d6d53d-eea1-4dc6-b4c9-d2e7b7fdc779.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588992/2017/05/22/image05_83313c93-62cc-4c2f-a095-d6e4d27232b9.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588992/2017/05/22/image06_c1946226-ebe9-497c-a65a-e260d1c3dd1a.jpg" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, May 22, 2017</h3>
+        <div title="Monday, May 22, 2017" class="two-margin journal-title-text"></div>
+        <div title="Monday, May 22, 2017" class="two-margin journal-text">
+        
+          <p>Tonight we made some cupcakes &quot;just because.&quot; Isaiah was my special helper getting them ready to bake. I think he was in it just for the beaters, but I'm okay with that. <br />Then we all decorated them. They were yummy!</p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588253/2017/05/22/image00_c868874b-61c3-4380-9043-d27b64f80ca5.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588253/2017/05/22/image01_8a2c82f3-05cd-4e5f-a5d8-cdd843290b90.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588253/2017/05/22/image02_5bea7136-9f2b-423f-9c11-f50f0ab94042.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588253/2017/05/22/image03_2ed2aba8-f4ed-4ac8-ab68-5656477500a7.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588253/2017/05/22/image04_4871c104-80c4-4c30-a01a-e535487cee16.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2588253/2017/05/22/image05_9554b882-03a7-4129-b555-e8a50693a544.jpg" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, May 22, 2017</h3>
+        <div title="Monday, May 22, 2017" class="two-margin journal-title-text"></div>
+        <div title="Monday, May 22, 2017" class="two-margin journal-text">
+        
+          <p>More of Isaiah's Kindergarten artwork. I love school art projects!</p><p><img id="entry_2588978_entry_image_93082" src="https://jrnl.s3.amazonaws.com/entry_images/13/2588978/2017/05/22/image00_1afac9e0-4c28-41de-b716-2513197747fc.jpg"></p><p><img id="entry_2588978_entry_image_93083" src="https://jrnl.s3.amazonaws.com/entry_images/13/2588978/2017/05/22/image01_f2b3c1a3-8f4e-44b0-9048-094b3db37975.jpg"></p><p><img id="entry_2588978_entry_image_93084" src="https://jrnl.s3.amazonaws.com/entry_images/13/2588978/2017/05/22/image02_412bfa23-5a5b-4c0c-a07d-38b1e80ea9de.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, May 22, 2017</h3>
+        <div title="Monday, May 22, 2017" class="two-margin journal-title-text"></div>
+        <div title="Monday, May 22, 2017" class="two-margin journal-text">
+        
+          <p>Golf clinic 2017</p><p><img id="entry_2588985_entry_image_93090" src="https://jrnl.s3.amazonaws.com/entry_images/13/2588985/2017/05/22/image00_daab7742-b7be-4f0f-9273-791971304e61.jpg"></p><p><img id="entry_2588985_entry_image_93091" src="https://jrnl.s3.amazonaws.com/entry_images/13/2588985/2017/05/22/image01_13d88919-0f6b-41f7-b60f-a974df1e566a.jpg"></p><p><img id="entry_2588985_entry_image_93092" src="https://jrnl.s3.amazonaws.com/entry_images/13/2588985/2017/05/22/image02_536f8572-31a9-4003-a826-e9ef8647eb62.jpg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, June 13, 2017</h3>
+        <div title="Tuesday, June 13, 2017" class="two-margin journal-title-text">Isaiahisms</div>
+        <div title="Tuesday, June 13, 2017" class="two-margin journal-text">
+        
+          <p>Isaiah's quote of the day...</p><p>&quot;I can't help it I'm cute, it's God's fault!&quot;</p><p>He said this to Ben at the grocery store last night. Apparently, when they were leaving the store, some lady came up to them and call him her baby. She went on about how cute he was and told him if he was ever in trouble, to come and find her. Then she kissed him on the cheek. </p><p>We have NO IDEA who she was! It was weird. Afterward, he told Ben, &quot;I can't help it I'm cute, it's God's fault!&quot;</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, June 17, 2017</h3>
+        <div title="Saturday, June 17, 2017" class="two-margin journal-title-text">Isaiah</div>
+        <div title="Saturday, June 17, 2017" class="two-margin journal-text">
+        
+          <p>Sometimes this boy just cracks me up!!</p><p><br /></p><p>Last night, he was wearing my bra around the house and thought it was HILARIOUS!!</p><p></p><p><img id="entry_2615217_entry_image_102476" src="https://jrnl.s3.amazonaws.com/entry_images/13/2615217/2017/06/17/fd3f54d643b7edfc3cc3dcb4cd078eb6_9320885a-314e-4531-a54e-f46cfb3b7075.jpeg"></p><p>Then today, I was getting my nails done when Ben text me: "Isaiah was letting Luna lick his mouth.  He said "we're dating dad""</p><p>This boy makes me smile every single day!</p><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, June 22, 2017</h3>
+        <div title="Thursday, June 22, 2017" class="two-margin journal-title-text">Mine are the greatest</div>
+        <div title="Thursday, June 22, 2017" class="two-margin journal-text">
+        
+          <p>I have the greatest kids. Really and truly, they are awesome. Today has been a long day and it isn't close to over yet.&nbsp;</p><p>Our flight to Cincinnati is delayed. Delayed...a lot. Our departure time of 9 am was bumped to 3:10 pm. I got the notification last night but it also said it was subject to change and it could be earlier. What are we supposed to do when we live an hour away?</p><p>So we got up at 4 am anyway. Antonio heard me listening to a voicemail from the airline at 4 and we discussed what we should do. We decided to stay awake, get ready and head to Vegas.&nbsp;</p><p>We arrived at the airport a little before 7 am. We had tons of time so of course everyone got up and ready with no issue or delay. When we arrived, we went ahead and checked our bags. Then we left and headed to IHOP for some breakfast.</p><p>We took our time with breakfast, then headed to Petco to walk around and look at the animals. We had to wait a little bit for it to open and I was able to catch a little nap in the air conditioned van before going in.&nbsp;</p><p>After Petco we went to Target for a couple of things then headed to Bass Pro Shop to look at all the fish in the tanks. We killed time there and then the kids were getting restless and were ready to get to the airport.&nbsp;</p><p>We grabbed some sandwiches at Subway then headed to the airport. Analise and Isaiah cried when Ben had to leave us at security. They were sad he couldn't go with us.&nbsp;</p><p>When we got to the gate, we finished Father of the Bride on my laptop. They have been so well behaved and patient. We still haven't boarded yet and they have done a great job waiting.&nbsp;</p><p>We got meal vouchers so we used them to buy donuts and extra&nbsp;drinks since we had eaten our sandwiches.&nbsp;</p><p>They have been waiting for "a million years" and they just want to get there. I can't blame them, so do I. But I'm proud of how well they've done being patient and waiting. I'm hopeful we'll get to board soon!</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, June 27, 2017</h3>
+        <div title="Tuesday, June 27, 2017" class="two-margin journal-title-text">Breakfast with Papaw</div>
+        <div title="Tuesday, June 27, 2017" class="two-margin journal-text">
+        
+          <p>A special treat for my kids when visiting with Mimi and Papaw, is for Papaw to take them out to breakfast. He didn't disappoint this time, with a group trip to IHOP. </p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2017/07/04/dad_and_kids_b6b7d699-7221-4039-a8da-7fcfdf1715e8.JPG" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, July 13, 2017</h3>
+        <div title="Thursday, July 13, 2017" class="two-margin journal-title-text"></div>
+        <div title="Thursday, July 13, 2017" class="two-margin journal-text">
+        
+          <p>Our first day fishing at Panguitch Lake was a success!! The weather was gorgeous, the fish were biting and everyone got along! </p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0762_ae476906-1b9c-4b88-8954-7e6bac82d5e8.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0764_80854dfe-bfa9-416e-8d3e-63442e954daf.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0768_a6e30b60-2e9b-4636-b46f-97743e6079a9.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0769_97c5bdf2-f796-4a06-bb3d-89e6423f1459.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0770_b4b10608-1304-4215-86b3-af839ca6782b.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0772_f1ceb1c7-8531-4d4c-a021-c2d2789fcfb9.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0773_38beb016-d213-4291-a98a-43a7d61eca9c.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0777_70fbce39-9ab9-4ffe-bc56-746497c85cae.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0779_77e8f55e-b54a-4d0b-9dc5-f0ad19aa5741.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0784_12f81f95-c9fb-497f-ae3f-7a7944584c03.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0789_a26401b2-13ce-4535-8cac-cf10e05ab851.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0793_08d0b609-43d5-48dc-a801-c6c75d16b43b.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0798_53ed76f8-2956-4143-9188-677f9885dbf9.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_1285_b04d27b9-a973-4b15-b087-320b5450badc.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0831_66473727-92b4-42da-9378-3b1c64d263ff.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0839_53b7810f-9937-47f3-b6bb-682105b5a41a.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0847_6ce2eec3-232c-442c-97a2-969730eba491.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0848_aae6a8eb-2690-4b17-9dd5-c9ba9215cdd5.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0850_0ef67b00-1d79-4bb5-b088-1194f179e424.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0855_3262c28f-1084-4034-9281-0c5a0d416026.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0861_8d9bbbba-0052-4ae2-8ac3-6dd5af20d073.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0867_1fc351e2-e0dc-49e1-b3c3-3df2e045f482.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0874_92b463eb-352e-4335-965e-9b2a8118de70.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0876_5b2c05c7-415d-4042-bcb6-105538725666.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_1288_45312591-d95a-46dd-af7a-611244727778.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_1291_75212e6f-06a3-4442-bb56-278877622579.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_0887_02ad3130-09f8-4480-92df-c7da8ca4efc8.JPG" /><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2646849/2017/07/17/IMG_1293_470267bf-0d5e-42b7-beae-f3810ba9dccc.JPG" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Monday, August 07, 2017</h3>
+        <div title="Monday, August 07, 2017" class="two-margin journal-title-text">First day of school 2017-2018!</div>
+        <div title="Monday, August 07, 2017" class="two-margin journal-text">
+        
+          <p>I can't believe summer is over. Analise and Antonio are venturing into 5th grade with Mrs. Floyd (Katie) while Isaiah is in 1st grade with Mrs. McDaniel (Keele). We certainly love Floyd Elementary and the kids were excited to go back! (Well, Isaiah was mostly excited). Mom didn't cry, but it was a close one!</p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2670106/2017/08/07/image00_e3f26d1a-42f6-4aca-927d-27fb2da9c191.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2670106/2017/08/07/image01_ad9c13ba-ca88-4a3e-9f9c-82ea9f0fea6d.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2670106/2017/08/07/image02_9e203967-c823-458d-b094-b9a1d891ad34.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2670106/2017/08/07/image03_f0115c23-3d1a-42df-b809-871f4afc218f.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2670106/2017/08/07/image04_3e5508f4-cd41-4b67-b26e-b43c87558dbc.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2670106/2017/08/07/image05_1ad20529-4c0f-4c4d-8aa8-ccc6a4be5d23.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2670106/2017/08/07/image06_2950256f-2c64-4011-bad7-f1fb734a3f3e.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2670106/2017/08/07/image07_98675ef6-c32f-4be2-aeca-ed2f0712031a.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2670106/2017/08/07/image08_15565208-2ff4-4c5d-86c7-232229387c31.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2670106/2017/08/07/image09_c5970751-041b-4c2b-8234-e3ccff40f148.jpg" /><p></p><p></p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2670106/2017/08/07/image10_97621d75-9510-4cd3-b301-853a8f2530ba.jpg" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, August 09, 2017</h3>
+        <div title="Wednesday, August 09, 2017" class="two-margin journal-title-text">Kid funnies</div>
+        <div title="Wednesday, August 09, 2017" class="two-margin journal-text">
+        
+          <p>This morning, on the way to school, the kids really cracked me up! Analise and Antonio took tests at school (either yesterday or the first day) to determine which math class they'll be in. </p><p>Antonio is in the accelerated math class, with Mrs. Harris, and Analise will have Katie for math - normal paced math (not low, just not as fast moving). Analise was telling me about the test on the way to school this morning, and the parts she thought she might have messed up.</p><p>As she was describing it, she was telling me about solving some of the problems and she said, &quot;There were w's and i's...those aren't even numbers, how are you supposed to even figure that out?!&quot; I couldn't help but giggle! I know she'll do great this year!</p><p>As I was letting them out of the car, Isaiah says to me, &quot;Have a great day! Don't get fired!!&quot; I told him I would do my best not to. That boy, he really just cracks me up!</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, August 15, 2017</h3>
+        <div title="Tuesday, August 15, 2017" class="two-margin journal-title-text">Dixie and the Class Treat</div>
+        <div title="Tuesday, August 15, 2017" class="two-margin journal-text">
+        
+          <p>Last night, Isaiah still needed to do his reading home when we all got home (Ben and the kids from football practice and me from work). So, I told him to go pick and book and we would read it together. </p><p>He brought out Dixie and the Class Treat. He said it was his favorite book, even though I had never read it with him before. I said, okay, let's do it. </p><p>He read the WHOLE BOOK! I helped him with a couple of words that aren't easily sounded out but all the rest was all him. I'm so very impressed with his reading ability and how well he is doing in school! He is a little rockstar.</p><p>The other two are doing great as well, but this is a &quot;brag about Isaiah&quot; entry. </p><p>Way to go, Zay!!</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, August 23, 2017</h3>
+        <div title="Wednesday, August 23, 2017" class="two-margin journal-title-text">Conversations with Isaiah</div>
+        <div title="Wednesday, August 23, 2017" class="two-margin journal-text">
+        
+          <p>Isaiah: &quot;I don't want to get married.&quot;</p><p>Me: &quot;Why not?&quot;</p><p>Isaiah: &quot;Cause I don't want to share my money.&quot;</p><p>Me: &quot;You can get married and not share money.&quot;</p><p>Isaiah: &quot;Yeah, I still don't want to get married, cause I don't want to have to kiss someone on the lips all the time.&quot;</p><p>Me: &quot;You kiss me on the lips.&quot;</p><p>Isaiah: &quot;Yeah, but you're my Mom!&quot;</p><p>I just love this boy so much!!</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Friday, August 25, 2017</h3>
+        <div title="Friday, August 25, 2017" class="two-margin journal-title-text">Rules for my Sons</div>
+        <div title="Friday, August 25, 2017" class="two-margin journal-text">
+        
+          <p>My Dad (Papaw) shared this on Facebook. I think many of these rules are very important to remember as you grow from a boy to a man. For Analise - many of these rules apply to you as well! Love you all!</p><p>Rules For My Son<br />AUGUST 23, 2017<br /><br />1. Never shake a man’s hand sitting down. (I would modify this to say never shake someone's hand while sitting down)</p><p>2. There are plenty of ways to enter a pool. The stairs ain’t one.</p><p>3. The man at the grill is the closest thing we have to a king.</p><p>4. In a negotiation, never make the first offer.</p><p>5. Act like you’ve been there before. Especially in the end zone.</p><p>6. Request the late check-out.</p><p>7. When entrusted with a secret, keep it.</p><p>8. Hold your heroes to a higher standard.</p><p>9. Return a borrowed car with a full tank of gas.</p><p>10. Don’t fill up on bread.</p><p>11. When shaking hands, grip firmly and look him in the eye. (I would add, look him or her in the eye)</p><p>12. Don’t let a wishbone grow where a backbone should be.</p><p>13. If you need music on the beach, you’re missing the point.</p><p>14. Carry two handkerchiefs. The one in your back pocket is for you. The one in your breast pocket is for her.</p><p>15. You marry the girl, you marry her whole family. (For Analise, same goes for you sweetie. You marry the boy, you marry his whole family)</p><p>16. Be like a duck. Remain calm on the surface and paddle like crazy underneath.</p><p>17. Experience the serenity of traveling alone.</p><p>18. Never be afraid to ask out the best looking girl in the room. (Or the best looking boy for you, Sis)</p><p>19. Never turn down a breath mint.</p><p>20. In a game of HORSE, sometimes a simple free throw will get ’em.</p><p>21. A sport coat is worth 1000 words.</p><p>22. Try writing your own eulogy. Never stop revising.</p><p>23. Thank a veteran. And then make it up to him.</p><p>24. If you want to know what makes you unique, sit for a caricature.</p><p>25. Eat lunch with the new kid.</p><p>26. After writing an angry email, read it carefully. Then delete it.</p><p>27. Ask your mom to play. She won’t let you win.</p><p>28. See it on the big screen.</p><p>29. Give credit. Take the blame.</p><p>30. Write down your dreams.</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, August 31, 2017</h3>
+        <div title="Thursday, August 31, 2017" class="two-margin journal-title-text">Isaiah - I'm watching you</div>
+        <div title="Thursday, August 31, 2017" class="two-margin journal-text">
+        
+          <p>So this morning I was sharing an old post on Facebook of Isaiah when he was a baby. It was a video where I asked if he was ready for a picture and he gave me his cheese face. Seriously...so dang cute! </p><p>He asked what I was doing and I said I was sharing it on Facebook. His immediate reaction was &quot;What?! No! I hate when you post me on Facebook.&quot; I told him I had already posted it a long time ago and that I was just sharing it again. </p><p>When I told him that Papaw had said he was the cutest ever and that he wanted me to post new things, he asked what I said. I told him I responded that he didn't like when I posted stuff about him on Facebook, but that I would see what I could do.</p><p>He said, &quot;Ugh, I guess you can post me, but just not any pictures of me when I don't like food. I'm watching you!&quot; And then he did that thing where he points two fingers at his eyes then at me, to show me he was watching me. I couldn't hold in the laugh. He's so funny!!</p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Thursday, August 31, 2017</h3>
+        <div title="Thursday, August 31, 2017" class="two-margin journal-title-text">Analise - Bravo Bobcat</div>
+        <div title="Thursday, August 31, 2017" class="two-margin journal-text">
+        
+          <p>Analise was the first kiddo to receive the Bravo Bobcat award this year! She was nominated by her peers, and her nomination was pulled out of the hat. The way it works in her class this year, is everyone can nominate someone with a reason why they think they deserve. Then, Mrs. Floyd (Katie) pulls two names from the nominations. If she agrees that the person is deserving, then they receive the honor. Analise was one of the winners this month.</p><p>I'm so proud of her and her hard work. She is a smart, kind, beautiful girl that has a world of potential. Love you, Sis!</p><p><img id="entry_2697702_entry_image_138766" src="https://jrnl.s3.amazonaws.com/entry_images/13/2697702/2017/09/01/aaee222fd87469a949b9331ab84a2d2e_98a4a088-0c33-4677-9f9b-aefbc71b5032.jpeg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Friday, September 22, 2017</h3>
+        <div title="Friday, September 22, 2017" class="two-margin journal-title-text">Sports Contacts</div>
+        <div title="Friday, September 22, 2017" class="two-margin journal-text">
+        
+          <p>These two cuties got measured for contacts today. Right now, the plan is for them just to wear them during sports, but we'll see how they do. This is just one more sign that they're growing up way too fast!!</p><p><img id="entry_2720785_entry_image_148781" src="https://jrnl.s3.amazonaws.com/entry_images/13/2720785/2017/09/22/eaaaeb109da72403d00fc9d160e8e177_44f5ab14-88db-4dc2-b0d3-ddb95383a91b.jpeg"></p><p><img id="entry_2720785_entry_image_148782" src="https://jrnl.s3.amazonaws.com/entry_images/13/2720785/2017/09/22/ddc694b6f6abe42554f9bbe56a5ff823_e7850949-b1c0-4ee9-971b-9f85e361819b.jpeg"></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, January 31, 2018</h3>
+        <div title="Wednesday, January 31, 2018" class="two-margin journal-title-text">Students of the Month!</div>
+        <div title="Wednesday, January 31, 2018" class="two-margin journal-text">
+        
+          <p>Antonio and Isaiah were both named Student of the Month today! I missed the assembly for Isaiah, as I was traveling back from Auston, TX. But Ben was able to go and get some video for me.</p><p><br /></p><p>Antonio’s was an in-class award presentation. They stopped having the upper grades as part of the assembly in an effort to not have it last as long.&nbsp;</p><p>So proud of my boys!</p><p></p><p><img id="entry_2840976_entry_image_205320" src="https://jrnl.s3.amazonaws.com/entry_images/13/2840976/2018/01/31/10adbc06561dff506e7310503ca2a6b4_11071c67-f72f-4b72-8060-41bdbe7307ab.jpeg"></p><p><img id="entry_2840976_entry_image_205321" src="https://jrnl.s3.amazonaws.com/entry_images/13/2840976/2018/01/31/1fcb44ad310134861fc629077d458fbc_2b0c3a6b-b035-4902-a598-5be4e96cf9e1.jpeg"></p><p><img id="entry_2840976_entry_image_205323" src="https://jrnl.s3.amazonaws.com/entry_images/13/2840976/2018/01/31/d92794afba98c76a34eba7f7030d5e46_9de1c503-f759-4071-a2ac-216cbb9b9280.jpeg"></p><p><img id="entry_2840976_entry_image_205596" src="https://jrnl.s3.amazonaws.com/entry_images/13/2840976/2018/01/31/ee4b4b9e75d5fcd2dcd97e29d5f1d328_820a1879-ccf5-4646-8c25-65663e9fa7d7.jpeg"></p><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, February 21, 2018</h3>
+        <div title="Wednesday, February 21, 2018" class="two-margin journal-title-text">Analise’s last game of the season</div>
+        <div title="Wednesday, February 21, 2018" class="two-margin journal-text">
+        
+          <p>Analise had a great basketball season! If she works really hard, she might have a chance to make the middle school team next&nbsp;year.&nbsp;</p><p></p><p><img id="entry_2860157_entry_image_212863" src="https://jrnl.s3.amazonaws.com/entry_images/13/2860157/2018/02/21/54253b3c74b98e978a11be52a6e042ac_08a551cf-47d4-4b74-9be9-1b53ef302ac9.jpeg"></p><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, February 21, 2018</h3>
+        <div title="Wednesday, February 21, 2018" class="two-margin journal-title-text">Isaiah’s Artwork</div>
+        <div title="Wednesday, February 21, 2018" class="two-margin journal-text">
+        
+          <p>Cute artwork for the 100th day of school!</p><p></p><p><img id="entry_2860154_entry_image_212860" src="https://jrnl.s3.amazonaws.com/entry_images/13/2860154/2018/02/21/3d621001dc56ec832465d01ddda2d59b_7dbb6ed5-6ff1-490a-8776-6f464f7ed591.jpeg"></p><p><img id="entry_2860154_entry_image_212861" src="https://jrnl.s3.amazonaws.com/entry_images/13/2860154/2018/02/21/9836235646b899e99291c880d2479b05_1fc50c3a-216a-4740-b6e7-14a879298650.jpeg"></p><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Wednesday, February 21, 2018</h3>
+        <div title="Wednesday, February 21, 2018" class="two-margin journal-title-text">Fanbooks!</div>
+        <div title="Wednesday, February 21, 2018" class="two-margin journal-text">
+        
+          <p>Woohoo! Cool new Fanbooks hats.&nbsp;</p><p></p><p><img id="entry_2860156_entry_image_212862" src="https://jrnl.s3.amazonaws.com/entry_images/13/2860156/2018/02/21/f1bd93cefc4f66e780f4535db5947166_c594bfbf-25f9-44c4-83d5-e98e96bb74f1.jpeg"></p><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Saturday, February 24, 2018</h3>
+        <div title="Saturday, February 24, 2018" class="two-margin journal-title-text">Antonio's Basketball Season</div>
+        <div title="Saturday, February 24, 2018" class="two-margin journal-text">
+        
+          <p>Antonio had his last game of the season tonight. He did a great job this season. It is so amazing to see his growth as an athlete. During this last game, he and his teammates tried really hard to help Dane score. He hadn't made a basket all season. Despite their best efforts, he just couldn't get one to sink. But I'm super proud of my boy for caring enough about his friend to sacrifice his own attempts at scoring to try to help him. </p><img src="https://jrnl.s3.amazonaws.com/entry_images/13/2862077/2018/02/24/image00_2ec5ef10-ed06-490a-b794-65802021d31f.jpg" /><p></p>
+        
+        </div>
+        
+      
+        <h3 class="subtitle right-align-text">Tuesday, October 23, 2018</h3>
+        <div title="Tuesday, October 23, 2018" class="two-margin journal-title-text">Twin Power</div>
+        <div title="Tuesday, October 23, 2018" class="two-margin journal-text">
+        
+          <p>&nbsp;Tonight, on the way home from soccer, Analise and Antonio were talking about the projects they have coming up for school. When talking about their project for Language Arts, Analise was telling me the subject she picked. She fumbled over pronouncing Perseus and Antonio asked, &quot;Perseus killing Medusa?&quot; She said yes and he shouted &quot;OMG, Twin Power! I picked the same thing!&quot; Then they high-fived. I laughed so hard. I love when their &quot;twin power&quot; comes into play, and love it even more when they talk about it!!&nbsp;</p><p>I love you guys!</p>
+        
+        </div>
+        
+      
+    
+  </div>
+</div>
+
+</body>
+</html>
