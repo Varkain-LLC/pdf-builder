@@ -432,7 +432,7 @@ img {
     margin-block-start: 0;
     margin-block-end: 0;
 }
-
+        
 .file-size, .file-name {
     font-family: "open sans", sans-serif;
     font-size: 0.5rem;
@@ -447,4 +447,8 @@ img {
     height: 2.5rem;
     object-fit: contain;
     margin-right: 0.9375rem;
+}
+
+.subpage {
+    padding-top: 30px;
 }

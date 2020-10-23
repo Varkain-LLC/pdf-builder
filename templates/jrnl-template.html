@@ -160,7 +160,7 @@
   let stack_count = 0;
   let stack_status = {};
   $(function(){
-      var content_height = $('.subpage').height() - 20;	// the height of the content, discluding the header/footer
+      var content_height = $('.subpage').height();	// the height of the content, discluding the header/footer
       var page = 1; // the beginning page number to show in the footer
       var pageContentIndex = 0;
       var pageContents = ['intro', 'aam', 'journals'];
@@ -362,27 +362,28 @@
       }
 
       $(document).ready(() => { 
-        let count = 0;
         const videoCount = $("video").length;
         let  loadedCount = 0, loadedVideoCount = 0;
 
-        for (let i = 0 ; i < $("img").length ; i++) {
-            if ($($("img")[i]).attr("src")) {
-                count++;
+        var imgs = document.images,
+            len = imgs.length,
+            counter = 0;
+
+        [].forEach.call( imgs, function( img ) {
+            if(img.complete)
+              incrementCounter();
+            else
+              img.addEventListener( 'load', incrementCounter, false );
+        } );
+
+        function incrementCounter() {
+            counter++;
+            if ( counter === len ) {
+              console.log('startbuilding');
+                startbuilding();
             }
         }
-
-        if (count === 0) {
-            startbuilding();
-        }
         
-        $("img").load(() => {
-          loadedCount ++;
-          if (loadedCount === count) {
-            startbuilding();
-          }
-        });
-
         $("source").remove();
       });
      
