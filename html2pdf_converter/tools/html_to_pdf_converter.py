@@ -25,34 +25,51 @@ def send_devtools(driver, cmd, params={}):
     return response.get('value')
 
 
-def get_pdf_from_html_terminal(path, pdf_file_path):
+def run_terminal_commands(commands=None):
+    cmnds = commands or []
     if sys.version_info[0] == 2:
-        return subprocess.call([
-            "/opt/google/chrome/chrome",
-            "--no-sandbox",
-            "--headless",
-            "--disable-gpu",
-            "--disable-dev-shm-usage",
-            "--print-to-pdf={}".format(pdf_file_path),
-            path,
-        ])
-    return subprocess.run([
+        return subprocess.call(cmnds, shell=True)
+    return subprocess.run(cmnds, shell=True, stdout=subprocess.DEVNULL)
+
+
+def get_engine0_pdf(path, pdf_file_path):
+    cmnds = [
         "/opt/google/chrome/chrome",
         "--no-sandbox",
         "--headless",
         "--disable-gpu",
         "--disable-dev-shm-usage",
         "--print-to-pdf={}".format(pdf_file_path),
-        path,
-    ], stdout=subprocess.DEVNULL)
+        path
+    ]
+    return run_terminal_commands(cmnds)
+
+
+def get_engine1_pdf(path, pdf_file_path):
+    path = path.replace('file://', '')
+    cmnds = [
+        'docker-compose run --rm prince -f {} -o /data/{} /data/{}'.format(
+            'docker-compose.yml',
+            pdf_file_path,
+            path)
+    ]
+    print(cmnds)
+    return run_terminal_commands(cmnds)
+
+
+def get_terminal_pdf(path, pdf_file_path, engine):
+    if engine == 1:
+        return get_engine1_pdf(path, pdf_file_path)
+    return get_engine0_pdf(path, pdf_file_path)
 
 
 def get_pdf_from_html(
     path, chromedriver='./chromedriver', print_options={},
-    pdf_file_path=None
+    pdf_file_path=None, engine=None
 ):
     if pdf_file_path:
-        return get_pdf_from_html_terminal(path, pdf_file_path)
+        return get_terminal_pdf(path, pdf_file_path, engine)
+
     webdriver_options = Options()
     webdriver_options.add_argument('--timeout {timeout}'.format(
         timeout=5*60*1000))  # 5 minutes

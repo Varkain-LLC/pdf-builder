@@ -1,0 +1,73 @@
+div.table-of-contents-body::after {
+  content: target-counter(attr(href, url), page);
+}
+
+img {
+  image-resolution: from-image;
+}
+
+@page {
+  counter-increment: page;
+  counter-reset: page;
+}
+
+@page:right {
+  margin: 0.5in 0.5in 0.5in 0.3in;
+  @bottom-right {
+    text-align: left;
+    margin: 0;
+    margin-bottom: 30pt;
+    content: counter(page);
+    font-size: .15in;
+    font-family: 'Arvo';
+  }
+}
+
+@page:left {
+  margin: 0.5in 0.3in 0.5in 0.5in;
+  @bottom-left {
+    text-align: right;
+    margin: 0;
+    margin-bottom: 30pt;
+    content: counter(page);
+    font-size: .15in;
+    font-family: 'Arvo';
+  }
+}
+
+@page:first {
+  margin: 0.3in;
+  @bottom-right {content: normal;}
+  @bottom-left {content: normal;}
+}
+@page page-empty {
+  margin: 0.3in;
+  @bottom-right {content: normal;}
+  @bottom-left {content: normal;}
+}
+@page table-of-contents {
+  margin: 0.3in;
+  @bottom-right {content: normal;}
+  @bottom-left {content: normal;}
+}
+.page-empty {
+  page: table-of-contents;
+}
+.toc, .tct {
+  page: table-of-contents;
+}
+.journal-date {
+  text-align: inside;
+  font-family: 'Arvo';
+}
+p {
+  font-family: 'Arvo';
+}
+.page {
+  page-break-before: always;
+  page-break-after: always;
+}
+.subpage {
+  padding-top: 0;
+  font-family: 'Arvo';
+}
