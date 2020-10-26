@@ -66,7 +66,7 @@ def get_pdf_from_html(
     path, chromedriver='./chromedriver', print_options={},
     pdf_file_path=None, engine=None
 ):
-    if pdf_file_path:
+    if engine == 1:
         return get_terminal_pdf(path, pdf_file_path, engine)
 
     webdriver_options = Options()

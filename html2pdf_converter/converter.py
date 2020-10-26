@@ -127,10 +127,13 @@ class HtmlToPdfConverter:
             pdf_file_path=output_file, engine=self.engine)
 
     def write_pdf_file(self, temp_html_file_path, output_file):
-        with open(output_file, 'wb') as file:
-            file.write(self.get_pdf_file(temp_html_file_path))
-            os.remove(temp_html_file_path)
-            # print(temp_html_file_path)
+        if self.engine == 1:
+            self.get_pdf_file(temp_html_file_path. output_file)
+        else:
+            with open(output_file, 'wb') as file:
+                file.write(self.get_pdf_file(temp_html_file_path))
+        # print(temp_html_file_path)
+        os.remove(temp_html_file_path)
 
     def get_html(self):
         json_data = self.get_json()
@@ -148,13 +151,10 @@ class HtmlToPdfConverter:
             output_file = get_pdf_name(self.assets_dir, output_file)
 
         if os.path.isfile(str('./' + temp_html_file_path)):
-            if output_file:
-                self.get_pdf_file(temp_html_file_path, output_file)
-            else:
-                self.write_pdf_file(
-                    temp_html_file_path=temp_html_file_path,
-                    output_file=output_file
-                )
+            self.write_pdf_file(
+                temp_html_file_path=temp_html_file_path,
+                output_file=output_file
+            )
 
         return output_file
 
