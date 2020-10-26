@@ -34,7 +34,7 @@ def run_terminal_commands(commands=None):
 
 def get_engine0_pdf(path, pdf_file_path):
     cmnds = [
-        "/opt/google/chrome/chrome",
+        "chrome",
         "--no-sandbox",
         "--headless",
         "--disable-gpu",
@@ -48,8 +48,7 @@ def get_engine0_pdf(path, pdf_file_path):
 def get_engine1_pdf(path, pdf_file_path):
     path = path.replace('file://', '')
     cmnds = [
-        'docker-compose run --rm prince -f {} -o /data/{} /data/{}'.format(
-            'docker-compose.yml',
+        'docker-compose run --rm prince -o /data/{} /data/{}'.format(
             pdf_file_path,
             path)
     ]
