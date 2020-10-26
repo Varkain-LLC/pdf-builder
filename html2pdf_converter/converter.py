@@ -1,4 +1,5 @@
 # coding: utf-8
+import argparse
 import os
 import json
 import sys
@@ -16,6 +17,23 @@ from tools.random_names import produce_amount_names
 
 from choices import templates
 
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    '--engine', '-e', type=int,
+    help="0 - chromium, 1 - prince, 2 - xhtml2pdf"
+)
+parser.add_argument(
+    '--json', '-j', type=str,
+    help="path to json file"
+)
+parser.add_argument(
+    '--template_id', '-tid', type=str,
+    help="Id of template: jrnl, jrnl-cover"
+)
+parser.add_argument(
+    '--output', '-o', type=str,
+    help="path to render pdf file"
+)
 
 is_python2 = platform.python_version().startswith('2.7')
 
@@ -31,9 +49,13 @@ class HtmlToPdfConverter:
     def __init__(
         self,
         base_dir=None,
-        json_data=None, html_data=None,
-        json_file_path=None, html_template_path=None
+        engine=0,
+        json_data=None,
+        json_file_path=None,
+        html_data=None,
+        html_template_path=None
     ):
+        self.engine = engine
         self.json_data = json_data
         self.json_file_path = json_file_path
         self.html_data = html_data
@@ -102,7 +124,7 @@ class HtmlToPdfConverter:
         html_path = 'file://' + os.getcwd() + str('/' + temp_html_file_path)
         return get_pdf_from_html(
             path=html_path, chromedriver=self.get_chromium_driver(),
-            pdf_file_path=output_file)
+            pdf_file_path=output_file, engine=self.engine)
 
     def write_pdf_file(self, temp_html_file_path, output_file):
         with open(output_file, 'wb') as file:
@@ -138,14 +160,16 @@ class HtmlToPdfConverter:
 
 
 if __name__ == "__main__":
+    args = parser.parse_args()
     html_to_pdf_obj = HtmlToPdfConverter(
-        json_file_path=sys.argv[1],  # 'assets/book.json'
+        engine=args.engine,
+        json_file_path=args.json,  # 'assets/book.json'
         json_data=json.dumps({
             "name": "qqqq",
             "description": "wwww",
             "price": 123
         }),
-        html_template_path=templates.get(sys.argv[2]),
+        html_template_path=templates.get(args.template_id),
         html_data='<div class="container">'
         '<div class="row"><div class="col-lg-12 text-center">'
         '<h1 class="mt-5">{{ json_obj.name }}</h1>'
@@ -153,5 +177,5 @@ if __name__ == "__main__":
         '<p class="lead">{{ json_obj.price }}</p></div></div></div>'
     )
     html_to_pdf_obj.create(
-        output_file=sys.argv[3]
+        output_file=args.output
     )
