@@ -34,7 +34,7 @@ def run_terminal_commands(commands=None):
 
 def get_engine0_pdf(path, pdf_file_path):
     cmnds = [
-        "chrome",
+        "/opt/google/chrome/chrome",
         "--no-sandbox",
         "--headless",
         "--disable-gpu",
