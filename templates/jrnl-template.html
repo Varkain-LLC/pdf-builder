@@ -89,7 +89,7 @@
     .subpage {
       padding-top: 0;
     }
-    p {
+    p, .item-content {
       font-size: 11pt;
       font: 11pt "Tahoma";
       font-weight: 300;
@@ -220,10 +220,10 @@
         <span class="two-margin aam-category-text">{{ entry.group }}</span>
       {% endif %}
       <div class="two-margin aam-question-text">{{ entry.title }}</div>
-      <div class="two-margin journal-text" style="font-style: italic;">
+      <div class="two-margin journal-text journal-date" style="font-style: italic;">
         {{ entry.entry_date }}
       </div>
-      <div class="two-margin journal-text" style="padding-bottom: 20mm;">
+      <div class="two-margin journal-text item-content" style="padding-bottom: 20mm;">
         {% if json_obj.photos is true %}
           {{ entry.content|safe }}
         {% else %}
@@ -260,7 +260,7 @@
       {% for entry in journal.entries %}
         <h3 class="subtitle journal-date">{{ entry.entry_date }}</h3>
         <div title="{{entry.entry_date}}" class="two-margin journal-title-text">{{ entry.title }}</div>
-        <div title="{{entry.entry_date}}" class="two-margin journal-text">
+        <div title="{{entry.entry_date}}" class="two-margin journal-text item-content">
         {% if json_obj.photos is true %}
           {{ entry.content|safe }}
         {% else %}
