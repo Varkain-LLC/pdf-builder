@@ -128,7 +128,7 @@ class HtmlToPdfConverter:
 
     def write_pdf_file(self, temp_html_file_path, output_file):
         if self.engine == 1:
-            self.get_pdf_file(temp_html_file_path. output_file)
+            self.get_pdf_file(temp_html_file_path, output_file)
         else:
             with open(output_file, 'wb') as file:
                 file.write(self.get_pdf_file(temp_html_file_path))
