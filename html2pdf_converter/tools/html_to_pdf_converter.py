@@ -46,7 +46,7 @@ def get_engine0_pdf(path, pdf_file_path):
 
 
 def get_engine1_pdf(path, pdf_file_path):
-    path = path.replace('file://', '')
+    path = path.replace('file://', '').split('/')[-1]
     cmnds = [
         'docker-compose run --rm prince -o /data/{} /data/{}'.format(
             pdf_file_path,
