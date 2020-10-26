@@ -1,7 +1,0 @@
-# docker-compose.yml
-version: '3'
-services:
-  prince:
-    image: michaelperrin/prince:latest
-    volumes:
-      - .:/data

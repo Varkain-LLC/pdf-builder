@@ -90,8 +90,9 @@
       padding-top: 0;
     }
     p {
-      font-size: 12pt;
-      font: 12pt "Tahoma";
+      font-size: 11pt;
+      font: 11pt "Tahoma";
+      font-weight: 300;
     }
 
     body[start=even] {
@@ -198,7 +199,7 @@
 
 {% if json_obj.table_of_contents.aam and json_obj.all_about_me != '' %}
   {% set item = json_obj.table_of_contents.aam %}
-  <div class="page" id="aam-chapter">
+  <div class="page tct" id="aam-chapter">
     <div class="subpage">
       <div class="vertical-align-center">
           <h3 class="table-content-title">{{ item.name }}</h3>
@@ -236,7 +237,7 @@
 
 {% if json_obj.table_of_contents.journals %}
   {% set item = json_obj.table_of_contents.journals %}
-  <div class="page" id="journals-chapter">
+  <div class="page tct" id="journals-chapter">
     <div class="subpage">
       <div class="vertical-align-center">
           <h3 class="table-content-title">{{ item.name }}</h3>
