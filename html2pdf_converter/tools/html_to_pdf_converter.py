@@ -47,7 +47,7 @@ def get_engine0_pdf(path, pdf_file_path):
 
 def get_engine1_pdf(path, pdf_file_path):
     cmnds = [
-        'prince {html} > {output}'.format(
+        'prince {html} -o {output}'.format(
             output=pdf_file_path,
             html=path
         )
