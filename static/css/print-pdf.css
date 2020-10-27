@@ -19,7 +19,6 @@ img {
     margin-bottom: 30pt;
     content: counter(page);
     font-size: .15in;
-    font-family: 'Arvo';
   }
 }
 
@@ -31,7 +30,6 @@ img {
     margin-bottom: 30pt;
     content: counter(page);
     font-size: .15in;
-    font-family: 'Arvo';
   }
 }
 
@@ -58,10 +56,6 @@ img {
 }
 .journal-date {
   text-align: inside;
-  font-family: 'Arvo';
-}
-p {
-  font-family: 'Arvo';
 }
 .page {
   page-break-before: always;
@@ -69,5 +63,11 @@ p {
 }
 .subpage {
   padding-top: 0;
-  font-family: 'Arvo';
+}
+img {
+    page-break-inside: avoid;
+}
+p {
+  widows: 3;
+  orphans: 3;
 }

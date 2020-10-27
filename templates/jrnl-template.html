@@ -18,7 +18,9 @@
   <style>
     @page {
       size: 6in 9in;
-      font: 12pt "Tahoma";
+      font: "Tahoma";
+      font-weight: 300;
+      font-size: 11pt;
     }
 
     .document-title {
@@ -89,10 +91,15 @@
     .subpage {
       padding-top: 0;
     }
-    p, .item-content {
-      font-size: 11pt;
-      font: 11pt "Tahoma";
-      font-weight: 300;
+    p, .item-content, .aam-date {
+      font: "Times New Roman";
+      font-weight: 200;
+      font-size: .14in;
+    }
+
+    .aam-date {
+      font-style: italic;
+      font-size: .145in;
     }
 
     body[start=even] {
@@ -188,7 +195,6 @@
       </div>
     </div>
   </div>
-  <div class="page page-empty"></div>
   <div id='intro'>
     <div id="book-content-intro">
       <h3 class="subtitle journal-date">{{ item.name }}</h3>
@@ -201,17 +207,14 @@
   {% set item = json_obj.table_of_contents.aam %}
   <div class="page tct" id="aam-chapter">
     <div class="subpage">
-      <div class="vertical-align-center">
-          <h3 class="table-content-title">{{ item.name }}</h3>
-          <div class='logo-img-container'>
-            <div class='line left-3-margin'></div>
-            <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
-            <div class='line right-3-margin'></div>
-          </div>
+      <h3 class="table-content-title">{{ item.name }}</h3>
+      <div class='logo-img-container'>
+        <div class='line left-3-margin'></div>
+        <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
+        <div class='line right-3-margin'></div>
       </div>
     </div>
   </div>
-  <div class="page page-empty"></div>
   <div id='aam'>
     <div id="book-content-aam">
       <h3 class="subtitle journal-date">{{ item.name }}</h3>
@@ -220,7 +223,7 @@
         <span class="two-margin aam-category-text">{{ entry.group }}</span>
       {% endif %}
       <div class="two-margin aam-question-text">{{ entry.title }}</div>
-      <div class="two-margin journal-text journal-date" style="font-style: italic;">
+      <div class="two-margin aam-date journal-text journal-date">
         {{ entry.entry_date }}
       </div>
       <div class="two-margin journal-text item-content" style="padding-bottom: 20mm;">
@@ -239,15 +242,12 @@
   {% set item = json_obj.table_of_contents.journals %}
   <div class="page tct" id="journals-chapter">
     <div class="subpage">
-      <div class="vertical-align-center">
-          <h3 class="table-content-title">{{ item.name }}</h3>
-          <div class='logo-img-container'>
-            <div class='line left-3-margin'></div>
-            <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
-            <div class='line right-3-margin'></div>
-          </div>
+      <h3 class="table-content-title">{{ item.name }}</h3>
+      <div class='logo-img-container'>
+        <div class='line left-3-margin'></div>
+        <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
+        <div class='line right-3-margin'></div>
       </div>
-      
     </div>
   </div>
   <div class="page page-empty"></div>
@@ -292,5 +292,6 @@
   </div>
 </div>
 {% endif %}
+<div class="page page-empty"></div>
 </body>
 </html>

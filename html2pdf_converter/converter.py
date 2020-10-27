@@ -34,6 +34,10 @@ parser.add_argument(
     '--output', '-o', type=str,
     help="path to render pdf file"
 )
+parser.add_argument(
+    '--html_only', type=bool,
+    help="create html file, not render pdf file"
+)
 
 is_python2 = platform.python_version().startswith('2.7')
 
@@ -53,7 +57,8 @@ class HtmlToPdfConverter:
         json_data=None,
         json_file_path=None,
         html_data=None,
-        html_template_path=None
+        html_template_path=None,
+        html_only=False,
     ):
         self.engine = engine
         self.json_data = json_data
@@ -65,6 +70,7 @@ class HtmlToPdfConverter:
         self.assets_dir = os.path.join(self.base_dir, 'assets/')
         self.static_url = os.path.join(self.base_dir, 'static/')
         self.chromium_path = os.path.join(self.assets_dir, 'drivers/')
+        self.html_only_mode = html_only
 
     def get_chromium_driver(self):
         _type = sys.platform
@@ -127,6 +133,9 @@ class HtmlToPdfConverter:
             pdf_file_path=output_file, engine=self.engine)
 
     def write_pdf_file(self, temp_html_file_path, output_file):
+        if self.html_only_mode:
+            return
+
         if self.engine == 1:
             self.get_pdf_file(temp_html_file_path, output_file)
         else:
@@ -174,7 +183,8 @@ if __name__ == "__main__":
         '<div class="row"><div class="col-lg-12 text-center">'
         '<h1 class="mt-5">{{ json_obj.name }}</h1>'
         '<p class="lead">{{ json_obj.description }}</p>'
-        '<p class="lead">{{ json_obj.price }}</p></div></div></div>'
+        '<p class="lead">{{ json_obj.price }}</p></div></div></div>',
+        html_only=args.html_only or False
     )
     html_to_pdf_obj.create(
         output_file=args.output
