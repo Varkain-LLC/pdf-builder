@@ -1,3 +1,19 @@
+/* add in emoji */
+@font-face {
+font-family: serif;
+src: prince-lookup("Apple Color Emoji")
+}
+
+@font-face {
+font-family: sans-serif;
+src: prince-lookup("Apple Color Emoji")
+}
+
+@font-face {
+font-family: monospace;
+src: prince-lookup("Apple Color Emoji")
+}
+
 div.table-of-contents-body::after {
   content: target-counter(attr(href, url), page);
 }

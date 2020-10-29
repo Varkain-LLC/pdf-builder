@@ -13,6 +13,20 @@
   />
   <link href="{{ static_url }}css/pdf.css" rel="stylesheet"/>
   <link href="{{ static_url }}css/print-pdf.css" rel="stylesheet" />
+  <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+  <script>
+    twemoji.parse(document.body, {
+      callback: function(icon, options, variant) {
+          switch ( icon ) {
+              case 'a9':      // © copyright
+              case 'ae':      // ® registered trademark
+              case '2122':    // ™ trademark
+                  return false;
+          }
+          return ''.concat(options.base, options.size, '/', icon, options.ext);
+      }
+    });
+  </script>
 
 {% if json_obj.export_format == '6X9' %}
   <style>
@@ -124,11 +138,26 @@
       @prince-overlay {
         text-align: center;
         content: "PREVIEW";
-        font-size: 1.3in;
-        color: rgba(0, 0, 0, 0.1);
+        font-size: 1.15in;
+        color: rgba(0, 0, 0, 0.3);
         transform: rotate(-35deg);
-        opacity: 0.1;
+        opacity: 0.3;
+        font-family: 'Arvo';
       }
+    }
+    @page:left {
+      @prince-overlay {
+        margin-left: -.2in;
+      }
+    }
+    @page table-of-contents {
+      @prince-overlay { margin-left: 0; }
+    }
+    @page page-empty {
+      @prince-overlay { margin-left: 0; }
+    }
+    @page:first {
+      @prince-overlay { margin-left: 0; }
     }
   </style>
 {% endif %}
