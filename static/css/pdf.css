@@ -252,6 +252,7 @@ img {
   max-height: 100%;
   height: auto;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .logo-img {
