@@ -150,7 +150,7 @@ section {
     font-size: 2.5vw;
     padding-bottom: 5px;
     border-bottom: 1px solid #000;
-    margin: 40px;
+    margin: 20px;
     font-family: 'Arvo';
 }
 
@@ -166,7 +166,7 @@ section {
     font-size: 3vw;
     font-weight: bold;
     border-bottom: 1px solid #000;
-    font-family: 'Arvo';
+    font-family: 'Khula';
 }
 
 .two-margin {
@@ -179,8 +179,8 @@ section {
     font-size: 2vw;
     font-weight: bold;
     border-bottom: 1px solid #000;
-    margin-bottom: 20px;
-    font-family: 'Arvo';
+    margin-bottom: 10px;
+    font-family: 'Khula';
 }
 
 .journal-title-text {
@@ -262,6 +262,7 @@ img {
 .small-logo-img {
     max-height: 1cm !important;
     max-width: 1cm !important;
+    padding: .2cm;
 }
 
 .subpage img {
@@ -276,7 +277,7 @@ img {
 }
 
 .line { 
-    width: 5cm;
+    width: 4cm;
     border-bottom: 1px solid #000000;
     transform: translateY(-50%);
     flex: 1;
@@ -288,6 +289,14 @@ img {
 
 .right-3-margin { 
     margin-right: 3cm;
+}
+
+.left-2-margin { 
+    margin-left: 2cm;
+}
+
+.right-2-margin { 
+    margin-right: 2cm;
 }
 
 

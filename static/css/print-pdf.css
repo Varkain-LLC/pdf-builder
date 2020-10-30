@@ -18,7 +18,8 @@ img {
     margin: 0;
     margin-bottom: 30pt;
     content: counter(page);
-    font-size: .15in;
+    font-size: .13in;
+    font: sans-serif;
   }
 }
 
@@ -29,7 +30,8 @@ img {
     margin: 0;
     margin-bottom: 30pt;
     content: counter(page);
-    font-size: .15in;
+    font-size: .13in;
+    font: sans-serif;
   }
 }
 

@@ -29,7 +29,7 @@
       font-family: "Arvo";
     }
 
-    .table-of-contents>h3 {
+    .table-of-contents > h3 {
       font-size: .33in;
       font-family: "Arvo";
     }
@@ -40,27 +40,31 @@
     }
 
     .table-content-title {
-      padding-top: 2.5in;
-      font-size: .27in;
-      margin-bottom: 40px;
+      padding-top: 3in;
+      font-size: .45in;
+      font-family: "Khula";
+      font-weight: 300;
+      margin-bottom: .1in;
       text-align: center;
-      font-family: "Arvo";
     }
 
     .subtitle {
-      font-size: .15in;
+      font-size: .13in;
       font-family: 'Arvo';
+      font-weight: 300;
     }
 
     .aam-category-text {
       font-size: .18in;
-      font-family: 'Arvo';
+      font-family: 'Tahoma';
+      font-weight: bold;
+    }
+    .aam-question-text {
+      font-size: .13in;
+      font-weight: bold;
+      font-family: sans-serif;
     }
 
-    .aam-question-text {
-      font-size: .12in;
-      font-family: 'Arvo';
-    }
     .journal-title-text {
       margin-top: .18in;
       font-size: .18in;
@@ -91,15 +95,16 @@
     .subpage {
       padding-top: 0;
     }
-    p, .item-content, .aam-date {
-      font: "Times New Roman";
-      font-weight: 200;
-      font-size: .14in;
+
+    p, .item-content {
+      font-family: 'Khula';
+      font-size: .15in;
     }
 
     .aam-date {
+      font-family: sans-serif;
       font-style: italic;
-      font-size: .145in;
+      font-size: .1in;
     }
 
     body[start=even] {
@@ -238,10 +243,10 @@
         <span class="two-margin aam-category-text">{{ entry.group }}</span>
       {% endif %}
       <div class="two-margin aam-question-text">{{ entry.title }}</div>
-      <div class="two-margin aam-date journal-text journal-date">
+      <div class="two-margin aam-date journal-text">
         {{ entry.entry_date }}
       </div>
-      <div class="two-margin journal-text item-content" style="padding-bottom: 20mm;">
+      <div class="two-margin journal-text item-content" style="padding-bottom: 1in;">
         {% if json_obj.photos is true %}
           {{ entry.content|safe }}
         {% else %}
@@ -274,8 +279,8 @@
       </div>
       {% for entry in journal.entries %}
         <h3 class="subtitle journal-date">{{ entry.entry_date }}</h3>
-        <div title="{{entry.entry_date}}" class="two-margin journal-title-text">{{ entry.title }}</div>
-        <div title="{{entry.entry_date}}" class="two-margin journal-text item-content">
+        <div class="two-margin journal-title-text">{{ entry.title }}</div>
+        <div class="two-margin journal-text item-content">
         {% if json_obj.photos is true %}
           {{ entry.content|safe }}
         {% else %}
@@ -307,6 +312,5 @@
   </div>
 </div>
 {% endif %}
-<div class="page page-empty"></div>
 </body>
 </html>
