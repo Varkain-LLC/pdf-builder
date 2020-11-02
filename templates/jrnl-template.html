@@ -275,45 +275,55 @@
   </div>
   <div class="page page-empty"></div>
   <div id="journals">
-  <div id="book-content-journals">
-    {% for journal in item.data %}
-      <div class="two-margin journal-text">
-        {{ journal.content|safe }}
-      </div>
-      {% for entry in journal.entries %}
-        <h3 class="subtitle journal-date">{{ entry.entry_date }}</h3>
-        <div class="two-margin journal-title-text">{{ entry.title }}</div>
-        <div class="two-margin journal-text item-content">
-        {% if json_obj.photos is true %}
-          {{ entry.content|safe }}
-        {% else %}
-          {{ entry.no_img_content|safe }}
-        {% endif %}
-        </div>
-        {% if entry.commenting is true and json_obj.comments is true %}
-          {% for comment in journal.comments[entry.id] %}
-            {% if loop.first %}
-              <div class="three-margin journal-comments-title-text">Comments:</div>
-            {% endif %}
-            <div class="three-margin journal-comment-container">
-                <div class="journal-comment-user-container">
-                    <img src="{{ comment.user.avatar_image_url }}" alt="user"/>
-                </div>
-                <div class="journal-comment-content-container">
-                    <div class="journal-comments-text">
-                        {{ comment.title }} {{ comment.content }}
-                    </div>
-                    <div class="journal-comment-content-info">
-                        <b>{{ comment.user.short_public_display_name }}</b> &nbsp; . &nbsp; {{ comment.created }}
-                    </div>
-                </div>
+    <div id="book-content-journals">
+      {% for journal in item.data %}
+        <div class="page tct" id="journal-{{ journal.id }}">
+          <div class="subpage">
+            <h3 class="table-content-title">{{ journal.title }}</h3>
+            <div class='logo-img-container'>
+              <div class='line left-3-margin'></div>
+              <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
+              <div class='line right-3-margin'></div>
             </div>
-          {% endfor %}
-        {% endif %}
+          </div>
+        </div>
+        <div class="two-margin journal-text">
+          {{ journal.content|safe }}
+        </div>
+        {% for entry in journal.entries %}
+          <h3 class="subtitle journal-date">{{ entry.entry_date }}</h3>
+          <div class="two-margin journal-title-text">{{ entry.title }}</div>
+          <div class="two-margin journal-text item-content">
+          {% if json_obj.photos is true %}
+            {{ entry.content|safe }}
+          {% else %}
+            {{ entry.no_img_content|safe }}
+          {% endif %}
+          </div>
+          {% if entry.commenting is true and json_obj.comments is true %}
+            {% for comment in journal.comments[entry.id] %}
+              {% if loop.first %}
+                <div class="three-margin journal-comments-title-text">Comments:</div>
+              {% endif %}
+              <div class="three-margin journal-comment-container">
+                  <div class="journal-comment-user-container">
+                      <img src="{{ comment.user.avatar_image_url }}" alt="user"/>
+                  </div>
+                  <div class="journal-comment-content-container">
+                      <div class="journal-comments-text">
+                          {{ comment.title }} {{ comment.content }}
+                      </div>
+                      <div class="journal-comment-content-info">
+                          <b>{{ comment.user.short_public_display_name }}</b> &nbsp; . &nbsp; {{ comment.created }}
+                      </div>
+                  </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
       {% endfor %}
-    {% endfor %}
+    </div>
   </div>
-</div>
 {% endif %}
 </body>
 </html>
