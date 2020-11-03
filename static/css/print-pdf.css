@@ -50,6 +50,14 @@ img {
   @bottom-right {content: normal;}
   @bottom-left {content: normal;}
 }
+@page journal-title {
+  margin: 0.5in;
+  @bottom-right {content: normal;}
+  @bottom-left {content: normal;}
+}
+.journal-title {
+  page: journal-title;
+}
 .page-empty {
   page: table-of-contents;
 }

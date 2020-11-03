@@ -184,20 +184,25 @@
         {% if json_obj.table_of_contents.intro %}
           {% set item = json_obj.table_of_contents.intro %}
           <div class="table-of-contents-body" href="#intro-chapter">
-            {{ item.name }}</br>
+            {{ item.name }}<br/>
         </div>
         {% endif %}
         {% if json_obj.table_of_contents.aam and json_obj.all_about_me != '' %}
           {% set item = json_obj.table_of_contents.aam %}
           <div class="table-of-contents-body" href="#aam-chapter">
-            {{ item.name }}</br>
+            {{ item.name }}<br/>
           </div>
         {% endif %}
         {% if json_obj.table_of_contents.journals %}
           {% set item = json_obj.table_of_contents.journals %}
           <div class="table-of-contents-body" href="#journals-chapter">
-            {{ item.name }}</br>
+            {{ item.name }}<br/>
           </div>
+          {% for journal in item.data %}
+            <div class="table-of-contents-body" href="#journal-{{ journal.id }}">
+              {{ journal.title }}<br/>
+            </div>
+          {% endfor %}
         {% endif %}
         <div class="end-line"></div>
     </div>
@@ -277,7 +282,7 @@
   <div id="journals">
     <div id="book-content-journals">
       {% for journal in item.data %}
-        <div class="page tct" id="journal-{{ journal.id }}">
+        <div class="page tct journal-title" id="journal-{{ journal.id }}">
           <div class="subpage">
             <h3 class="table-content-title">{{ journal.title }}</h3>
             <div class='logo-img-container'>
