@@ -6,11 +6,6 @@ img {
   image-resolution: from-image;
 }
 
-@page {
-  counter-increment: page;
-  counter-reset: page;
-}
-
 @page:right {
   margin: 0.5in 0.5in 0.5in 0.3in;
   @bottom-right {
@@ -40,6 +35,11 @@ img {
   @bottom-right {content: normal;}
   @bottom-left {content: normal;}
 }
+@page page-first {
+  margin: 0.3in;
+  @bottom-right {content: normal;}
+  @bottom-left {content: normal;}
+}
 @page page-empty {
   margin: 0.3in;
   @bottom-right {content: normal;}
@@ -54,6 +54,9 @@ img {
   margin: 0.5in;
   @bottom-right {content: normal;}
   @bottom-left {content: normal;}
+}
+.page-first {
+  page: page-first;
 }
 .journal-title {
   page: journal-title;
@@ -80,4 +83,9 @@ img {
 p {
   widows: 3;
   orphans: 3;
+}
+
+body {
+  counter-increment: page;
+  counter-reset: page;
 }
