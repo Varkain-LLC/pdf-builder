@@ -133,7 +133,6 @@ class HtmlToPdfConverter:
             pdf_file_path=output_file, engine=self.engine)
 
     def write_pdf_file(self, temp_html_file_path, output_file):
-        print('write_pdf_file', self.engine)
         if self.html_only_mode:
             return
 
