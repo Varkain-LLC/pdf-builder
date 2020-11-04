@@ -128,6 +128,7 @@ class HtmlToPdfConverter:
     def get_pdf_file(self, temp_html_file_path, output_file=None):
         """Get pdf file"""
         html_path = 'file://' + os.getcwd() + str('/' + temp_html_file_path)
+        print('get_pdf_file')
         return get_pdf_from_html(
             path=html_path, chromedriver=self.get_chromium_driver(),
             pdf_file_path=output_file, engine=self.engine)
