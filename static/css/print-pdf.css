@@ -55,6 +55,16 @@ img {
   @bottom-right {content: normal;}
   @bottom-left {content: normal;}
 }
+
+@media print {
+    .original-content {
+        display: none !important;
+    }
+    map {
+        display: block !important;
+    }
+}
+
 .page-first {
   page: page-first;
 }
