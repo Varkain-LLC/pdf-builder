@@ -99,3 +99,10 @@ body {
   counter-increment: page;
   counter-reset: page;
 }
+
+.aam-item-content {
+  padding-bottom: .1in;
+}
+.aam-item-content:last-child {
+  padding-bottom: .2in;
+}

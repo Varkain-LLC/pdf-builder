@@ -55,12 +55,12 @@
     }
 
     .aam-category-text {
-      font-size: .18in;
+      font-size: .19in;
       font-family: 'Tahoma';
       font-weight: bold;
     }
     .aam-question-text {
-      font-size: .13in;
+      font-size: .165in;
       font-weight: bold;
       font-family: sans-serif;
     }
@@ -255,7 +255,10 @@
       <div class="two-margin aam-date journal-text">
         {{ entry.entry_date }}
       </div>
-      <div class="two-margin journal-text item-content" style="padding-bottom: .1in;">
+      <div
+        class="two-margin journal-text item-content"
+        style="padding-bottom: {% if loop.last or loop.nextitem.group != entry.group %}.3{% else %}.1{% endif%}in;"
+      >
         {% if json_obj.photos is true %}
           {{ entry.content|safe }}
         {% else %}
