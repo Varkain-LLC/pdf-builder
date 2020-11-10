@@ -51,7 +51,7 @@ img {
   @bottom-left {content: normal;}
 }
 @page journal-title {
-  margin: 0.5in;
+  margin: .5in;
   @bottom-right {content: normal;}
   @bottom-left {content: normal;}
 }
