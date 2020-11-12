@@ -201,9 +201,11 @@
         {% endif %}
         {% if json_obj.table_of_contents.journals %}
           {% set item = json_obj.table_of_contents.journals %}
+        {#
           <div class="table-of-contents-body" href="#journals-chapter">
             {{ item.name }}<br/>
           </div>
+        #}
           {% for journal in item.data %}
             <div class="table-of-contents-body" href="#journal-{{ journal.id }}">
               {{ journal.title }}<br/>
@@ -277,6 +279,7 @@
 
 {% if json_obj.table_of_contents.journals %}
   {% set item = json_obj.table_of_contents.journals %}
+{#
   <div class="page tct" id="journals-chapter">
     <div class="subpage">
       <h3 class="table-content-title">{{ item.name }}</h3>
@@ -288,6 +291,7 @@
     </div>
   </div>
   <div class="page page-empty"></div>
+#}
   <div id="journals">
     <div id="book-content-journals">
       {% for journal in item.data %}
