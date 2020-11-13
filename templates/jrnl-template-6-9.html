@@ -50,6 +50,14 @@
         filter: grayscale(100%);
     }
   {% endif %}
+
+  {% if json_obj.photos is false %}
+    <style>
+        img.media-photo {
+            display: none !important;
+        }
+    </style>
+  {% endif %}
   </style>
   <script type="text/javascript" src="{{ static_url }}vendors/jquery.js"></script>
   <script src="{{ static_url }}vendors/autocolumn.min.js" type="text/javascript" charset="utf-8"></script>
@@ -249,11 +257,7 @@
       <div class="two-margin aam-question-text">{{ entry.title }}</div>
       <div class="two-margin journal-text">{{ entry.entry_date }}</div>
       <div class="two-margin journal-text" style="padding-bottom: 20mm;">
-        {% if json_obj.photos is true %}
-          {{ entry.content|safe }}
-        {% else %}
-          {{ entry.no_img_content|safe }}
-        {% endif %}
+        {{ entry.content|safe }}
       </div>
     {% endfor %}
     </div>
