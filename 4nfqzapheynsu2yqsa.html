@@ -1,0 +1,1783 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arvo">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Khula">
+  <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800"
+      rel="stylesheet"
+    />
+  <link
+    href="https://fonts.googleapis.com/css?family=Roboto+Slab"
+    rel="stylesheet"
+  />
+  <link href="static/css/pdf.css" rel="stylesheet"/>
+  <link href="static/css/print-pdf.css" rel="stylesheet" />
+
+
+  <style>
+    @page {
+      size: 6in 9in;
+      font: "Tahoma";
+      font-weight: 300;
+      font-size: 11pt;
+    }
+
+    .document-title {
+      font-size: .42in;
+      padding-top: 2.5in;
+      font-family: "Arvo";
+    }
+
+    .table-of-contents > h3 {
+      font-size: .33in;
+      font-family: "Arvo";
+    }
+
+    .table-of-contents-body {
+      font-size: .15in;
+      font-family: "Khula";
+    }
+
+    .table-content-title {
+      padding-top: 3in;
+      font-size: .45in;
+      font-family: "Khula";
+      font-weight: 300;
+      margin-bottom: .1in;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: .13in;
+      font-family: 'Arvo';
+      font-weight: 300;
+    }
+
+    .aam-category-text {
+      font-size: .19in;
+      font-family: 'Tahoma';
+      font-weight: bold;
+    }
+    .aam-question-text {
+      font-size: .165in;
+      font-weight: bold;
+      font-family: sans-serif;
+    }
+
+    .journal-title-text {
+      margin-top: .18in;
+      font-size: .18in;
+    }
+    .journal-comments-title-text {
+      margin-top: 10px;
+      font-size: .15in;
+      margin-bottom: 10px;
+    }
+    .journal-comments-username {
+      font-size: .15in;
+    }
+    .journal-comments-text {
+      font-size: .15in;
+    }
+    .journal-comment-user-container > img { 
+      width: .42in;
+      height: .42in;
+    }
+    .journal-comment-content-info {
+      font-size: .132in;
+    }
+    .page {
+      page-break-before: always;
+      page-break-after: always;
+    }
+
+    .subpage {
+      padding-top: 0;
+    }
+
+    p, .item-content {
+      font-family: 'Khula';
+      font-size: .15in;
+      max-width: 100%;
+      max-height: 100%;
+      overflow: hidden;
+    }
+
+    .aam-date {
+      font-family: sans-serif;
+      font-style: italic;
+      font-size: .1in;
+    }
+
+    body[start=even] {
+      break-before:left;
+    }
+
+    .journal-title {
+      margin-left: .5in;
+      margin-right: .5in;
+    }
+  </style>
+
+
+
+
+
+  <style>
+    @page {
+      @prince-overlay {
+        text-align: center;
+        content: "PREVIEW";
+        font-size: 1.15in;
+        color: rgba(0, 0, 0, 0.3);
+        transform: rotate(-35deg);
+        opacity: 0.3;
+        font-family: 'Arvo';
+      }
+    }
+    @page:left {
+      @prince-overlay {
+        margin-left: -.2in;
+      }
+    }
+    @page table-of-contents {
+      @prince-overlay { margin-left: 0; }
+    }
+    @page page-empty {
+      @prince-overlay { margin-left: 0; }
+    }
+    @page:first {
+      @prince-overlay { margin-left: 0; }
+    }
+  </style>
+
+</head>
+<body>
+<div class="page page-empty"></div>
+<div class="page page-first">
+  <div class="subpage">
+    <div class='content' style="position: relative; top: 50%;">
+      <h5 class="document-title">
+        My JRNL
+      </h5>
+      <p class="document-date">
+      
+        Wednesday, November 11, 2020 - Sunday, November 15, 2020
+      
+      </p>
+      <img src="static/images/timeline-images/logo.png" class="center logo-img" alt="logo"/>
+    </div>
+    
+  </div>
+</div>
+<div class="page page-empty"></div>
+
+<div class="page toc">
+  <div class="subpage">
+    <div class="table-of-contents">
+      <h3>Table of Contents</h3>
+        
+        
+          
+          <div class="table-of-contents-body" href="#aam-chapter">
+            All About Me<br/>
+          </div>
+        
+        
+          
+        
+          
+            <div class="table-of-contents-body" href="#journal-">
+              test1234568789's default journal<br/>
+            </div>
+          
+        
+        <div class="end-line"></div>
+    </div>
+    <img src="static/images/timeline-images/logo.png" alt="logo" class="center logo-img" />
+  </div>
+</div>
+<div class="page page-empty"></div>
+
+
+
+
+  
+  <div class="page tct" id="aam-chapter">
+    <div class="subpage">
+      <h3 class="table-content-title">All About Me</h3>
+      <div class='logo-img-container'>
+        <div class='line left-3-margin'></div>
+        <img src="static/images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
+        <div class='line right-3-margin'></div>
+      </div>
+    </div>
+  </div>
+  <div id='aam'>
+    <div id="book-content-aam">
+      <h3 class="subtitle journal-date">All About Me</h3>
+    
+      
+        <span class="two-margin aam-category-text">General</span>
+      
+      <div class="two-margin aam-question-text">Do you like to exercise? Go to the gym? Take long walks?</div>
+      <div class="two-margin aam-date journal-text">
+        Tuesday, August 11, 2020
+      </div>
+      <div
+        class="two-margin journal-text item-content"
+        style="padding-bottom: .3in;"
+      >
+        
+          <p class="align-left"><span style="font-family: Roboto">What do you think?&nbsp;</span></p>
+        
+      </div>
+    
+      
+        <span class="two-margin aam-category-text">Challenges</span>
+      
+      <div class="two-margin aam-question-text">What has been your greatest challenge in life?</div>
+      <div class="two-margin aam-date journal-text">
+        Tuesday, August 11, 2020
+      </div>
+      <div
+        class="two-margin journal-text item-content"
+        style="padding-bottom: .3in;"
+      >
+        
+          <p class="align-left"><span style="font-family: Roboto">adsfadfasdf</span></p>
+        
+      </div>
+    
+    </div>
+  </div>
+
+
+
+  
+
+  <div id="journals">
+    <div id="book-content-journals">
+      
+        <div class="page tct journal-title" id="journal-">
+          <div class="subpage">
+            <h3 class="table-content-title">test1234568789's default journal</h3>
+            <div class='logo-img-container'>
+              <div class='line left-3-margin'></div>
+              <img src="static/images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
+              <div class='line right-3-margin'></div>
+            </div>
+          </div>
+        </div>
+        <div class="two-margin journal-text">
+          
+        </div>
+        
+          <h3 class="subtitle journal-date">Thursday, November 12, 2020</h3>
+          <div class="two-margin journal-title-text">123</div>
+          <div class="two-margin journal-text item-content">
+          
+            <p><br></p>
+<figure>
+                <q type='document'  src="https://jrnl.s3.amazonaws.com/dev/entry_files/66122/46104/2020/11/12/test_5a08ae8a-7856-4527-8d20-c81ee7569dc7.pdf" size="5288328" formatted_size="5.04 MB" caption="" name="test.pdf" entry_link="https://link.jrnl.com/dynamicpagelink/DeGxYgQtMaqsfawE8" created_date="Thursday, 12 November 2020" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46104/2020/11/12/entry-qrcode_620beeaf-f323-4a68-a3e6-42e99682f167.svg">
+                    <div class='add-media-box-file original-content' style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.25rem;
+                width: 33.25rem;
+                height: 3.75rem;
+                border-radius: 0.3125rem;
+                border: solid 0.0625rem #d5d5d5;
+                background-color: #ffffff;
+            ">
+                        <img
+                            src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/11/file_2ef74894-1bf9-4b77-9745-08fd879d9d28.png"
+                            alt=""
+                            style="
+                color: rgb(47, 95, 129);
+                width: 1.9563rem;
+                height: 2.4438rem;
+                font-size: 2.5rem;
+                margin-left: 1.25rem;
+                min-width: 0px !important;
+            " />
+                        <div class="add-media-box-file-info" style="
+                cursor: pointer;
+                padding-left: 1.275rem;
+                overflow: hidden;
+            ">
+                            <p class="file-info-name" style="
+                white-space: pre;
+                padding-bottom: 0.3125rem;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 1.0625rem;
+                font-weight: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            ">test.pdf</p>
+                            <a href="https://link.jrnl.com/dynamicpagelink/DeGxYgQtMaqsfawE8" class="file-info-size" style="
+                display: inline-block;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 0.875rem;
+                font-weight: normal;
+                color: #2f5f81;
+                border-bottom: 1px solid #2f5f81;
+            " onClick={openDocument}>Open File (5.04 MB)</a>
+                        </div>
+                    </div>
+                </q>
+                <map style="width: 100%; display: none;">
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        ">
+                        <div style="display: flex; align-items: center;">
+                            <img
+                                style="
+            width: 2.9375rem;
+            height: 2.5rem;
+            object-fit: contain;
+            margin-right: 0.9375rem;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/05/file_8208c991-d54e-4fac-bd8a-ecb831239f30.png"
+                                alt="audiowave"
+                            />
+                            <div class="pdf-content-media-desc">
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">test.pdf</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">5.04 MB</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">PDF File</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">Uploaded on Thursday, 12 November 2020</div>
+                            </div>
+                        </div>
+                        <div class="pdf-content-media-qr">
+                            <img
+                                style="
+            width: 100px;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46104/2020/11/12/entry-qrcode_620beeaf-f323-4a68-a3e6-42e99682f167.svg"
+                                alt="qr" 
+                            />
+                        </div>
+                    </div>
+                </map>
+             &nbsp;</figure>
+<p style="text-align: left"><br></p>
+          
+          </div>
+          
+        
+          <h3 class="subtitle journal-date">Thursday, November 12, 2020</h3>
+          <div class="two-margin journal-title-text">123</div>
+          <div class="two-margin journal-text item-content">
+          
+            <p><br></p>
+<figure>
+                <q type='document'  src="https://jrnl.s3.amazonaws.com/dev/entry_files/66122/46104/2020/11/12/test_26294d34-c2c1-45eb-b717-dfbcb7815c7e.pdf" size="5288328" formatted_size="5.04 MB" caption="" name="test.pdf" entry_link="https://link.jrnl.com/dynamicpagelink/2erzvu6Drdx9nuqj9" created_date="Thursday, 12 November 2020" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46104/2020/11/12/entry-qrcode_8330e3ce-c80f-4c67-8544-e16aa3bc703e.svg">
+                    <div class='add-media-box-file original-content' style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.25rem;
+                width: 100%;
+                height: 3.75rem;
+                border-radius: 0.3125rem;
+                border: solid 0.0625rem #d5d5d5;
+                background-color: #ffffff;
+            ">
+                        <img
+                            src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/11/file_2ef74894-1bf9-4b77-9745-08fd879d9d28.png"
+                            alt=""
+                            style="
+                color: rgb(47, 95, 129);
+                width: 1.9563rem;
+                height: 2.4438rem;
+                font-size: 2.5rem;
+                margin-left: 1.25rem;
+                min-width: 0px !important;
+            " />
+                        <div class="add-media-box-file-info" style="
+                cursor: pointer;
+                padding-left: 1.275rem;
+                overflow: hidden;
+            ">
+                            <p class="file-info-name" style="
+                white-space: pre;
+                padding-bottom: 0.3125rem;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 1.0625rem;
+                font-weight: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            ">test.pdf</p>
+                            <a href="https://link.jrnl.com/dynamicpagelink/2erzvu6Drdx9nuqj9" class="file-info-size" style="
+                display: inline-block;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 0.875rem;
+                font-weight: normal;
+                color: #2f5f81;
+                border-bottom: 1px solid #2f5f81;
+            " onClick={openDocument}>Open File (5.04 MB)</a>
+                        </div>
+                    </div>
+                </q>
+                <map style="width: 100%; display: none;">
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        ">
+                        <div style="display: flex; align-items: center;">
+                            <img
+                                style="
+            width: 2.9375rem;
+            height: 2.5rem;
+            object-fit: contain;
+            margin-right: 0.9375rem;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/05/file_8208c991-d54e-4fac-bd8a-ecb831239f30.png"
+                                alt="audiowave"
+                            />
+                            <div class="pdf-content-media-desc">
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">test.pdf</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">5.04 MB</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">PDF File</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">Uploaded on Thursday, 12 November 2020</div>
+                            </div>
+                        </div>
+                        <div class="pdf-content-media-qr">
+                            <img
+                                style="
+            width: 100px;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46104/2020/11/12/entry-qrcode_8330e3ce-c80f-4c67-8544-e16aa3bc703e.svg"
+                                alt="qr" 
+                            />
+                        </div>
+                    </div>
+                </map>
+             &nbsp;</figure>
+<p style="text-align: left"><br></p>
+          
+          </div>
+          
+        
+          <h3 class="subtitle journal-date">Thursday, November 12, 2020</h3>
+          <div class="two-margin journal-title-text">123</div>
+          <div class="two-margin journal-text item-content">
+          
+            <p style="text-align: left"><br></p>
+<figure>
+                <q type='document'  src="https://jrnl.s3.amazonaws.com/dev/entry_files/66122/46104/2020/11/12/test_16ceee20-6128-4683-b821-dddf71149227.pdf" size="5288328" formatted_size="5.04 MB" caption="" name="test.pdf" entry_link="https://link.jrnl.com/dynamicpagelink/uUJsGqyJqTa3F5tr9" created_date="Thursday, 12 November 2020" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46104/2020/11/12/entry-qrcode_a248a08e-151f-42cd-aaee-094c3e516c5e.svg">
+                    <div class='add-media-box-file original-content' style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.25rem;
+                width: 100%;
+                height: 3.75rem;
+                border-radius: 0.3125rem;
+                border: solid 0.0625rem #d5d5d5;
+                background-color: #ffffff;
+            ">
+                        <img
+                            src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/11/file_2ef74894-1bf9-4b77-9745-08fd879d9d28.png"
+                            alt=""
+                            style="
+                color: rgb(47, 95, 129);
+                width: 1.9563rem;
+                height: 2.4438rem;
+                font-size: 2.5rem;
+                margin-left: 1.25rem;
+                min-width: 0px !important;
+            " />
+                        <div class="add-media-box-file-info" style="
+                cursor: pointer;
+                padding-left: 1.275rem;
+                overflow: hidden;
+            ">
+                            <p class="file-info-name" style="
+                white-space: pre;
+                padding-bottom: 0.3125rem;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 1.0625rem;
+                font-weight: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            ">test.pdf</p>
+                            <a href="https://link.jrnl.com/dynamicpagelink/uUJsGqyJqTa3F5tr9" class="file-info-size" style="
+                display: inline-block;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 0.875rem;
+                font-weight: normal;
+                color: #2f5f81;
+                border-bottom: 1px solid #2f5f81;
+            " onClick={openDocument}>Open File (5.04 MB)</a>
+                        </div>
+                    </div>
+                </q>
+                <map style="width: 100%; display: none;">
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        ">
+                        <div style="display: flex; align-items: center;">
+                            <img
+                                style="
+            width: 2.9375rem;
+            height: 2.5rem;
+            object-fit: contain;
+            margin-right: 0.9375rem;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/05/file_8208c991-d54e-4fac-bd8a-ecb831239f30.png"
+                                alt="audiowave"
+                            />
+                            <div class="pdf-content-media-desc">
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">test.pdf</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">5.04 MB</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">PDF File</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">Uploaded on Thursday, 12 November 2020</div>
+                            </div>
+                        </div>
+                        <div class="pdf-content-media-qr">
+                            <img
+                                style="
+            width: 100px;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46104/2020/11/12/entry-qrcode_a248a08e-151f-42cd-aaee-094c3e516c5e.svg"
+                                alt="qr" 
+                            />
+                        </div>
+                    </div>
+                </map>
+            </figure>
+<p style="text-align: left"><br></p>
+          
+          </div>
+          
+        
+          <h3 class="subtitle journal-date">Thursday, November 12, 2020</h3>
+          <div class="two-margin journal-title-text">123</div>
+          <div class="two-margin journal-text item-content">
+          
+            <p><br></p>
+<figure>
+                <q type='document'  src="https://jrnl.s3.amazonaws.com/dev/entry_files/66122/46104/2020/11/12/test_4514e033-f42c-472c-be02-e7fcd7254966.pdf" size="5288328" formatted_size="5.04 MB" caption="" name="test.pdf" entry_link="https://link.jrnl.com/dynamicpagelink/8NWQmLXbh6ojCMnQ8" created_date="Thursday, 12 November 2020" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46104/2020/11/12/entry-qrcode_1e5dd9ba-3301-40d2-8a8e-4484f870017f.svg">
+                    <div class='add-media-box-file original-content' style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.25rem;
+                width: 100%;
+                height: 3.75rem;
+                border-radius: 0.3125rem;
+                border: solid 0.0625rem #d5d5d5;
+                background-color: #ffffff;
+            ">
+                        <img
+                            src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/11/file_2ef74894-1bf9-4b77-9745-08fd879d9d28.png"
+                            alt=""
+                            style="
+                color: rgb(47, 95, 129);
+                width: 1.9563rem;
+                height: 2.4438rem;
+                font-size: 2.5rem;
+                margin-left: 1.25rem;
+                min-width: 0px !important;
+            " />
+                        <div class="add-media-box-file-info" style="
+                cursor: pointer;
+                padding-left: 1.275rem;
+                overflow: hidden;
+            ">
+                            <p class="file-info-name" style="
+                white-space: pre;
+                padding-bottom: 0.3125rem;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 1.0625rem;
+                font-weight: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            ">test.pdf</p>
+                            <a href="https://link.jrnl.com/dynamicpagelink/8NWQmLXbh6ojCMnQ8" class="file-info-size" style="
+                display: inline-block;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 0.875rem;
+                font-weight: normal;
+                color: #2f5f81;
+                border-bottom: 1px solid #2f5f81;
+            " onClick={openDocument}>Open File (5.04 MB)</a>
+                        </div>
+                    </div>
+                </q>
+                <map style="width: 100%; display: none;">
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        ">
+                        <div style="display: flex; align-items: center;">
+                            <img
+                                style="
+            width: 2.9375rem;
+            height: 2.5rem;
+            object-fit: contain;
+            margin-right: 0.9375rem;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/05/file_8208c991-d54e-4fac-bd8a-ecb831239f30.png"
+                                alt="audiowave"
+                            />
+                            <div class="pdf-content-media-desc">
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">test.pdf</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">5.04 MB</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">PDF File</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">Uploaded on Thursday, 12 November 2020</div>
+                            </div>
+                        </div>
+                        <div class="pdf-content-media-qr">
+                            <img
+                                style="
+            width: 100px;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46104/2020/11/12/entry-qrcode_1e5dd9ba-3301-40d2-8a8e-4484f870017f.svg"
+                                alt="qr" 
+                            />
+                        </div>
+                    </div>
+                </map>
+             &nbsp;</figure>
+<p style="text-align: left"><br></p>
+          
+          </div>
+          
+        
+          <h3 class="subtitle journal-date">Thursday, November 12, 2020</h3>
+          <div class="two-margin journal-title-text">123</div>
+          <div class="two-margin journal-text item-content">
+          
+            <p style="text-align: left"><br></p>
+<figure>
+                <q type='document'  src="https://jrnl.s3.amazonaws.com/dev/entry_files/66122/46104/2020/11/12/test_2d6cb908-701e-4cc9-ad91-f443eb920ec0.pdf" size="5288328" formatted_size="5.04 MB" caption="" name="test.pdf" entry_link="https://link.jrnl.com/dynamicpagelink/LFDA2gSiABHoWppK9" created_date="Thursday, 12 November 2020" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46104/2020/11/12/entry-qrcode_25fc1fa8-e370-4c72-9a88-af87e77798d2.svg">
+                    <div class='add-media-box-file original-content' style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.25rem;
+                width: 100%;
+                height: 3.75rem;
+                border-radius: 0.3125rem;
+                border: solid 0.0625rem #d5d5d5;
+                background-color: #ffffff;
+            ">
+                        <img
+                            src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/11/file_2ef74894-1bf9-4b77-9745-08fd879d9d28.png"
+                            alt=""
+                            style="
+                color: rgb(47, 95, 129);
+                width: 1.9563rem;
+                height: 2.4438rem;
+                font-size: 2.5rem;
+                margin-left: 1.25rem;
+                min-width: 0px !important;
+            " />
+                        <div class="add-media-box-file-info" style="
+                cursor: pointer;
+                padding-left: 1.275rem;
+                overflow: hidden;
+            ">
+                            <p class="file-info-name" style="
+                white-space: pre;
+                padding-bottom: 0.3125rem;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 1.0625rem;
+                font-weight: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            ">test.pdf</p>
+                            <a href="https://link.jrnl.com/dynamicpagelink/LFDA2gSiABHoWppK9" class="file-info-size" style="
+                display: inline-block;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 0.875rem;
+                font-weight: normal;
+                color: #2f5f81;
+                border-bottom: 1px solid #2f5f81;
+            " onClick={openDocument}>Open File (5.04 MB)</a>
+                        </div>
+                    </div>
+                </q>
+                <map style="width: 100%; display: none;">
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        ">
+                        <div style="display: flex; align-items: center;">
+                            <img
+                                style="
+            width: 2.9375rem;
+            height: 2.5rem;
+            object-fit: contain;
+            margin-right: 0.9375rem;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/05/file_8208c991-d54e-4fac-bd8a-ecb831239f30.png"
+                                alt="audiowave"
+                            />
+                            <div class="pdf-content-media-desc">
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">test.pdf</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">5.04 MB</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">PDF File</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">Uploaded on Thursday, 12 November 2020</div>
+                            </div>
+                        </div>
+                        <div class="pdf-content-media-qr">
+                            <img
+                                style="
+            width: 100px;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46104/2020/11/12/entry-qrcode_25fc1fa8-e370-4c72-9a88-af87e77798d2.svg"
+                                alt="qr" 
+                            />
+                        </div>
+                    </div>
+                </map>
+            </figure>
+<p style="text-align: left"><br></p>
+          
+          </div>
+          
+        
+          <h3 class="subtitle journal-date">Friday, November 13, 2020</h3>
+          <div class="two-margin journal-title-text">123</div>
+          <div class="two-margin journal-text item-content">
+          
+            <p><br></p>
+<figure>
+                <q type='document'  src="https://jrnl.s3.amazonaws.com/dev/entry_files/66122/46080/2020/11/13/test_9f3d6311-38df-4903-9853-5fe1d0f5cf1c.pdf" size="5288328" formatted_size="5.04 MB" caption="" name="test.pdf" entry_link="https://link.jrnl.com/dynamicpagelink/dVJ4hqD3y5wZrx7d8" created_date="Friday, 13 November 2020" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46080/2020/11/13/entry-qrcode_a6fb9183-9270-4414-acd5-7525896f4475.svg">
+                    <div class='add-media-box-file original-content' style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.25rem;
+                width: 33.25rem;
+                height: 3.75rem;
+                border-radius: 0.3125rem;
+                border: solid 0.0625rem #d5d5d5;
+                background-color: #ffffff;
+            ">
+                        <img
+                            src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/11/file_2ef74894-1bf9-4b77-9745-08fd879d9d28.png"
+                            alt=""
+                            style="
+                color: rgb(47, 95, 129);
+                width: 1.9563rem;
+                height: 2.4438rem;
+                font-size: 2.5rem;
+                margin-left: 1.25rem;
+                min-width: 0px !important;
+            " />
+                        <div class="add-media-box-file-info" style="
+                cursor: pointer;
+                padding-left: 1.275rem;
+                overflow: hidden;
+            ">
+                            <p class="file-info-name" style="
+                white-space: pre;
+                padding-bottom: 0.3125rem;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 1.0625rem;
+                font-weight: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            ">test.pdf</p>
+                            <a href="https://link.jrnl.com/dynamicpagelink/dVJ4hqD3y5wZrx7d8" class="file-info-size" style="
+                display: inline-block;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 0.875rem;
+                font-weight: normal;
+                color: #2f5f81;
+                border-bottom: 1px solid #2f5f81;
+            " onClick={openDocument}>Open File (5.04 MB)</a>
+                        </div>
+                    </div>
+                </q>
+                <map style="width: 100%; display: none;">
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        ">
+                        <div style="display: flex; align-items: center;">
+                            <img
+                                style="
+            width: 2.9375rem;
+            height: 2.5rem;
+            object-fit: contain;
+            margin-right: 0.9375rem;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/05/file_8208c991-d54e-4fac-bd8a-ecb831239f30.png"
+                                alt="audiowave"
+                            />
+                            <div class="pdf-content-media-desc">
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">test.pdf</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">5.04 MB</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">PDF File</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">Uploaded on Friday, 13 November 2020</div>
+                            </div>
+                        </div>
+                        <div class="pdf-content-media-qr">
+                            <img
+                                style="
+            width: 100px;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46080/2020/11/13/entry-qrcode_a6fb9183-9270-4414-acd5-7525896f4475.svg"
+                                alt="qr" 
+                            />
+                        </div>
+                    </div>
+                </map>
+             &nbsp;</figure>
+<p style="text-align: left"><span style="font-family: Roboto">1123</span></p>
+          
+          </div>
+          
+        
+          <h3 class="subtitle journal-date">Friday, November 13, 2020</h3>
+          <div class="two-margin journal-title-text">Test document </div>
+          <div class="two-margin journal-text item-content">
+          
+            <p style="text-align: left"><br></p>
+<figure>
+                <q type='document'  src="https://jrnl.s3.amazonaws.com/dev/entry_files/66122/46080/2020/11/13/test_4e3b45a2-649d-4a29-9d7e-30991f4e4df3.pdf" size="5288328" formatted_size="5.04 MB" caption="" name="test.pdf" entry_link="https://link.jrnl.com/dynamicpagelink/aWo8BgECTnybtFov8" created_date="Friday, 13 November 2020" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46080/2020/11/13/entry-qrcode_a023e4ac-8f36-4f0a-864c-a91e0d581ecd.svg">
+                    <div class='add-media-box-file original-content' style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.25rem;
+                width: 33.25rem;
+                height: 3.75rem;
+                border-radius: 0.3125rem;
+                border: solid 0.0625rem #d5d5d5;
+                background-color: #ffffff;
+            ">
+                        <img
+                            src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/11/file_2ef74894-1bf9-4b77-9745-08fd879d9d28.png"
+                            alt=""
+                            style="
+                color: rgb(47, 95, 129);
+                width: 1.9563rem;
+                height: 2.4438rem;
+                font-size: 2.5rem;
+                margin-left: 1.25rem;
+                min-width: 0px !important;
+            " />
+                        <div class="add-media-box-file-info" style="
+                cursor: pointer;
+                padding-left: 1.275rem;
+                overflow: hidden;
+            ">
+                            <p class="file-info-name" style="
+                white-space: pre;
+                padding-bottom: 0.3125rem;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 1.0625rem;
+                font-weight: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            ">test.pdf</p>
+                            <a href="https://link.jrnl.com/dynamicpagelink/aWo8BgECTnybtFov8" class="file-info-size" style="
+                display: inline-block;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 0.875rem;
+                font-weight: normal;
+                color: #2f5f81;
+                border-bottom: 1px solid #2f5f81;
+            " onClick={openDocument}>Open File (5.04 MB)</a>
+                        </div>
+                    </div>
+                </q>
+                <map style="width: 100%; display: none;">
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        ">
+                        <div style="display: flex; align-items: center;">
+                            <img
+                                style="
+            width: 2.9375rem;
+            height: 2.5rem;
+            object-fit: contain;
+            margin-right: 0.9375rem;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/05/file_8208c991-d54e-4fac-bd8a-ecb831239f30.png"
+                                alt="audiowave"
+                            />
+                            <div class="pdf-content-media-desc">
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">test.pdf</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">5.04 MB</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">PDF File</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">Uploaded on Friday, 13 November 2020</div>
+                            </div>
+                        </div>
+                        <div class="pdf-content-media-qr">
+                            <img
+                                style="
+            width: 100px;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46080/2020/11/13/entry-qrcode_a023e4ac-8f36-4f0a-864c-a91e0d581ecd.svg"
+                                alt="qr" 
+                            />
+                        </div>
+                    </div>
+                </map>
+            </figure>
+<p style="text-align: left"><br></p>
+          
+          </div>
+          
+        
+          <h3 class="subtitle journal-date">Friday, November 13, 2020</h3>
+          <div class="two-margin journal-title-text">Test</div>
+          <div class="two-margin journal-text item-content">
+          
+            <p style="text-align: left"><br></p>
+<figure>
+                <q type='document'  src="https://jrnl.s3.amazonaws.com/dev/entry_files/66122/46080/2020/11/13/test_0b5f68a9-2dc8-4e03-b242-ff92382d8bc3.pdf" size="5288328" formatted_size="5.04 MB" caption="" name="test.pdf" entry_link="https://link.jrnl.com/dynamicpagelink/ipeJwrsWSUFzAwLv9" created_date="Friday, 13 November 2020" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46080/2020/11/13/entry-qrcode_71ccdc78-e923-4d2c-9594-05ef010cb228.svg">
+                    <div class='add-media-box-file original-content' style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.25rem;
+                width: 33.25rem;
+                height: 3.75rem;
+                border-radius: 0.3125rem;
+                border: solid 0.0625rem #d5d5d5;
+                background-color: #ffffff;
+            ">
+                        <img
+                            src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/11/file_2ef74894-1bf9-4b77-9745-08fd879d9d28.png"
+                            alt=""
+                            style="
+                color: rgb(47, 95, 129);
+                width: 1.9563rem;
+                height: 2.4438rem;
+                font-size: 2.5rem;
+                margin-left: 1.25rem;
+                min-width: 0px !important;
+            " />
+                        <div class="add-media-box-file-info" style="
+                cursor: pointer;
+                padding-left: 1.275rem;
+                overflow: hidden;
+            ">
+                            <p class="file-info-name" style="
+                white-space: pre;
+                padding-bottom: 0.3125rem;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 1.0625rem;
+                font-weight: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            ">test.pdf</p>
+                            <a href="https://link.jrnl.com/dynamicpagelink/ipeJwrsWSUFzAwLv9" class="file-info-size" style="
+                display: inline-block;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 0.875rem;
+                font-weight: normal;
+                color: #2f5f81;
+                border-bottom: 1px solid #2f5f81;
+            " onClick={openDocument}>Open File (5.04 MB)</a>
+                        </div>
+                    </div>
+                </q>
+                <map style="width: 100%; display: none;">
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        ">
+                        <div style="display: flex; align-items: center;">
+                            <img
+                                style="
+            width: 2.9375rem;
+            height: 2.5rem;
+            object-fit: contain;
+            margin-right: 0.9375rem;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/05/file_8208c991-d54e-4fac-bd8a-ecb831239f30.png"
+                                alt="audiowave"
+                            />
+                            <div class="pdf-content-media-desc">
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">test.pdf</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">5.04 MB</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">PDF File</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">Uploaded on Friday, 13 November 2020</div>
+                            </div>
+                        </div>
+                        <div class="pdf-content-media-qr">
+                            <img
+                                style="
+            width: 100px;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46080/2020/11/13/entry-qrcode_71ccdc78-e923-4d2c-9594-05ef010cb228.svg"
+                                alt="qr" 
+                            />
+                        </div>
+                    </div>
+                </map>
+            </figure>
+<p style="text-align: left"><span style="font-family: Roboto">123</span></p>
+          
+          </div>
+          
+        
+          <h3 class="subtitle journal-date">Friday, November 13, 2020</h3>
+          <div class="two-margin journal-title-text">123</div>
+          <div class="two-margin journal-text item-content">
+          
+            <p><br></p>
+<figure><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/13/file_8f034247-a889-4bdc-9be6-599c50956450.png" caption="" style='position:relative; cursor: default; width: 40%;'/><figcaption></figcaption></figure></figure>
+<p style="text-align: left"><br></p>
+          
+          </div>
+          
+        
+          <h3 class="subtitle journal-date">Friday, November 13, 2020</h3>
+          <div class="two-margin journal-title-text">Image tester</div>
+          <div class="two-margin journal-text item-content">
+          
+            <p style="text-align: left"><br></p>
+<figure>
+            <figure>
+                <img  src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/13/file_383eb42b-ac23-4ee7-a5e1-117b4753fc0b.png" caption="" class="undefined media-photo" style='position:relative; cursor: default; width: 40%;' />
+                <figcaption></figcaption>
+            </figure></figure>
+<p style="text-align: left"><br></p>
+          
+          </div>
+          
+        
+          <h3 class="subtitle journal-date">Friday, November 13, 2020</h3>
+          <div class="two-margin journal-title-text">Image tester</div>
+          <div class="two-margin journal-text item-content">
+          
+            <p><br></p>
+<figure>
+            <figure>
+                <img  src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/13/file_383eb42b-ac23-4ee7-a5e1-117b4753fc0b.png" caption="" class="undefined media-photo" style='position:relative; cursor: default; width: 40%;' />
+                <figcaption></figcaption>
+            </figure></figure>
+<p style="text-align: left"><br></p>
+          
+          </div>
+          
+        
+          <h3 class="subtitle journal-date">Friday, November 13, 2020</h3>
+          <div class="two-margin journal-title-text">123</div>
+          <div class="two-margin journal-text item-content">
+          
+            <p><br></p>
+<figure>
+                <q type='document'  src="https://jrnl.s3.amazonaws.com/dev/entry_files/66122/46037/2020/11/13/dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy_f6a93d83-bd13-43f4-888c-d77512baf1df.pdf" size="5288328" formatted_size="5.04 MB" caption="" name="dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy.pdf" entry_link="https://link.jrnl.com/dynamicpagelink/TfUKumDgY1zF573E6" created_date="Friday, 13 November 2020" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46037/2020/11/13/entry-qrcode_a6cc1040-6af2-42fc-9fc8-49da04e047fc.svg">
+                    <div class='add-media-box-file original-content' style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.25rem;
+                width: 100%;
+                height: 3.75rem;
+                border-radius: 0.3125rem;
+                border: solid 0.0625rem #d5d5d5;
+                background-color: #ffffff;
+            ">
+                        <img
+                            src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/11/file_2ef74894-1bf9-4b77-9745-08fd879d9d28.png"
+                            alt=""
+                            style="
+                color: rgb(47, 95, 129);
+                width: 1.9563rem;
+                height: 2.4438rem;
+                font-size: 2.5rem;
+                margin-left: 1.25rem;
+                min-width: 0px !important;
+            " />
+                        <div class="add-media-box-file-info" style="
+                cursor: pointer;
+                padding-left: 1.275rem;
+                overflow: hidden;
+            ">
+                            <p class="file-info-name" style="
+                white-space: pre;
+                padding-bottom: 0.3125rem;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 1.0625rem;
+                font-weight: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            ">dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy.pdf</p>
+                            <a href="https://link.jrnl.com/dynamicpagelink/TfUKumDgY1zF573E6" class="file-info-size" style="
+                display: inline-block;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 0.875rem;
+                font-weight: normal;
+                color: #2f5f81;
+                border-bottom: 1px solid #2f5f81;
+            " onClick={openDocument}>Open File (5.04 MB)</a>
+                        </div>
+                    </div>
+                </q>
+                <map style="width: 100%; display: none;">
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        ">
+                        <div style="display: flex; align-items: center;">
+                            <img
+                                style="
+            width: 2.9375rem;
+            height: 2.5rem;
+            object-fit: contain;
+            margin-right: 0.9375rem;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/05/file_8208c991-d54e-4fac-bd8a-ecb831239f30.png"
+                                alt="audiowave"
+                            />
+                            <div class="pdf-content-media-desc">
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy.pdf</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">5.04 MB</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">PDF File</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">Uploaded on Friday, 13 November 2020</div>
+                            </div>
+                        </div>
+                        <div class="pdf-content-media-qr">
+                            <img
+                                style="
+            width: 100px;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46037/2020/11/13/entry-qrcode_a6cc1040-6af2-42fc-9fc8-49da04e047fc.svg"
+                                alt="qr" 
+                            />
+                        </div>
+                    </div>
+                </map>
+             &nbsp;</figure>
+<p style="text-align: left"><span style="font-family: Roboto">test QR Code&nbsp;</span></p>
+          
+          </div>
+          
+        
+          <h3 class="subtitle journal-date">Friday, November 13, 2020</h3>
+          <div class="two-margin journal-title-text">123</div>
+          <div class="two-margin journal-text item-content">
+          
+            <p style="text-align: left"><br></p>
+<figure>
+                <q type='document'  src="https://jrnl.s3.amazonaws.com/dev/entry_files/66122/46036/2020/11/13/dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy_4aeaa96e-03da-4fe9-b3f6-21df2643af78.pdf" size="5288328" formatted_size="5.04 MB" caption="" name="dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy.pdf" entry_link="https://link.jrnl.com/dynamicpagelink/VHHYTuB7NFQHXPUU6" created_date="Friday, 13 November 2020" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46036/2020/11/13/entry-qrcode_df088848-68b9-431d-ab41-edcc42343aae.svg">
+                    <div class='add-media-box-file original-content' style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.25rem;
+                width: 100%;
+                height: 3.75rem;
+                border-radius: 0.3125rem;
+                border: solid 0.0625rem #d5d5d5;
+                background-color: #ffffff;
+            ">
+                        <img
+                            src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/11/file_2ef74894-1bf9-4b77-9745-08fd879d9d28.png"
+                            alt=""
+                            style="
+                color: rgb(47, 95, 129);
+                width: 1.9563rem;
+                height: 2.4438rem;
+                font-size: 2.5rem;
+                margin-left: 1.25rem;
+                min-width: 0px !important;
+            " />
+                        <div class="add-media-box-file-info" style="
+                cursor: pointer;
+                padding-left: 1.275rem;
+                overflow: hidden;
+            ">
+                            <p class="file-info-name" style="
+                white-space: pre;
+                padding-bottom: 0.3125rem;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 1.0625rem;
+                font-weight: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            ">dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy.pdf</p>
+                            <a href="https://link.jrnl.com/dynamicpagelink/VHHYTuB7NFQHXPUU6" class="file-info-size" style="
+                display: inline-block;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 0.875rem;
+                font-weight: normal;
+                color: #2f5f81;
+                border-bottom: 1px solid #2f5f81;
+            " onClick={openDocument}>Open File (5.04 MB)</a>
+                        </div>
+                    </div>
+                </q>
+                <map style="width: 100%; display: none;">
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        ">
+                        <div style="display: flex; align-items: center;">
+                            <img
+                                style="
+            width: 2.9375rem;
+            height: 2.5rem;
+            object-fit: contain;
+            margin-right: 0.9375rem;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/05/file_8208c991-d54e-4fac-bd8a-ecb831239f30.png"
+                                alt="audiowave"
+                            />
+                            <div class="pdf-content-media-desc" style="
+            word-break: break-word;
+        "}>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy.pdf</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">5.04 MB</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">PDF File</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">Uploaded on Friday, 13 November 2020</div>
+                            </div>
+                        </div>
+                        <div class="pdf-content-media-qr">
+                            <img
+                                style="
+            width: 100px;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46036/2020/11/13/entry-qrcode_df088848-68b9-431d-ab41-edcc42343aae.svg"
+                                alt="qr" 
+                            />
+                        </div>
+                    </div>
+                </map>
+            </figure>
+<p style="text-align: left"><span style="font-family: Roboto">1123</span></p>
+          
+          </div>
+          
+        
+          <h3 class="subtitle journal-date">Friday, November 13, 2020</h3>
+          <div class="two-margin journal-title-text">123</div>
+          <div class="two-margin journal-text item-content">
+          
+            <p style="text-align: left"><br></p>
+<figure>
+                <q type='document'  src="https://jrnl.s3.amazonaws.com/dev/entry_files/66122/46035/2020/11/13/dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy_2d7b22bf-4a26-47a2-9568-8a4d6dac2b0f.pdf" size="5288328" formatted_size="5.04 MB" caption="" name="dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy.pdf" entry_link="https://link.jrnl.com/dynamicpagelink/KwLpBe1L6h14G9TZ7" created_date="Friday, 13 November 2020" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46035/2020/11/13/entry-qrcode_d3c9f96b-6bc0-4d43-a6bf-75d29405006b.svg">
+                    <div class='add-media-box-file original-content' style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.25rem;
+                width: 100%;
+                height: 3.75rem;
+                border-radius: 0.3125rem;
+                border: solid 0.0625rem #d5d5d5;
+                background-color: #ffffff;
+            ">
+                        <img
+                            src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/11/file_2ef74894-1bf9-4b77-9745-08fd879d9d28.png"
+                            alt=""
+                            style="
+                color: rgb(47, 95, 129);
+                width: 1.9563rem;
+                height: 2.4438rem;
+                font-size: 2.5rem;
+                margin-left: 1.25rem;
+                min-width: 0px !important;
+            " />
+                        <div class="add-media-box-file-info" style="
+                cursor: pointer;
+                padding-left: 1.275rem;
+                overflow: hidden;
+            ">
+                            <p class="file-info-name" style="
+                white-space: pre;
+                padding-bottom: 0.3125rem;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 1.0625rem;
+                font-weight: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            ">dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy.pdf</p>
+                            <a href="https://link.jrnl.com/dynamicpagelink/KwLpBe1L6h14G9TZ7" class="file-info-size" style="
+                display: inline-block;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 0.875rem;
+                font-weight: normal;
+                color: #2f5f81;
+                border-bottom: 1px solid #2f5f81;
+            " onClick={openDocument}>Open File (5.04 MB)</a>
+                        </div>
+                    </div>
+                </q>
+                <map style="width: 100%; display: none;">
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        ">
+                        <div style="display: flex; align-items: center;">
+                            <img
+                                style="
+            width: 2.9375rem;
+            height: 2.5rem;
+            object-fit: contain;
+            margin-right: 0.9375rem;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/05/file_8208c991-d54e-4fac-bd8a-ecb831239f30.png"
+                                alt="audiowave"
+                            />
+                            <div class="pdf-content-media-desc" style="
+            word-break: break-word;
+            flex: 1;
+        "}>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy.pdf</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">5.04 MB</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">PDF File</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">Uploaded on Friday, 13 November 2020</div>
+                            </div>
+                            <div class="pdf-content-media-qr">
+                                <img
+                                    style="
+            width: 100px;
+        "
+                                    src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46035/2020/11/13/entry-qrcode_d3c9f96b-6bc0-4d43-a6bf-75d29405006b.svg"
+                                    alt="qr" 
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </map>
+            </figure>
+<p style="text-align: left"><br></p>
+          
+          </div>
+          
+        
+          <h3 class="subtitle journal-date">Friday, November 13, 2020</h3>
+          <div class="two-margin journal-title-text">Document File Test</div>
+          <div class="two-margin journal-text item-content">
+          
+            <p><br></p>
+<figure>
+                <q type='document'  src="https://jrnl.s3.amazonaws.com/dev/entry_files/66122/46031/2020/11/13/dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy_4091ee36-c686-4850-a22a-078b419ba01b.pdf" size="5288328" formatted_size="5.04 MB" caption="" name="dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy.pdf" entry_link="https://link.jrnl.com/dynamicpagelink/ETq2jVhsBPcNrUqo6" created_date="Friday, 13 November 2020" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46031/2020/11/13/entry-qrcode_c39c4ff8-0cb0-4ddf-9ecd-39c7f30c3268.svg">
+                    <div class='add-media-box-file original-content' style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.25rem;
+                width: 100%;
+                height: 3.75rem;
+                border-radius: 0.3125rem;
+                border: solid 0.0625rem #d5d5d5;
+                background-color: #ffffff;
+            ">
+                        <img
+                            src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/11/file_2ef74894-1bf9-4b77-9745-08fd879d9d28.png"
+                            alt=""
+                            style="
+                color: rgb(47, 95, 129);
+                width: 1.9563rem;
+                height: 2.4438rem;
+                font-size: 2.5rem;
+                margin-left: 1.25rem;
+                min-width: 0px !important;
+            " />
+                        <div class="add-media-box-file-info" style="
+                cursor: pointer;
+                padding-left: 1.275rem;
+                overflow: hidden;
+            ">
+                            <p class="file-info-name" style="
+                white-space: pre;
+                padding-bottom: 0.3125rem;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 1.0625rem;
+                font-weight: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            ">dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy.pdf</p>
+                            <a href="https://link.jrnl.com/dynamicpagelink/ETq2jVhsBPcNrUqo6" class="file-info-size" style="
+                display: inline-block;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 0.875rem;
+                font-weight: normal;
+                color: #2f5f81;
+                border-bottom: 1px solid #2f5f81;
+            " onClick={openDocument}>Open File (5.04 MB)</a>
+                        </div>
+                    </div>
+                </q>
+                <map style="width: 100%; display: none;">
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        ">
+                        <div style="display: flex; align-items: center;">
+                            <img
+                                style="
+            width: 2.9375rem;
+            height: 2.5rem;
+            object-fit: contain;
+            margin-right: 0.9375rem;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/05/file_8208c991-d54e-4fac-bd8a-ecb831239f30.png"
+                                alt="audiowave"
+                            />
+                            <div class="pdf-content-media-desc" style="
+            word-break: break-word;
+            flex: 1;
+        "}>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">dummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummydummy.pdf</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">5.04 MB</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">PDF File</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">Uploaded on Friday, 13 November 2020</div>
+                            </div>
+                            <div class="pdf-content-media-qr">
+                                <img
+                                    style="
+            width: 100px;
+        "
+                                    src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/66122/46031/2020/11/13/entry-qrcode_c39c4ff8-0cb0-4ddf-9ecd-39c7f30c3268.svg"
+                                    alt="qr" 
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </map>
+             &nbsp;</figure>
+<p style="text-align: left"><br></p>
+          
+          </div>
+          
+        
+      
+    </div>
+  </div>
+
+</body>
+</html>
