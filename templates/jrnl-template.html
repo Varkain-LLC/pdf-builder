@@ -12,118 +12,20 @@
     rel="stylesheet"
   />
   <link href="{{ static_url }}css/pdf.css" rel="stylesheet"/>
-  <link href="{{ static_url }}css/print-pdf.css" rel="stylesheet" />
 
 {% if json_obj.export_format == '6X9' %}
-  <style>
-    @page {
-      size: 6in 9in;
-      font: "Tahoma";
-      font-weight: 300;
-      font-size: 11pt;
-    }
-
-    .document-title {
-      font-size: .42in;
-      padding-top: 2.5in;
-      font-family: "Arvo";
-    }
-
-    .table-of-contents > h3 {
-      font-size: .33in;
-      font-family: "Arvo";
-    }
-
-    .table-of-contents-body {
-      font-size: .15in;
-      font-family: "Khula";
-    }
-
-    .table-content-title {
-      padding-top: 3in;
-      font-size: .45in;
-      font-family: "Khula";
-      font-weight: 300;
-      margin-bottom: .1in;
-      text-align: center;
-    }
-
-    .subtitle {
-      font-size: .13in;
-      font-family: 'Arvo';
-      font-weight: 300;
-    }
-
-    .aam-category-text {
-      font-size: .19in;
-      font-family: 'Tahoma';
-      font-weight: bold;
-    }
-    .aam-question-text {
-      font-size: .165in;
-      font-weight: bold;
-      font-family: sans-serif;
-    }
-
-    .journal-title-text {
-      margin-top: .18in;
-      font-size: .18in;
-    }
-    .journal-comments-title-text {
-      margin-top: 10px;
-      font-size: .15in;
-      margin-bottom: 10px;
-    }
-    .journal-comments-username {
-      font-size: .15in;
-    }
-    .journal-comments-text {
-      font-size: .15in;
-    }
-    .journal-comment-user-container > img { 
-      width: .42in;
-      height: .42in;
-    }
-    .journal-comment-content-info {
-      font-size: .132in;
-    }
-    .page {
-      page-break-before: always;
-      page-break-after: always;
-    }
-
-    .subpage {
-      padding-top: 0;
-    }
-
-    p, .item-content {
-      font-family: 'Khula';
-      font-size: .15in;
-      max-width: 100%;
-      max-height: 100%;
-      overflow: hidden;
-    }
-
-    .aam-date {
-      font-family: sans-serif;
-      font-style: italic;
-      font-size: .1in;
-    }
-
-    body[start=even] {
-      break-before:left;
-    }
-
-    .journal-title {
-      margin-left: .5in;
-      margin-right: .5in;
-    }
-  </style>
+  <link href="{{ static_url }}css/print-pdf-6x9.css" rel="stylesheet" />
 {% endif %}
 
-{% if json_obj.color is false %}
+{% if json_obj.color is true %}
   <style>
-    img { 
+    @page {
+      size: 6.25in 9.25in;
+    }
+  </style>
+{% else %}
+  <style>
+    img, p { 
         -webkit-filter: grayscale(100%);
         /* Safari 6.0 - 9.0 */
         filter: grayscale(100%);
