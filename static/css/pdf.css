@@ -462,3 +462,8 @@ img {
 .subpage {
     padding-top: 30px;
 }
+
+q::before, q::after {
+  content: '';
+  display: none;
+}
