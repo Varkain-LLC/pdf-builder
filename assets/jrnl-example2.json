@@ -254,6 +254,7 @@
     "document_logo_src": "",
     "document_back_cover": "",
     "photos": true,
+    "qr_code": true,
     "comments": false,
     "document_subtitle": "",
     "document_date": "",
