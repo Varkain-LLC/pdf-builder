@@ -467,3 +467,38 @@ q::before, q::after {
   content: '';
   display: none;
 }
+
+.pdf-content-header > .pdf-content-title {
+    margin-bottom: 0;
+    padding-left: 0;
+    flex: 1;
+}
+
+.pdf-content-header > .pdf-content-location {
+    display: flex;
+    align-items: center;
+}
+
+.pdf-content-location > i {
+    margin-right: 0.625rem;
+}
+
+.pdf-location-title {
+    font-family: "open sans", sans-serif;
+    font-size: 0.5rem;
+    font-weight: 600;
+    color: #000;
+    line-height: 1.2 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.pdf-location-subtitle {
+    font-family: "open sans", sans-serif;
+    font-size: 0.5rem;
+    text-align: left;
+    color: #000000;
+    line-height: 1.2 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
