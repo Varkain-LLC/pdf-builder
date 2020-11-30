@@ -157,7 +157,6 @@ body {
 }
 
 .journal-title-text {
-  margin-top: .18in;
   font-size: .18in;
 }
 .journal-comments-title-text {
@@ -208,4 +207,11 @@ body[start=even] {
 .journal-title {
   margin-left: .5in;
   margin-right: .5in;
+}
+
+.pdf-content-header {
+    margin-top: .18in;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
