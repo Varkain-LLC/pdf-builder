@@ -468,16 +468,10 @@ q::before, q::after {
   display: none;
 }
 
-.pdf-content-header {
-    display: flex;
-    flex-direction: column;
-    /* justify-content: space-between; */
-    padding-right: 2.5rem;
-}
-
 .pdf-content-header > .pdf-content-title {
     margin-bottom: 0;
     padding-left: 0;
+    flex: 1;
 }
 
 .pdf-content-header > .pdf-content-location {
@@ -486,17 +480,7 @@ q::before, q::after {
 }
 
 .pdf-content-location > i {
-    font-size: 0.75rem;
     margin-right: 0.625rem;
-}
-
-.pdf-content-location-info {
-  display: flex;
-  align-items: center;
-}
-
-.pdf-content-location > .icon-location::before {
-  color: #a5a5a5;
 }
 
 .pdf-location-title {

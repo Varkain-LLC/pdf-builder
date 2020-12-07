@@ -209,3 +209,9 @@ body[start=even] {
   margin-right: .5in;
 }
 
+.pdf-content-header {
+    margin-top: .18in;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
