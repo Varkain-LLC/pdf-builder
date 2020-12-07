@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?2e0p7e');
-  src:  url('fonts/icomoon.eot?2e0p7e#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?2e0p7e') format('truetype'),
-    url('fonts/icomoon.woff?2e0p7e') format('woff'),
-    url('fonts/icomoon.svg?2e0p7e#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?i8qvfr');
+  src:  url('fonts/icomoon.eot?i8qvfr#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?i8qvfr') format('truetype'),
+    url('fonts/icomoon.woff?i8qvfr') format('woff'),
+    url('fonts/icomoon.svg?i8qvfr#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,62 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-invitations:before {
+  content: "\e96a";
+}
+.icon-knowledgebase:before {
+  content: "\e96b";
+}
+.icon-contact-support:before {
+  content: "\e96c";
+}
+.icon-jrnl-blog:before {
+  content: "\e96d";
+}
+.icon-exit:before {
+  content: "\e96e";
+}
+.icon-ellipsis:before {
+  content: "\e966";
+  color: #0064ff;
+}
+.icon-draft:before {
+  content: "\e969";
+  color: #1164fb;
+}
+.icon-reminders:before {
+  content: "\e96f";
+}
+.icon-account:before {
+  content: "\e970";
+}
+.icon-billing:before {
+  content: "\e971";
+}
+.icon-email-to-journal:before {
+  content: "\e972";
+}
+.icon-jrnl-guard:before {
+  content: "\e973";
+}
+.icon-contacts:before {
+  content: "\e974";
+}
+.icon-notifications-settings:before {
+  content: "\e975";
+}
+.icon-profile:before {
+  content: "\e976";
+}
+.icon-security:before {
+  content: "\e977";
+}
+.icon-social-connect:before {
+  content: "\e978";
+}
+.icon-themes:before {
+  content: "\e979";
+}
 .icon-location:before {
   content: "\e968";
   color: #1164fb;
@@ -475,10 +531,6 @@
 .icon-user-circle:before {
   content: "\f2bd";
 }
-.icon-star-circle1:before {
-  content: "\e966";
-  color: #05416a;
-}
 .icon-bars:before {
   content: "\f0c9";
 }
@@ -487,9 +539,6 @@
 }
 .icon-linkedin-in:before {
   content: "\f0e2";
-}
-.icon-exit:before {
-  content: "\e914";
 }
 .icon-help:before {
   content: "\e916";
@@ -506,23 +555,11 @@
 .icon-mail:before {
   content: "\e91d";
 }
-.icon-billing:before {
-  content: "\e91e";
-}
 .icon-brush:before {
   content: "\e91f";
 }
-.icon-account:before {
-  content: "\e920";
-}
-.icon-security:before {
-  content: "\e921";
-}
 .icon-notifications:before {
   content: "\e922";
-}
-.icon-contacts:before {
-  content: "\e923";
 }
 .icon-mailbox:before {
   content: "\e924";
