@@ -139,6 +139,10 @@ section {
     font-family: "Arvo";   
 }
 
+.journal-title-content {
+    text-align: center;
+}
+
 .vertical-align-center {
     position: relative;
     top: 50%;
