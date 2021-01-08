@@ -1,4 +1,4 @@
-from constants import (
+from .constants import (
     FANBOOKS_TEMPLATE_ID,
     JRNL_TEMPLATE_ID,
     JRNL_COVER_TEMPLATE_ID
