@@ -200,19 +200,30 @@
         <div class="page tct journal-title" id="journal-{{ journal.id }}">
           <div class="subpage">
             <h3 class="table-content-title">{{ journal.title }}</h3>
+            <div class="journal-title-content">
+              {{ journal.content|safe }}
+            </div>
             <div class='logo-img-container'>
               <div class='line left-3-margin'></div>
               <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
               <div class='line right-3-margin'></div>
             </div>
           </div>
-        </div>
-        <div class="two-margin journal-text">
-          {{ journal.content|safe }}
-        </div>
+        </div>        
         {% for entry in journal.entries %}
           <h3 class="subtitle journal-date">{{ entry.entry_date }}</h3>
-          <div class="two-margin journal-title-text">{{ entry.title }}</div>
+          <div class="two-margin pdf-content-header">
+            <div class="pdf-content-title journal-title-text">{{ entry.title }}</div>
+            {% if entry.location1 and entry.location2 %}
+            <div class="pdf-content-location">
+                <i class="icon-location"></i>
+                <div class="pdf-content-location-info">
+                    <h3 class="pdf-location-title">{{ entry.location1 }}</h3>
+                    <h5 class="pdf-location-subtitle">{{ entry.location2 }}</h5>
+                </div>
+            </div>
+            {% endif %}
+          </div>
           <div class="two-margin journal-text item-content">
           {% if json_obj.photos is true %}
             {% if json_obj.qr_code is true %}

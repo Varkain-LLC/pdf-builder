@@ -1,4 +1,5 @@
 @import url("../fonts/google-fonts/style.css");
+@import url("../fonts//saasuma-icons/style.css");
 
 @font-face {
   font-family: 'Roboto Slab';
@@ -138,6 +139,10 @@ section {
     font-family: "Arvo";   
 }
 
+.journal-title-content {
+    text-align: center;
+}
+
 .vertical-align-center {
     position: relative;
     top: 50%;
@@ -184,7 +189,6 @@ section {
 }
 
 .journal-title-text {
-    margin-top: 3vw;
     font-size: 3vw;
     font-weight: 600;
     margin-bottom: 20px;
@@ -466,4 +470,55 @@ img {
 q::before, q::after {
   content: '';
   display: none;
+}
+
+.pdf-content-header {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    padding-right: 2.5rem;
+}
+
+.pdf-content-header > .pdf-content-title {
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+.pdf-content-header > .pdf-content-location {
+    display: flex;
+    align-items: center;
+}
+
+.pdf-content-location > i {
+    font-size: 0.75rem;
+    margin-right: 0.625rem;
+}
+
+.pdf-content-location-info {
+  display: flex;
+  align-items: center;
+}
+
+.pdf-content-location > .icon-location::before {
+  color: #a5a5a5;
+}
+
+.pdf-location-title {
+    font-family: "open sans", sans-serif;
+    font-size: 0.5rem;
+    font-weight: 600;
+    color: #000;
+    line-height: 1.2 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.pdf-location-subtitle {
+    font-family: "open sans", sans-serif;
+    font-size: 0.5rem;
+    text-align: left;
+    color: #000000;
+    line-height: 1.2 !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
