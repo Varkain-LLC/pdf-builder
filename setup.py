@@ -2,9 +2,9 @@ from distutils.core import setup
 
 setup(
     name='pdfbuilder',
-    version='0.0.3',
-    author='Elya',
-    author_email='elya@saasuma.com',
+    version='0.1.0',
+    author='Smirnov.EV',
+    author_email='knyazz@gmail.com',
     url='https://github.com/Varkain-LLC/PDF-builder/',
     packages=['html2pdf_converter'],
     description='HTML to PDF with Python-Jinja',
