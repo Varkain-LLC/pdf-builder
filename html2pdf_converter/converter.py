@@ -8,14 +8,14 @@ import platform
 # from jinja2 import Environment, FileSystemLoader
 from jinja2 import Template
 
-from tools.html_to_pdf_converter import (
+from .tools.html_to_pdf_converter import (
     get_pdf_from_html,
     get_html_name,
     get_pdf_name,
 )
-from tools.random_names import produce_amount_names
+from .tools.random_names import produce_amount_names
 
-from choices import templates
+from .choices import templates
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
