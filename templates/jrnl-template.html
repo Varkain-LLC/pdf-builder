@@ -226,17 +226,9 @@
           </div>
           <div class="two-margin journal-text item-content">
           {% if json_obj.photos is true %}
-            {% if json_obj.qr_code is true %}
-              {{ entry.content|safe }}
-            {% else %}
-              {{ entry.no_qr_code_content|safe }}
-            {% endif %}
+            {{ entry.content|safe }}
           {% else %}
-            {% if json_obj.qr_code is true %}
-              {{ entry.no_img_content|safe }}
-            {% else %}
-              {{ entry.no_any_img_content|safe }}
-            {% endif %}
+            {{ entry.no_img_content|safe }}
           {% endif %}
           </div>
           {% if entry.commenting is true and json_obj.comments is true %}
