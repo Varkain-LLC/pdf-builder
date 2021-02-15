@@ -14,7 +14,8 @@
 body {
   margin: 0;
   padding: 0;
-  font: 12pt "Tahoma";
+  font: 10pt "Tahoma";
+  color: black;
 }
 
 * {
@@ -172,6 +173,11 @@ section {
     font-weight: bold;
     border-bottom: 1px solid #000;
     font-family: 'Khula';
+}
+
+.one-margin {
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .two-margin {

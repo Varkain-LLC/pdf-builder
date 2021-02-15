@@ -4,9 +4,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arvo">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Khula">
   <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800"
-      rel="stylesheet"
-    />
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800"
+    rel="stylesheet"
+  />
   <link
     href="https://fonts.googleapis.com/css?family=Roboto+Slab"
     rel="stylesheet"
@@ -25,10 +25,13 @@
   </style>
 {% else %}
   <style>
-    img, p { 
+    img { 
         -webkit-filter: grayscale(100%);
         /* Safari 6.0 - 9.0 */
         filter: grayscale(100%);
+    }
+    p {
+      color: black !important;
     }
   </style>
 {% endif %}
@@ -209,10 +212,10 @@
               <div class='line right-3-margin'></div>
             </div>
           </div>
-        </div>        
+        </div>
         {% for entry in journal.entries %}
-          <h3 class="subtitle journal-date">{{ entry.entry_date }}</h3>
-          <div class="two-margin pdf-content-header">
+          <h3 class="subtitle journal-date journal-item">{{ entry.entry_date }}</h3>
+          <div class="one-margin pdf-content-header">
             <div class="pdf-content-title journal-title-text">{{ entry.title }}</div>
             {% if entry.location1 and entry.location2 %}
             <div class="pdf-content-location">
@@ -224,7 +227,7 @@
             </div>
             {% endif %}
           </div>
-          <div class="two-margin journal-text item-content">
+          <div class="one-margin journal-text item-content">
           {% if json_obj.photos is true %}
             {{ entry.content|safe }}
           {% else %}
@@ -234,9 +237,9 @@
           {% if entry.commenting is true and json_obj.comments is true %}
             {% for comment in journal.comments[entry.id] %}
               {% if loop.first %}
-                <div class="three-margin journal-comments-title-text">Comments:</div>
+                <div class="two-margin journal-comments-title-text">Comments:</div>
               {% endif %}
-              <div class="three-margin journal-comment-container">
+              <div class="two-margin journal-comment-container">
                   <div class="journal-comment-user-container">
                       <img src="{{ comment.user.avatar_image_url }}" alt="user"/>
                   </div>

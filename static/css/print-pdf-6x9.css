@@ -9,24 +9,40 @@ img {
 @page:right {
   margin: 0.5in 0.5in 0.5in 0.3in;
   @bottom-right {
-    text-align: left;
-    margin: 0;
-    margin-bottom: 30pt;
     content: counter(page);
     font-size: .13in;
-    font: sans-serif;
+    font-family: 'Khula', sans-serif;
+    margin-bottom: 30pt;
+    margin-left: 0.5in;
+    text-align: right;
+  }
+  @top-right {
+    content: element(jheader);
+    font-size: .13in;
+    font-family: 'Khula', sans-serif;
+    margin-left: 0.3in;
+    margin-top: 20pt;
+    text-align: right;
   }
 }
 
 @page:left {
   margin: 0.5in 0.3in 0.5in 0.5in;
   @bottom-left {
-    text-align: right;
-    margin: 0;
-    margin-bottom: 30pt;
     content: counter(page);
     font-size: .13in;
-    font: sans-serif;
+    font-family: 'Khula', sans-serif;
+    margin-right: 0.5in;
+    margin-bottom: 20pt;
+    text-align: left;
+  }
+  @top-left {
+    content: element(jheader);
+    font-size: .13in;
+    font-family: 'Khula', sans-serif;
+    margin-right: 0.3in;
+    margin-top: 20pt;
+    text-align: left;
   }
 }
 
@@ -57,12 +73,12 @@ img {
 }
 
 @media print {
-    .original-content {
-        display: none !important;
-    }
-    map {
-        display: block !important;
-    }
+  .original-content {
+      display: none !important;
+  }
+  map {
+      display: block !important;
+  }
 }
 
 .page-first {
@@ -77,8 +93,12 @@ img {
 .toc, .tct {
   page: table-of-contents;
 }
+h3.journal-item {
+  position: running(jheader)
+}
 .journal-date {
   text-align: inside;
+  padding-bottom: 0;
 }
 .page {
   page-break-before: always;
@@ -161,14 +181,14 @@ body {
 }
 .journal-comments-title-text {
   margin-top: 10px;
-  font-size: .15in;
+  font-size: .13in;
   margin-bottom: 10px;
 }
 .journal-comments-username {
-  font-size: .15in;
+  font-size: .13in;
 }
 .journal-comments-text {
-  font-size: .15in;
+  font-size: .13in;
 }
 .journal-comment-user-container > img { 
   width: .42in;
@@ -188,7 +208,7 @@ body {
 
 p, .item-content {
   font-family: 'Khula';
-  font-size: .15in;
+  font-size: .13in;
   max-width: 100%;
   max-height: 100%;
   overflow: hidden;
@@ -207,5 +227,10 @@ body[start=even] {
 .journal-title {
   margin-left: .5in;
   margin-right: .5in;
+}
+
+.one-margin {
+  margin-left: .2in;
+  margin-right: .2in;
 }
 

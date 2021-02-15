@@ -5,17 +5,17 @@ import json
 import sys
 import platform
 
-# from jinja2 import Environment, FileSystemLoader
 from jinja2 import Template
 
-from .tools.html_to_pdf_converter import (
+
+from html2pdf_converter.tools.html_to_pdf_converter import (
     get_pdf_from_html,
     get_html_name,
     get_pdf_name,
 )
-from .tools.random_names import produce_amount_names
+from html2pdf_converter.tools.random_names import produce_amount_names
 
-from .choices import templates
+from html2pdf_converter.choices import templates
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -66,7 +66,7 @@ class HtmlToPdfConverter:
         self.html_data = html_data
         self.html_template_path = html_template_path
         self.base_dir = base_dir or os.path.abspath(os.path.join(
-            os.path.dirname(os.path.dirname(__file__)), '..'))
+            os.path.dirname(os.path.dirname(__file__))))
         self.assets_dir = os.path.join(self.base_dir, 'assets/')
         self.static_url = os.path.join(self.base_dir, 'static/')
         self.chromium_path = os.path.join(self.assets_dir, 'drivers/')

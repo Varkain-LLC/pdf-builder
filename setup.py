@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='pdfbuilder',
@@ -6,7 +6,7 @@ setup(
     author='Smirnov.EV',
     author_email='knyazz@gmail.com',
     url='https://github.com/Varkain-LLC/PDF-builder/',
-    packages=['html2pdf_converter'],
+    packages=['html2pdf_converter', 'html2pdf_converter.tools'],
     description='HTML to PDF with Python-Jinja',
     long_description=open('README.md').read(),
     keywords=['pdf', 'pdf_builder', 'pdf-builder', 'PDFbuilder', 'pdfbuilder'],
