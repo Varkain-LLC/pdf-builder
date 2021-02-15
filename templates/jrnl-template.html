@@ -11,6 +11,7 @@
     href="https://fonts.googleapis.com/css?family=Roboto+Slab"
     rel="stylesheet"
   />
+  <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
   <link href="{{ static_url }}css/pdf.css" rel="stylesheet"/>
 
 {% if json_obj.export_format == '6X9' %}
@@ -40,18 +41,26 @@
   <style>
     @page {
       @prince-overlay {
-        text-align: center;
+        margin-top: -1in;
         content: "PREVIEW";
-        font-size: 1.15in;
         color: rgba(0, 0, 0, 0.3);
+        font-size: 1.2in;
+        font-family: 'Bree Serif', serif;
+        text-align: center;
         transform: rotate(-35deg);
         opacity: 0.3;
-        font-family: 'Arvo';
       }
     }
     @page:left {
       @prince-overlay {
-        margin-left: -.2in;
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+    @page:right {
+      @prince-overlay {
+        margin-left: 0;
+        margin-right: 0;
       }
     }
     @page table-of-contents {
