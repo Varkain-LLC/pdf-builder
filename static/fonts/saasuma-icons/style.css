@@ -25,6 +25,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-jrnl-logo:before {
+  content: "\e98b";
+}
 .icon-invitations:before {
   content: "\e96a";
 }

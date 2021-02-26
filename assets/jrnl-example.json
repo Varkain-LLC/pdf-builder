@@ -138,7 +138,7 @@
                         {
                             "id": "36105",
                             "commenting": true,
-                            "content": "<p class=\"align-left\"><br></p>↵<p class=\"align-left\"><br></p>",
+                            "content": "<p class=\"align-left\"></p>↵<p class=\"align-left\"></p>",
                             "entry_date": "Monday, June 29, 2020",
                             "title": "Word counter"
                         },

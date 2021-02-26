@@ -108,9 +108,9 @@ h3.journal-item {
 img {
     page-break-inside: avoid;
 }
-p {
-  widows: 3;
-  orphans: 3;
+p, .entry-base-content {
+  widows: 1;
+  orphans: 1;
 }
 
 body {
@@ -221,10 +221,19 @@ p, .item-content {
 body[start=even] {
   break-before:left;
 }
-
+.journal-new-date {
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: -.68in;
+  margin-bottom: .2in;
+  overflow: hidden;
+  z-index: -1;
+}
 .journal-title {
   margin-left: .5in;
   margin-right: .5in;
+  z-index: 999;
 }
 
 .one-margin {

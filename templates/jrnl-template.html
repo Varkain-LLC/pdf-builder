@@ -11,7 +11,10 @@
     href="https://fonts.googleapis.com/css?family=Roboto+Slab"
     rel="stylesheet"
   />
-  <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap"
+    rel="stylesheet"
+  />
   <link href="{{ static_url }}css/pdf.css" rel="stylesheet"/>
 
 {% if json_obj.export_format == '6X9' %}
@@ -224,16 +227,19 @@
         </div>
         {% for entry in journal.entries %}
           <h3 class="subtitle journal-date journal-item">{{ entry.entry_date }}</h3>
+          {% if loop.previtem and entry.entry_date != loop.previtem.entry_date %}
+            <h3 class="subtitle journal-date journal-new-date">{{ entry.entry_date }}</h3>
+          {% endif %}
           <div class="one-margin pdf-content-header">
             <div class="pdf-content-title journal-title-text">{{ entry.title }}</div>
             {% if entry.location1 and entry.location2 %}
-            <div class="pdf-content-location">
+              <div class="pdf-content-location">
                 <i class="icon-location"></i>
                 <div class="pdf-content-location-info">
-                    <h3 class="pdf-location-title">{{ entry.location1 }}</h3>
-                    <h5 class="pdf-location-subtitle">{{ entry.location2 }}</h5>
+                  <h3 class="pdf-location-title">{{ entry.location1 }}</h3>
+                  <h5 class="pdf-location-subtitle">{{ entry.location2 }}</h5>
                 </div>
-            </div>
+              </div>
             {% endif %}
           </div>
           <div class="one-margin journal-text item-content">
@@ -262,6 +268,13 @@
                   </div>
               </div>
             {% endfor %}
+          {% endif %}
+          {% if loop.nextitem and entry.entry_date == loop.nextitem.entry_date %}
+            <div class="pdf-entry-separator">
+              <i class="icon-jrnl-logo"></i>
+            </div>
+          {% else %}
+            <div style="margin-bottom: .7in; page-break-before: avoid; page-break-after: avoid;"></div>
           {% endif %}
         {% endfor %}
       {% endfor %}

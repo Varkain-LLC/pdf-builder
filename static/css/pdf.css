@@ -528,3 +528,33 @@ q::before, q::after {
     padding: 0 !important;
     margin: 0 !important;
 }
+
+.pdf-entry-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: 116px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pdf-entry-separator::before {
+  content: "";
+  position: absolute;
+  width: 1.875rem;
+  border-bottom: 0.0625rem solid #000000;
+  left: 0;
+}
+
+.pdf-entry-separator::after {
+  content: "";
+  position: absolute;
+  width: 1.875rem;
+  border-bottom: 0.0625rem solid #000000;
+  right: 0;
+}
+.journal-new-date {
+  display: none;
+}
