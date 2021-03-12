@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css??family=Arvo">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Khula">
+    <link href="{{ static_url }}css/pdf.css" rel="stylesheet"/>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #FAFAFA;
+        font: 12pt "Tahoma";
+      }
+
+      .page {
+        height: 100vh;
+        min-height: 100vh;
+        width: 100%;
+        position: relative;
+      }
+
+      .back-cover-container {
+				background-color: #00ACC4; 
+				height: 100%; 
+				width: 7in;
+				position: relative;
+			}
+			.spine-container {
+				background-color: rgb(20, 13, 108); 
+				height: 100%; 
+				width: 1in; 
+				position: relative;
+			}
+			.front-cover-container{
+				background-color: #FFF; 
+				height: 100%; 
+				width: 7in; 
+				padding-left: 0; 
+				position: relative;
+			}
+
+    </style>
+    <style>
+      @page {
+        size: 15in 9in;
+        margin: 0;
+      }
+    </style>
+
+    <style>
+      @media print {
+        .page {
+          margin: 0;
+          border-radius: initial;
+          width: initial;
+          min-height: initial;
+          box-shadow: initial;
+          position: initial;
+        }
+      }
+    </style>
+  </head>
+  <body>
+     <div class="page" style="display: flex; flex-direction: row;">
+      <div class="back-cover-container">
+        <div style="position: absolute; top: 10%; right: 15%; width: 50%; word-break: break-word; color: #FFF;  ">
+            May life have been meaningful and full of service and good works
+        </div>
+        <div style="position: absolute; bottom: 10%; right: 25%;    ">
+					<img src="{{ static_url }}images/timeline-images/jrnl-book-trademark.png" 
+						style="width: 5vw;"
+					/>
+        </div>
+      </div>
+      <div class="spine-container">
+				<div style="writing-mode: vertical-rl; text-orientation: mixed; color: #FFF; position: absolute; left: 50%; transform: translateX(-50%); top: 10%;">
+					1123
+				</div>
+				<div style="writing-mode: vertical-rl; text-orientation: mixed; color: #FFF; position: absolute; left: 50%; transform: translateX(-50%) rotate(90deg); bottom: 10%;">
+					<img src="{{ static_url }}images/timeline-images/jrnl-book-trademark-blue.png" style="width: 5vw;" class='logo-cover-image' />
+				</div>
+      </div>
+      <div class="front-cover-container">
+        <div class="title-container" style="padding-top: 10vh;">
+					<div style="width: 100%; display: flex; flex-direction: column;">
+						<div class='cover-title' style="font-size: 2vw !important; margin-left: 5vw !important; border-bottom: 2px solid #DDD;">
+							{{ json_obj.document_title }}
+						</div>
+						<div class='cover-sub-title' style="color: #00ACC4; margin: auto; margin-top: 4vh;">
+							{{ json_obj.document_subtitle }}
+						</div>
+					</div>
+      	</div>
+				<div style="position: absolute; bottom: 10%; left: 30%;">
+					<div>
+							<img src="{{ static_url }}images/timeline-images/jrnl-book-trademark-blue.png" style="width: 30%;" class='logo-cover-image' />
+					</div>
+				</div>
+      </div>
+    </div>
+  </body>
+</html>
