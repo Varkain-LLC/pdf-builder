@@ -24,7 +24,7 @@
       .back-cover-container {
 				background-color: #00ACC4; 
 				height: 100%; 
-				width: 7in;
+				width: 8in;
 				position: relative;
 			}
 			.spine-container {
@@ -36,7 +36,7 @@
 			.front-cover-container{
 				background-color: #FFF; 
 				height: 100%; 
-				width: 7in; 
+				width: 8in; 
 				padding-left: 0; 
 				position: relative;
 			}
@@ -44,7 +44,7 @@
     </style>
     <style>
       @page {
-        size: 15in 9in;
+        size: 17in 9in;
         margin: 0;
       }
     </style>
@@ -79,23 +79,25 @@
 					1123
 				</div>
 				<div style="writing-mode: vertical-rl; text-orientation: mixed; color: #FFF; position: absolute; left: 50%; transform: translateX(-50%) rotate(90deg); bottom: 10%;">
-					<img src="{{ static_url }}images/timeline-images/jrnl-book-trademark-blue.png" style="width: 5vw;" class='logo-cover-image' />
+					<img src="{{ static_url }}images/timeline-images/jrnl_full-dark.png" style="width: 5vw;" class='logo-cover-image' />
 				</div>
       </div>
       <div class="front-cover-container">
         <div class="title-container" style="padding-top: 10vh;">
-					<div style="width: 100%; display: flex; flex-direction: column;">
-						<div class='cover-title' style="font-size: 2vw !important; margin-left: 5vw !important; border-bottom: 2px solid #DDD;">
-							{{ json_obj.document_title }}
-						</div>
-						<div class='cover-sub-title' style="color: #00ACC4; margin: auto; margin-top: 4vh;">
-							{{ json_obj.document_subtitle }}
-						</div>
+					<div style="width: 100%; display: flex; flex-direction: row; padding-left: 5vw; padding-right: 5vw;">
+                        <div>
+                            <div class='cover-title' style="font-size: 2vw !important; border-bottom: 2px solid #DDD; text-align: center;">
+                                {{ json_obj.document_title }}
+                            </div>
+                            <div class='cover-sub-title' style="color: #00ACC4; margin: auto; margin-top: 4vh; text-align: center;">
+                                {{ json_obj.document_subtitle }}
+                            </div>
+                        </div>
 					</div>
       	</div>
 				<div style="position: absolute; bottom: 10%; left: 30%;">
 					<div>
-							<img src="{{ static_url }}images/timeline-images/jrnl-book-trademark-blue.png" style="width: 30%;" class='logo-cover-image' />
+							<img src="{{ static_url }}images/timeline-images/jrnl_full-light.png" style="width: 30%;" class='logo-cover-image' />
 					</div>
 				</div>
       </div>
