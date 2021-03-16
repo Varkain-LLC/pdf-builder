@@ -4,7 +4,7 @@ div.table-of-contents-body::after {
 
 img {
   image-resolution: from-image;
-  max-height: 8in;
+  max-height: 7.5in;
 }
 
 @page:right {
