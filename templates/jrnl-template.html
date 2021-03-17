@@ -232,7 +232,7 @@
           {% endif %}
           <div
             class="journal-entry-main-container"
-            style="orphans:4;"
+            style="orphans:{% if entry.location1 and entry.location2 %}4{% else %}2{% endif %};"
           >
             <div class="one-margin pdf-content-header">
               <div class="pdf-content-title journal-title-text">{{ entry.title }}</div>
@@ -246,7 +246,7 @@
                 </div>
               {% endif %}
             </div>
-            <div class="one-margin journal-text item-content">
+            <div class="one-margin journal-text item-content" style="orphans:1;">
             {% if json_obj.photos is true %}
               {{ entry.content|safe }}
             {% else %}
