@@ -230,10 +230,7 @@
           {% if loop.previtem and entry.entry_date != loop.previtem.entry_date %}
             <h3 class="subtitle journal-date journal-new-date">{{ entry.entry_date }}</h3>
           {% endif %}
-          <div
-            class="journal-entry-main-container"
-            style="orphans:{% if entry.location1 and entry.location2 %}4{% else %}2{% endif %};"
-          >
+          <div class="journal-entry-main-container">
             <div class="one-margin pdf-content-header">
               <div class="pdf-content-title journal-title-text">{{ entry.title }}</div>
               {% if entry.location1 and entry.location2 %}
