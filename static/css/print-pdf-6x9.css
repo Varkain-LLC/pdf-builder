@@ -110,8 +110,8 @@ img {
     page-break-inside: avoid;
 }
 p, .entry-base-content {
-  widows: 2;
-  orphans: 2;
+  widows: 1;
+  orphans: 1;
 }
 
 body {
