@@ -230,24 +230,29 @@
           {% if loop.previtem and entry.entry_date != loop.previtem.entry_date %}
             <h3 class="subtitle journal-date journal-new-date">{{ entry.entry_date }}</h3>
           {% endif %}
-          <div class="one-margin pdf-content-header">
-            <div class="pdf-content-title journal-title-text">{{ entry.title }}</div>
-            {% if entry.location1 and entry.location2 %}
-              <div class="pdf-content-location">
-                <i class="icon-location"></i>
-                <div class="pdf-content-location-info">
-                  <h3 class="pdf-location-title">{{ entry.location1 }}</h3>
-                  <h5 class="pdf-location-subtitle">{{ entry.location2 }}</h5>
+          <div
+            class="journal-entry-main-container"
+            style="orphans:{% if entry.location1 and entry.location2 %}4{% else %}2{% endif %};"
+          >
+            <div class="one-margin pdf-content-header">
+              <div class="pdf-content-title journal-title-text">{{ entry.title }}</div>
+              {% if entry.location1 and entry.location2 %}
+                <div class="pdf-content-location">
+                  <i class="icon-location"></i>
+                  <div class="pdf-content-location-info">
+                    <h3 class="pdf-location-title">{{ entry.location1 }}</h3>
+                    <h5 class="pdf-location-subtitle">{{ entry.location2 }}</h5>
+                  </div>
                 </div>
-              </div>
+              {% endif %}
+            </div>
+            <div class="one-margin journal-text item-content">
+            {% if json_obj.photos is true %}
+              {{ entry.content|safe }}
+            {% else %}
+              {{ entry.no_img_content|safe }}
             {% endif %}
-          </div>
-          <div class="one-margin journal-text item-content">
-          {% if json_obj.photos is true %}
-            {{ entry.content|safe }}
-          {% else %}
-            {{ entry.no_img_content|safe }}
-          {% endif %}
+            </div>
           </div>
           {% if entry.commenting is true and json_obj.comments is true %}
             {% for comment in journal.comments[entry.id] %}
