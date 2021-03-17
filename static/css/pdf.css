@@ -567,6 +567,8 @@ blockquote {
     padding: 0 0 0 1rem !important;
 }
 
-.journal-entry-main-container {
+.journal-entry-title-container {
+  break-after: avoid-page;
+  page-break-after: avoid;
   page-break-inside: avoid;
 }
