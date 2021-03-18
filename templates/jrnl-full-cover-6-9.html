@@ -22,29 +22,42 @@
       }
 
       .back-cover-container {
-				background-color: #00ACC4; 
-				height: 100%; 
-				width: 8in;
-				position: relative;
-			}
-			.spine-container {
-				background-color: rgb(20, 13, 108); 
-				height: 100%; 
-				width: 1in; 
-				position: relative;
-			}
-			.front-cover-container{
-				background-color: #FFF; 
-				height: 100%; 
-				width: 8in; 
-				padding-left: 0; 
-				position: relative;
-			}
+        background-color: #00ACC4 !important;  
+        height: 100%; 
+        width: 9.25in;
+        position: relative;
+      }
+      .spine-container {
+        background-color: #002450; 
+        height: 100%; 
+        flex: 1;
+        position: relative;
+      }
+      .front-cover-container{
+        background-color: #FFF; 
+        height: 100%; 
+        width: 9.25in; 
+        padding-left: 0; 
+        position: relative;
+      }
+      .cover-title {
+        font-size: 2vw !important;
+        border-bottom: 2px solid #DDD !important; 
+        text-align: center !important; 
+        color: #00214C !important; 
+        font-weight: bold !important;
+      }
+      .cover-sub-title {
+        color: #00ACC4 !important; 
+        margin: auto !important; 
+        margin-top: 4vh !important; 
+        text-align: center !important;
+      }
 
     </style>
     <style>
       @page {
-        size: 17in 9in;
+        size: 19.4in 9.75in;
         margin: 0;
       }
     </style>
@@ -68,7 +81,7 @@
         <div style="position: absolute; top: 10%; right: 15%; width: 50%; word-break: break-word; color: #FFF;  ">
             May life have been meaningful and full of service and good works
         </div>
-        <div style="position: absolute; bottom: 10%; right: 25%;    ">
+        <div style="position: absolute; bottom: 10%; right: 27%; ">
 					<img src="{{ static_url }}images/timeline-images/jrnl-book-trademark.png" 
 						style="width: 5vw;"
 					/>
@@ -83,21 +96,21 @@
 				</div>
       </div>
       <div class="front-cover-container">
-        <div class="title-container" style="padding-top: 10vh;">
-					<div style="width: 100%; display: flex; flex-direction: row; padding-left: 5vw; padding-right: 5vw;">
-                        <div>
-                            <div class='cover-title' style="font-size: 2vw !important; border-bottom: 2px solid #DDD; text-align: center;">
-                                {{ json_obj.document_title }}
-                            </div>
-                            <div class='cover-sub-title' style="color: #00ACC4; margin: auto; margin-top: 4vh; text-align: center;">
-                                {{ json_obj.document_subtitle }}
-                            </div>
-                        </div>
+        <div class="title-container" style="padding-top: 22vh;">
+					<div style="width: 100%; display: flex; flex-direction: row; padding-left: 8vw; padding-right: 6vw;">
+            <div>
+              <div class='cover-title'>
+                  {{ json_obj.document_title }}
+              </div>
+              <div class='cover-sub-title' style="">
+                  {{ json_obj.document_subtitle }}
+              </div>
+            </div>
 					</div>
       	</div>
-				<div style="position: absolute; bottom: 10%; left: 30%;">
+				<div style="position: absolute; bottom: 10%; left: 26%;">
 					<div>
-							<img src="{{ static_url }}images/timeline-images/jrnl_full-light.png" style="width: 30%;" class='logo-cover-image' />
+							<img src="{{ static_url }}images/timeline-images/jrnl_full-light.png" style="width: 20%;" class='logo-cover-image' />
 					</div>
 				</div>
       </div>
