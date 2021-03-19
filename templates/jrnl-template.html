@@ -173,14 +173,14 @@
       <h3 class="subtitle journal-date">{{ item.name }}</h3>
     {% for entry in item.data.aam %}
       {% if loop.first or loop.previtem.group != entry.group %}
-        <span class="two-margin aam-category-text">{{ entry.group }}</span>
+        <span class="one-margin aam-category-text">{{ entry.group }}</span>
       {% endif %}
-      <div class="two-margin aam-question-text">{{ entry.title }}</div>
-      <div class="two-margin aam-date journal-text">
+      <div class="one-margin aam-question-text">{{ entry.title }}</div>
+      <div class="one-margin aam-date journal-text">
         {{ entry.entry_date }}
       </div>
       <div
-        class="two-margin journal-text item-content"
+        class="one-margin journal-text item-content"
         style="padding-bottom: {% if loop.last or loop.nextitem.group != entry.group %}.3{% else %}.1{% endif%}in;"
       >
         {% if json_obj.photos is true %}
