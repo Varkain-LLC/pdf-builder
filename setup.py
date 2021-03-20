@@ -12,7 +12,7 @@ setup(
     keywords=['pdf', 'pdf_builder', 'pdf-builder', 'PDFbuilder', 'pdfbuilder'],
     install_requires=[
         'selenium==3.141.0',
-        'jinja2==2.11.2'
+        'jinja2==2.11.3'
     ],
     classifiers=[
         'Programming Language :: Python',
