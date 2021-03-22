@@ -170,7 +170,7 @@
   </div>
   <div id='aam'>
     <div id="book-content-aam">
-      <h3 class="subtitle journal-date">{{ item.name }}</h3>
+      <h3 class="subtitle journal-date aam-name">{{ item.name }}</h3>
     {% for entry in item.data.aam %}
       {% if loop.first or loop.previtem.group != entry.group %}
         <span class="one-margin aam-category-text">{{ entry.group }}</span>

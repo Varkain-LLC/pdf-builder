@@ -222,7 +222,8 @@ p, .item-content {
 body[start=even] {
   break-before:left;
 }
-.journal-new-date {
+.journal-new-date,
+.aam-name {
   display: block;
   margin-left: 0;
   margin-right: 0;
@@ -240,4 +241,9 @@ body[start=even] {
 .one-margin {
   margin-left: .1in;
   margin-right: .1in;
+}
+.aam-name {
+  margin-top: -.3in;
+  overflow: hidden;
+  z-index: -1;
 }
