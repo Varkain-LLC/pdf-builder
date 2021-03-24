@@ -79,7 +79,7 @@
     <div class="page" style="display: flex; flex-direction: row;">
       <div class="back-cover-container" style="width: 6.25in;">
         <div style="position: absolute; top: 10%; right: 15%; width: 50%; word-break: break-word; color: #FFF;  ">
-            May life have been meaningful and full of service and good works
+            {{ json_obj.document_back_cover }}
         </div>
         <div style="position: absolute; bottom: 10%; right: 27%; ">
 					<img src="{{ static_url }}images/timeline-images/jrnl-book-trademark.png" 
@@ -89,7 +89,7 @@
       </div>
       <div class="spine-container" style="width: {{ json_obj.spine_bulk }}in;">
 				<div style="writing-mode: vertical-rl; text-orientation: mixed; color: #FFF; position: absolute; left: 50%; transform: translateX(-50%); top: 10%;">
-					1123
+					{{ json_obj.spine }}
 				</div>
 				<div style="writing-mode: vertical-rl; text-orientation: mixed; color: #FFF; position: absolute; left: 50%; transform: translateX(-50%) rotate(90deg); bottom: 10%;">
 					<img src="{{ static_url }}images/timeline-images/jrnl_full-dark.png" style="width: 5vw;max-width: 70%;" class='logo-cover-image' />
