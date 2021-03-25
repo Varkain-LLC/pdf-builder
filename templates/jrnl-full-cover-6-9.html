@@ -57,7 +57,7 @@
     </style>
     <style>
       @page {
-        size: {{ json_obj.spine_bulk + 12.5 }}in 9.5in;
+        size: {{ json_obj.spine_bulk + 19.25 }}in 9.75in;
         margin: 0;
       }
     </style>
@@ -77,8 +77,8 @@
   </head>
   <body>
     <div class="page" style="display: flex; flex-direction: row;">
-      <div class="back-cover-container" style="width: 6.25in;">
-        <div style="position: absolute; top: 10%; right: 15%; width: 50%; word-break: break-word; color: #FFF;  ">
+      <div class="back-cover-container" style="width: 9.625in;">
+        <div style="position: absolute; top: 10%; right: 15%; width: 33.25%; word-break: break-word; color: #FFF;  ">
             {{ json_obj.document_back_cover }}
         </div>
         <div style="position: absolute; bottom: 10%; right: 27%; ">
@@ -95,7 +95,7 @@
 					<img src="{{ static_url }}images/timeline-images/jrnl_full-dark.png" style="width: 5vw;max-width: 70%;" class='logo-cover-image' />
 				</div>
       </div>
-      <div class="front-cover-container" style="width: 6.25in;">
+      <div class="front-cover-container" style="width: 9.625in;">
         <div class="title-container" style="padding-top: 22vh;">
 					<div style="width: 100%; display: flex; flex-direction: row; padding-left: 8vw; padding-right: 6vw;">
             <div>

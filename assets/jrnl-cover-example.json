@@ -1,5 +1,7 @@
 {
+    "document_back_cover": "custom subtitle", 
     "document_title": "My JRNL cover",
     "document_subtitle": "custom subtitle",
-    "spine_bulk": 0.125
+    "spine": "My JRNL cover",
+    "spine_bulk": 0.25
 }
