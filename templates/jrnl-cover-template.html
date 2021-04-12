@@ -70,8 +70,8 @@
     <div class="page" style="background-color: #00ACC4;">
       <div class="subpage" style="width: 100%; height: 100%; position: relative;" >
         <div class="back-cover-container">
-          <div style="width: 100%; display: flex;">
-            <span class='back-cover'>{{ json_obj.document_back_cover }}</span>
+          <div style="width: 100%; display: flex;flex-direction: column;">
+            <div class='back-cover'>{{ json_obj.document_back_cover.replace("\n", "<br/>").replace(' ', "&nbsp;") }}</div>
           </div>
         </div>
         <div class="back-logo-container">

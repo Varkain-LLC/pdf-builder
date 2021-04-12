@@ -79,7 +79,7 @@
     <div class="page" style="display: flex; flex-direction: row;">
       <div class="back-cover-container" style="width: 9.625in;">
         <div style="position: absolute; top: 10%; right: 15%; width: 33.25%; word-break: break-word; color: #FFF;  ">
-            {{ json_obj.document_back_cover }}
+            <div class='back-cover'>{{ json_obj.document_back_cover.replace("\n", "<br/>").replace(' ', "&nbsp;") }}</div>
         </div>
         <div style="position: absolute; bottom: 10%; right: 27%; ">
 					<img src="{{ static_url }}images/timeline-images/jrnl-book-trademark.png" 
