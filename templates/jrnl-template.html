@@ -151,7 +151,7 @@
   </div>
   <div id='intro'>
     <div id="book-content-intro">
-      <h3 class="subtitle journal-date">{{ item.name }}</h3>
+      <h3 class="subtitle journal-date intro-name">{{ item.name }}</h3>
       <div class="two-margin journal-text">{{ item.data }}</div>
     </div>
   </div>
@@ -169,7 +169,7 @@
       </div>
     </div>
   </div>
-  <div id='aam'>
+  <div id='aam' class="aam">
     <div id="book-content-aam">
       <h3 class="subtitle journal-date aam-name">{{ item.name }}</h3>
     {% for entry in item.data.aam %}
