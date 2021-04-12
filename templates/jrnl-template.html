@@ -107,8 +107,9 @@
         {% if json_obj.table_of_contents.intro %}
           {% set item = json_obj.table_of_contents.intro %}
           <div class="table-of-contents-body" href="#intro-chapter">
-            {{ item.name }}<br/>
-        </div>
+            {{ item.name.replace("\n", "<br/>").replace(' ', "&nbsp;") }}
+            <br/>
+          </div>
         {% endif %}
         {% if json_obj.table_of_contents.aam and json_obj.all_about_me != '' %}
           {% set item = json_obj.table_of_contents.aam %}
@@ -140,7 +141,7 @@
   {% set item = json_obj.table_of_contents.intro %}
   <div class="page tct" id="intro-chapter">
     <div class="subpage">
-      <h3 class="table-content-title">{{ item.name }}</h3>
+      <h3 class="table-content-title">{{ item.name.replace("\n", "<br/>").replace(' ', "&nbsp;") }}</h3>
       <div class='logo-img-container'>
         <div class='line left-3-margin'></div>
         <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
