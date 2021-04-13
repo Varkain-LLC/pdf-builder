@@ -70,6 +70,9 @@ img {
   @bottom-right {content: normal;}
   @bottom-left {content: normal;}
 }
+@page aam {
+  margin-top: .7in;
+}
 
 @media print {
   .original-content {
@@ -91,6 +94,9 @@ img {
 }
 .toc, .tct {
   page: table-of-contents;
+}
+.aam {
+  page: aam;
 }
 h3.journal-item {
   position: running(jheader);
@@ -223,7 +229,8 @@ body[start=even] {
   break-before:left;
 }
 .journal-new-date,
-.aam-name {
+.aam-name,
+.intro-name {
   display: block;
   margin-left: 0;
   margin-right: 0;
@@ -242,8 +249,10 @@ body[start=even] {
   margin-left: .1in;
   margin-right: .1in;
 }
+
+.intro-name {
+  margin-top: -.38in;
+}
 .aam-name {
-  margin-top: -.3in;
-  overflow: hidden;
-  z-index: -1;
+  margin-top: 0;
 }
