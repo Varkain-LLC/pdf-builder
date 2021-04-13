@@ -107,7 +107,7 @@
         {% if json_obj.table_of_contents.intro %}
           {% set item = json_obj.table_of_contents.intro %}
           <div class="table-of-contents-body" href="#intro-chapter">
-            {{ item.name.replace("\n", "<br/>").replace(' ', "&nbsp;") }}
+            {{ item.name}}
             <br/>
           </div>
         {% endif %}
@@ -141,7 +141,7 @@
   {% set item = json_obj.table_of_contents.intro %}
   <div class="page tct" id="intro-chapter">
     <div class="subpage">
-      <h3 class="table-content-title">{{ item.name.replace("\n", "<br/>").replace(' ', "&nbsp;") }}</h3>
+      <h3 class="table-content-title">{{ item.name }}</h3>
       <div class='logo-img-container'>
         <div class='line left-3-margin'></div>
         <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
@@ -152,7 +152,7 @@
   <div id='intro'>
     <div id="book-content-intro">
       <h3 class="subtitle journal-date">{{ item.name }}</h3>
-      <div class="two-margin journal-text">{{ item.data }}</div>
+      <div class="two-margin journal-text">{{ item.data.replace("\n", "<br/>").replace(' ', "&nbsp;") }}</div>
     </div>
   </div>
 {% endif %}

@@ -170,7 +170,7 @@
         {% if json_obj.table_of_contents.intro %}
           {% set item = json_obj.table_of_contents.intro %}
           <div class="table-of-contents-body">
-            {{ item.name.replace("\n", "<br/>").replace(' ', "&nbsp;") }}
+            {{ item.name }}
             </br>
             <span id='intro-pagenumber'>1</span>
         </div>
@@ -205,7 +205,7 @@
     <div class="subpage">
       <div class="vertical-align-center">
           <h3 class="table-content-title">
-            {{ item.name.replace("\n", "<br/>").replace(' ', "&nbsp;") }}
+            {{ item.name }}
           </h3>
           <div class='logo-img-container'>
             <div class='line left-3-margin'></div>
@@ -220,7 +220,7 @@
   <div id='intro'>
     <div id="book-content-intro">
       <h3 class="subtitle right-align-text">{{ item.name }}</h3>
-      <div class="two-margin journal-text">{{ item.data }}</div>
+      <div class="two-margin journal-text">{{ item.data.replace("\n", "<br/>").replace(' ', "&nbsp;") }}</div>
     </div>
   </div>
 {% endif %}
