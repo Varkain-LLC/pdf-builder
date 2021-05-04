@@ -209,6 +209,9 @@ section {
 
 .journal-text {
     word-break: break-word;
+}
+
+.journal-introduction {
     white-space: pre-wrap;
 }
 
