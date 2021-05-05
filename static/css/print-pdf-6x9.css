@@ -73,6 +73,9 @@ img {
 @page aam {
   margin-top: .7in;
 }
+@page intro {
+  margin-top: .7in;
+}
 
 @media print {
   .original-content {
@@ -97,6 +100,9 @@ img {
 }
 .aam {
   page: aam;
+}
+.intro {
+  page: intro;
 }
 h3.journal-item {
   position: running(jheader);
