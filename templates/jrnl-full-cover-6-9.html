@@ -77,42 +77,44 @@
   </head>
   <body>
     <div class="page" style="display: flex; flex-direction: row;">
-      <div class="back-cover-container" style="width: 9.625in;">
-        <div style="position: absolute; top: 10%; right: 15%; width: 33.25%; word-break: break-word; color: #FFF;  ">
-            <div class='back-cover'>{{ json_obj.document_back_cover }}</div>
-        </div>
-        <div style="position: absolute; bottom: 10%; right: 27%; ">
-					<img src="{{ static_url }}images/timeline-images/jrnl-book-trademark.png" 
-						style="width: 5vw;"
-					/>
+      <div class="back-cover-container" style="width: 9.625in; display: flex; flex-direction: row; justify-content: flex-end;">
+        <div style="width: 6.25in; position: relative;">
+            <div style="position: absolute; top: 10%; left: 50%; max-width: 33.25%; word-break: break-word; color: #FFF; transform: translateX(-50%); ">
+                <div class='back-cover'>{{ json_obj.document_back_cover }}</div>
+            </div>
+            <div style="position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%); ">
+                <img src="{{ static_url }}images/timeline-images/jrnl-book-trademark.png" 
+                    style="width: 5vw;"
+                />
+            </div>
         </div>
       </div>
       <div class="spine-container" style="width: {{ json_obj.spine_bulk }}in;">
-				<div style="writing-mode: vertical-rl; text-orientation: mixed; color: #FFF; position: absolute; left: 50%; transform: translateX(-50%); top: 10%;">
-					{{ json_obj.spine }}
-				</div>
-				<div style="writing-mode: vertical-rl; text-orientation: mixed; color: #FFF; position: absolute; left: 50%; transform: translateX(-50%) rotate(90deg); bottom: 10%;">
-					<img src="{{ static_url }}images/timeline-images/jrnl_full-dark.png" style="width: 5vw;max-width: 70%;" class='logo-cover-image' />
-				</div>
-      </div>
-      <div class="front-cover-container" style="width: 9.625in;">
-        <div class="title-container" style="padding-top: 22vh;">
-					<div style="width: 65%; display: flex; flex-direction: row; padding-left: 8vw; padding-right: 6vw;">
-            <div>
-              <div class='cover-title'>
-                  {{ json_obj.document_title }}
-              </div>
-              <div class='cover-sub-title' style="">
-                  {{ json_obj.document_subtitle }}
-              </div>
+            <div style="writing-mode: vertical-rl; text-orientation: mixed; color: #FFF; position: absolute; left: 50%; transform: translateX(-50%); top: 10%;">
+                {{ json_obj.spine }}
             </div>
-					</div>
-      	</div>
-				<div style="position: absolute; bottom: 10%; left: 26%;">
-					<div>
-							<img src="{{ static_url }}images/timeline-images/jrnl_full-light.png" style="width: 20%;" class='logo-cover-image' />
-					</div>
-				</div>
+            <div style="writing-mode: vertical-rl; text-orientation: mixed; color: #FFF; position: absolute; left: 50%; transform: translateX(-50%) rotate(90deg); bottom: 10%;">
+                <img src="{{ static_url }}images/timeline-images/jrnl_full-dark.png" style="width: 5vw;max-width: 70%;" class='logo-cover-image' />
+            </div>
+      </div>
+      <div class="front-cover-container" style="width: 9.625in; display: flex; flex-direction: row; justify-content: flex-start;">
+        <div style="width: 6.25in; position: relative;">
+            <div class="title-container" style="position: absolute; top: 22%; left: 50%; transform: translateX(-50%); ">
+                <div style="width: 100%; display: flex; flex-direction: row; ">
+                    <div>
+                        <div class='cover-title'>
+                            {{ json_obj.document_title }}
+                        </div>
+                        <div class='cover-sub-title' style="">
+                            {{ json_obj.document_subtitle }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%);">
+                <img src="{{ static_url }}images/timeline-images/jrnl_full-light.png" style="width: 5vw;" class='logo-cover-image' />
+            </div>
+        </div>
       </div>
     </div>
   </body>

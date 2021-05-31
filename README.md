@@ -68,3 +68,5 @@ chrome -disk-cache-dir=/tmp --user-data-dir=/tmp --crash-dumps-dir=/tmp --disabl
 PYTHONPATH=. python html2pdf_converter/converter.py -j assets/jrnl-example2.json -tid jrnl -o test.pdf -e 1
 
 PYTHONPATH=. python html2pdf_converter/converter.py -j assets/jrnl-example2.json -tid jrnl-cover -o test-cover.pdf -e 0
+
+PYTHONPATH=. python html2pdf_converter/converter.py -j assets/jrnl-cover-example.json -tid jrnl-full-cover -o test-full-cover.pdf -e 0
