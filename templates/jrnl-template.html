@@ -176,10 +176,8 @@
       {% if loop.first or loop.previtem.group != entry.group %}
         <span class="one-margin aam-category-text">{{ entry.group }}</span>
       {% endif %}
-      <div class="one-margin aam-question-text">{{ entry.title }}</div>
-      <div class="one-margin aam-date journal-text">
-        {{ entry.entry_date }}
-      </div>
+      <div class="one-margin aam-question-text" >{{ entry.title }}</div>
+      <div class="one-margin aam-date journal-text">{{ entry.entry_date }}</div>
       <div
         class="one-margin journal-text item-content"
         style="padding-bottom: {% if loop.last or loop.nextitem.group != entry.group %}.3{% else %}.1{% endif%}in;"
@@ -231,7 +229,10 @@
           {% if loop.previtem and entry.entry_date != loop.previtem.entry_date %}
             <h3 class="subtitle journal-date journal-new-date">{{ entry.entry_date }}</h3>
           {% endif %}
-          <div class="journal-entry-main-container">
+          <div
+            class="journal-entry-main-container"
+            style="{% if entry.content|striptags %}{% else %}padding-bottom: 15px; page-break-before: avoid; page-break-after: avoid;{%endif%}"
+          >
             <div class="journal-entry-title-container">
               <div class="one-margin pdf-content-header">
                 <div class="pdf-content-title journal-title-text">{{ entry.title }}</div>
