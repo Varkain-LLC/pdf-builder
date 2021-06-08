@@ -13,8 +13,8 @@ img {
     content: counter(page);
     font-size: .13in;
     font-family: 'Khula', sans-serif;
-    margin-bottom: 30pt;
-    margin-right: 0.5in;
+    margin-top: 5pt;
+    margin-bottom: 20pt;
     text-align: left;
   }
   @top-center {
@@ -32,7 +32,7 @@ img {
     content: counter(page);
     font-size: .13in;
     font-family: 'Khula', sans-serif;
-    margin-left: 0.5in;
+    margin-top: 5pt;
     margin-bottom: 20pt;
     text-align: right;
   }
