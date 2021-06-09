@@ -119,14 +119,17 @@
         {% endif %}
         {% if json_obj.table_of_contents.journals %}
           {% set item = json_obj.table_of_contents.journals %}
-        {#
-          <div class="table-of-contents-body" href="#journals-chapter">
-            {{ item.name }}<br/>
-          </div>
-        #}
           {% for journal in item.data %}
             <div class="table-of-contents-body" href="#journal-{{ journal.id }}">
               {{ journal.title }}<br/>
+            </div>
+          {% endfor %}
+        {% endif %}
+        {% if json_obj.table_of_contents.tags %}
+          {% set item = json_obj.table_of_contents.tags %}
+          {% for tag in item.data %}
+            <div class="table-of-contents-body" href="#tag-{{ tag.id }}">
+              {{ tag.title }}<br/>
             </div>
           {% endfor %}
         {% endif %}
@@ -226,6 +229,85 @@
           </div>
         </div>
         {% for entry in journal.entries %}
+          <h3 class="subtitle journal-date journal-item">{{ entry.entry_date }}</h3>
+          {% if loop.previtem and entry.entry_date != loop.previtem.entry_date %}
+            <h3 class="subtitle journal-date journal-new-date">{{ entry.entry_date }}</h3>
+          {% endif %}
+          <div
+            class="journal-entry-main-container"
+            style="{% if entry.content|striptags %}{% else %}padding-bottom: 15px; page-break-before: avoid; page-break-after: avoid;{%endif%}"
+          >
+            <div class="journal-entry-title-container">
+              <div class="one-margin pdf-content-header">
+                <div class="pdf-content-title journal-title-text">{{ entry.title }}</div>
+                {% if entry.location1 and entry.location2 %}
+                  <div class="pdf-content-location">
+                    <i class="icon-location"></i>
+                    <div class="pdf-content-location-info">
+                      <h3 class="pdf-location-title">{{ entry.location1 }}</h3>
+                      <h5 class="pdf-location-subtitle">{{ entry.location2 }}</h5>
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="one-margin journal-text item-content" style="orphans:1;">
+            {% if json_obj.photos is true %}
+              {{ entry.content|safe }}
+            {% else %}
+              {{ entry.no_img_content|safe }}
+            {% endif %}
+            </div>
+          </div>
+          {% if entry.commenting is true and json_obj.comments is true %}
+            {% for comment in journal.comments[entry.id] %}
+              {% if loop.first %}
+                <div class="two-margin journal-comments-title-text">Comments:</div>
+              {% endif %}
+              <div class="two-margin journal-comment-container">
+                  <div class="journal-comment-user-container">
+                      <img src="{{ comment.user.avatar_image_url }}" alt="user"/>
+                  </div>
+                  <div class="journal-comment-content-container">
+                      <div class="journal-comments-text">
+                          {{ comment.title }} {{ comment.content }}
+                      </div>
+                      <div class="journal-comment-content-info">
+                          <b>{{ comment.user.short_public_display_name }}</b> &nbsp; . &nbsp; {{ comment.created }}
+                      </div>
+                  </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+          {% if loop.nextitem and entry.entry_date == loop.nextitem.entry_date %}
+            <div class="pdf-entry-separator">
+              <i class="icon-jrnl-logo"></i>
+            </div>
+          {% else %}
+            <div style="margin-bottom: .7in; page-break-before: avoid; page-break-after: avoid;"></div>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% if json_obj.table_of_contents.tags %}
+  {% set item = json_obj.table_of_contents.tags %}
+  <div id="tags">
+    <div id="book-content-tags">
+      {% for tag in item.data %}
+        <div class="page tct joutnal-title" id="tag-{{ tag.id }}">
+          <div class="subpage">
+            <h3 class="table-content-title">{{ tag.title }}</h3>
+            <div class='logo-img-container'>
+              <div class='line left-3-margin'></div>
+              <img src="{{ static_url }}images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
+              <div class='line right-3-margin'></div>
+            </div>
+          </div>
+        </div>
+        {% for entry in tag.entries %}
           <h3 class="subtitle journal-date journal-item">{{ entry.entry_date }}</h3>
           {% if loop.previtem and entry.entry_date != loop.previtem.entry_date %}
             <h3 class="subtitle journal-date journal-new-date">{{ entry.entry_date }}</h3>
