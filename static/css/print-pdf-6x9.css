@@ -17,12 +17,14 @@ img {
     margin-bottom: 20pt;
     text-align: left;
   }
-  @top-center {
-    content: element(jheader);
-    font-size: .13in;
-    font-family: 'Khula', sans-serif;
+  @top-left {
+    content: string(pagetitle);
     margin-top: 0.5in;
-    text-float: right;
+    margin-bottom: 0.3in;
+    text-align: left;
+    font-size: .13in;
+    border-bottom: 1px solid #000;
+    font-family: 'Arvo';
   }
 }
 
@@ -36,12 +38,14 @@ img {
     margin-bottom: 20pt;
     text-align: right;
   }
-  @top-center {
-    content: element(jheader);
-    font-size: .13in;
-    font-family: 'Khula', sans-serif;
+  @top-right {
+    content: string(pagetitle);
     margin-top: 0.5in;
-    text-float: left;
+    margin-bottom: 0.3in;
+    text-align: left;
+    font-size: .13in;
+    border-bottom: 1px solid #000;
+    font-family: 'Arvo';
   }
 }
 
@@ -49,32 +53,50 @@ img {
   margin: 0.3in;
   @bottom-right {content: normal;}
   @bottom-left {content: normal;}
+  @top-right {content: normal;}
+  @top-left {content: normal;}
 }
 @page page-first {
   margin: 0.3in;
   @bottom-right {content: normal;}
   @bottom-left {content: normal;}
+  @top-right {content: normal;}
+  @top-left {content: normal;}
 }
 @page page-empty {
   margin: 0.3in;
   @bottom-right {content: normal;}
   @bottom-left {content: normal;}
+  @top-right {content: normal;}
+  @top-left {content: normal;}
 }
 @page table-of-contents {
   margin: 0.3in;
   @bottom-right {content: normal;}
   @bottom-left {content: normal;}
+  @top-right {content: normal;}
+  @top-left {content: normal;}
 }
 @page journal-title {
   margin: .5in;
   @bottom-right {content: normal;}
   @bottom-left {content: normal;}
+  @top-right {content: normal;}
+  @top-left {content: normal;}
 }
 @page aam {
   margin-top: .7in;
+  @bottom-right {content: normal;}
+  @bottom-left {content: normal;}
+  @top-right {content: normal;}
+  @top-left {content: normal;}
 }
 @page intro {
   margin-top: .7in;
+  @bottom-right {content: normal;}
+  @bottom-left {content: normal;}
+  @top-right {content: normal;}
+  @top-left {content: normal;}
 }
 
 @media print {
@@ -104,8 +126,11 @@ img {
 .intro {
   page: intro;
 }
-h3.journal-item {
-  position: running(jheader);
+div.entry-container {
+  string-set: pagetitle attr(entry-date);
+}
+div {
+  string-set: pagetitle attr(entry-date);
 }
 .journal-date {
   text-align: inside;
@@ -240,7 +265,7 @@ body[start=even] {
   display: block;
   margin-left: 0;
   margin-right: 0;
-  margin-top: -.68in;
+  /*margin-top: -.68in;*/
   margin-bottom: .2in;
   overflow: hidden;
   z-index: -1;

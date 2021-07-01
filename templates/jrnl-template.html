@@ -229,13 +229,11 @@
           </div>
         </div>
         {% for entry in journal.entries %}
-          <h3 class="subtitle journal-date journal-item">{{ entry.entry_date }}</h3>
-          {% if loop.previtem and entry.entry_date != loop.previtem.entry_date %}
-            <h3 class="subtitle journal-date journal-new-date">{{ entry.entry_date }}</h3>
-          {% endif %}
+          {% set content = entry.content|striptags %}
           <div
             class="journal-entry-main-container"
-            style="{% if entry.content|striptags %}{% else %}padding-bottom: 15px; page-break-before: avoid; page-break-after: avoid;{%endif%}"
+            entry-date="{{ entry.entry_date }}"
+            style="{% if content %}{% else %}padding-bottom: 15px; page-break-before: avoid; page-break-after: avoid; page-break-inside: avoid;{%endif%}"
           >
             <div class="journal-entry-title-container">
               <div class="one-margin pdf-content-header">
@@ -251,40 +249,57 @@
                 {% endif %}
               </div>
             </div>
-            <div class="one-margin journal-text item-content" style="orphans:1;">
+          </div>
+          {% if content %}
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1;"
+              entry-date="{{ entry.entry_date }}"
+            >
             {% if json_obj.photos is true %}
               {{ entry.content|safe }}
             {% else %}
               {{ entry.no_img_content|safe }}
             {% endif %}
             </div>
-          </div>
+          {% endif %}
           {% if entry.commenting is true and json_obj.comments is true %}
             {% for comment in journal.comments[entry.id] %}
               {% if loop.first %}
-                <div class="two-margin journal-comments-title-text">Comments:</div>
+                <div
+                  class="two-margin journal-comments-title-text"
+                  entry-date="{{ entry.entry_date }}"
+                >Comments:</div>
               {% endif %}
-              <div class="two-margin journal-comment-container">
-                  <div class="journal-comment-user-container">
-                      <img src="{{ comment.user.avatar_image_url }}" alt="user"/>
+              <div
+                class="two-margin journal-comment-container"
+                entry-date="{{ entry.entry_date }}"
+              >
+                <div class="journal-comment-user-container">
+                  <img src="{{ comment.user.avatar_image_url }}" alt="user"/>
+                </div>
+                <div class="journal-comment-content-container">
+                  <div class="journal-comments-text">
+                    {{ comment.title }} {{ comment.content }}
                   </div>
-                  <div class="journal-comment-content-container">
-                      <div class="journal-comments-text">
-                          {{ comment.title }} {{ comment.content }}
-                      </div>
-                      <div class="journal-comment-content-info">
-                          <b>{{ comment.user.short_public_display_name }}</b> &nbsp; . &nbsp; {{ comment.created }}
-                      </div>
+                  <div class="journal-comment-content-info">
+                    <b>{{ comment.user.short_public_display_name }}</b> &nbsp; . &nbsp; {{ comment.created }}
                   </div>
+                </div>
               </div>
             {% endfor %}
           {% endif %}
-          {% if loop.nextitem and entry.entry_date == loop.nextitem.entry_date %}
-            <div class="pdf-entry-separator">
-              <i class="icon-jrnl-logo"></i>
-            </div>
-          {% else %}
-            <div style="margin-bottom: .7in; page-break-before: avoid; page-break-after: avoid;"></div>
+          {% if loop.nextitem %}
+            {% if entry.entry_date == loop.nextitem.entry_date %}
+              <div class="pdf-entry-separator" entry-date="{{ entry.entry_date }}">
+                <i class="icon-jrnl-logo"></i>
+              </div>
+            {% else %}
+              <div class="avoid-page-break" entry-date="{{ entry.entry_date }}"></div>
+              <h3 class="subtitle journal-date journal-new-date avoid-page-break">
+                {{ loop.nextitem.entry_date }}
+              </h3>
+            {% endif %}
           {% endif %}
         {% endfor %}
       {% endfor %}
@@ -308,14 +323,15 @@
           </div>
         </div>
         {% for entry in tag.entries %}
-          <h3 class="subtitle journal-date journal-item">{{ entry.entry_date }}</h3>
-          {% if loop.previtem and entry.entry_date != loop.previtem.entry_date %}
-            <h3 class="subtitle journal-date journal-new-date">{{ entry.entry_date }}</h3>
-          {% endif %}
+          {% set content = entry.content|striptags %}
           <div
             class="journal-entry-main-container"
-            style="{% if entry.content|striptags %}{% else %}padding-bottom: 15px; page-break-before: avoid; page-break-after: avoid;{%endif%}"
+            entry-date="{{ entry.entry_date }}"
+            style="{% if content %}{% else %}padding-bottom: 15px; page-break-before: avoid; page-break-after: avoid;{%endif%}"
           >
+            {% if loop.previtem and entry.entry_date != loop.previtem.entry_date %}
+              <h3 class="subtitle journal-date journal-new-date">{{ entry.entry_date }}</h3>
+            {% endif %}
             <div class="journal-entry-title-container">
               <div class="one-margin pdf-content-header">
                 <div class="pdf-content-title journal-title-text">{{ entry.title }}</div>
@@ -330,40 +346,54 @@
                 {% endif %}
               </div>
             </div>
-            <div class="one-margin journal-text item-content" style="orphans:1;">
+          {% if content %}
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1;"
+              entry-date="{{ entry.entry_date }}"
+            >
             {% if json_obj.photos is true %}
               {{ entry.content|safe }}
             {% else %}
               {{ entry.no_img_content|safe }}
             {% endif %}
             </div>
+          {% endif %}
           </div>
           {% if entry.commenting is true and json_obj.comments is true %}
             {% for comment in journal.comments[entry.id] %}
               {% if loop.first %}
                 <div class="two-margin journal-comments-title-text">Comments:</div>
               {% endif %}
-              <div class="two-margin journal-comment-container">
-                  <div class="journal-comment-user-container">
-                      <img src="{{ comment.user.avatar_image_url }}" alt="user"/>
+              <div
+                class="two-margin journal-comment-container"
+                entry-date="{{ entry.entry_date }}"
+              >
+                <div class="journal-comment-user-container">
+                  <img src="{{ comment.user.avatar_image_url }}" alt="user"/>
+                </div>
+                <div class="journal-comment-content-container">
+                  <div class="journal-comments-text">
+                    {{ comment.title }} {{ comment.content }}
                   </div>
-                  <div class="journal-comment-content-container">
-                      <div class="journal-comments-text">
-                          {{ comment.title }} {{ comment.content }}
-                      </div>
-                      <div class="journal-comment-content-info">
-                          <b>{{ comment.user.short_public_display_name }}</b> &nbsp; . &nbsp; {{ comment.created }}
-                      </div>
+                  <div class="journal-comment-content-info">
+                    <b>{{ comment.user.short_public_display_name }}</b> &nbsp; . &nbsp; {{ comment.created }}
                   </div>
+                </div>
               </div>
             {% endfor %}
           {% endif %}
           {% if loop.nextitem and entry.entry_date == loop.nextitem.entry_date %}
-            <div class="pdf-entry-separator">
+            <div class="pdf-entry-separator" entry-date="{{ entry.entry_date }}">
               <i class="icon-jrnl-logo"></i>
             </div>
           {% else %}
-            <div style="margin-bottom: .7in; page-break-before: avoid; page-break-after: avoid;"></div>
+            {% if content %}
+              <div
+                entry-date="{{ entry.entry_date }}"
+                style="margin-bottom: .7in; page-break-before: avoid; page-break-after: avoid;"
+              ></div>
+            {% endif %}
           {% endif %}
         {% endfor %}
       {% endfor %}
