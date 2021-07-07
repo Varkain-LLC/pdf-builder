@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arvo">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Khula">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Roboto+Slab"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bree+Serif"
+    rel="stylesheet"
+  />
+  <link href="/Users/smirnovev/projects/Varkain/PDF-builder/static/css/pdf.css" rel="stylesheet"/>
+
+
+  <link href="/Users/smirnovev/projects/Varkain/PDF-builder/static/css/print-pdf-6x9.css" rel="stylesheet" />
+
+
+
+  <style>
+    img { 
+        -webkit-filter: grayscale(100%);
+        /* Safari 6.0 - 9.0 */
+        filter: grayscale(100%);
+    }
+    p {
+      color: black !important;
+    }
+  </style>
+
+
+
+  <style>
+    @page {
+      @prince-overlay {
+        margin-top: -1in;
+        content: "PREVIEW";
+        color: rgba(0, 0, 0, 0.3);
+        font-size: 1.2in;
+        font-family: 'Bree Serif', serif;
+        text-align: center;
+        transform: rotate(-35deg);
+        opacity: 0.3;
+      }
+    }
+    @page:left {
+      @prince-overlay {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+    @page:right {
+      @prince-overlay {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+    @page table-of-contents {
+      @prince-overlay { margin-left: 0; }
+    }
+    @page page-empty {
+      @prince-overlay { margin-left: 0; }
+    }
+    @page:first {
+      @prince-overlay { margin-left: 0; }
+    }
+    div.new-date-breaker::after,
+    div.journal-entry-main-container::before {
+      content: attr(changed-entry-date);
+      font-size: 2.5vw;
+      padding-bottom: 5px;
+      margin: 30px 0;
+      font-family: 'Arvo';
+    }
+  </style>
+
+</head>
+<body>
+<div class="page page-empty"></div>
+<div class="page page-first">
+  <div class="subpage">
+    <div class='content' style="position: relative; top: 50%;">
+      <h5 class="document-title">
+        My JRNL
+      </h5>
+      <p class="document-date">
+      
+        
+      
+      </p>
+      <img src="/Users/smirnovev/projects/Varkain/PDF-builder/static/images/timeline-images/logo.png" class="center logo-img" alt="logo"/>
+    </div>
+    
+  </div>
+</div>
+<div class="page page-empty"></div>
+
+<div class="page toc">
+  <div class="subpage">
+    <div class="table-of-contents">
+      <h3>Table of Contents</h3>
+        
+          
+          <div class="table-of-contents-body" href="#intro-chapter">
+            Introduction
+            <br/>
+          </div>
+        
+        
+          
+          <div class="table-of-contents-body" href="#aam-chapter">
+            All About Me<br/>
+          </div>
+        
+        
+          
+          
+            <div class="table-of-contents-body" href="#journal-1">
+              test01072020's default journal<br/>
+            </div>
+          
+            <div class="table-of-contents-body" href="#journal-2">
+              journal2<br/>
+            </div>
+          
+        
+        
+        <div class="end-line"></div>
+    </div>
+    <img src="/Users/smirnovev/projects/Varkain/PDF-builder/static/images/timeline-images/logo.png" alt="logo" class="center logo-img" />
+  </div>
+</div>
+<div class="page page-empty"></div>
+
+
+  
+  <div class="page tct" id="intro-chapter">
+    <div class="subpage">
+      <h3 class="table-content-title">Introduction</h3>
+      <div class='logo-img-container'>
+        <div class='line left-3-margin'></div>
+        <img src="/Users/smirnovev/projects/Varkain/PDF-builder/static/images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
+        <div class='line right-3-margin'></div>
+      </div>
+    </div>
+  </div>
+  <div class="page page-empty"></div>
+  <div id='intro' class="intro">
+    <div id="book-content-intro">
+      <h3 class="subtitle journal-date aam-name">Introduction</h3>
+      <div class="one-margin journal-text journal-introduction"></div>
+    </div>
+  </div>
+
+
+
+  
+  <div class="page tct" id="aam-chapter">
+    <div class="subpage">
+      <h3 class="table-content-title">All About Me</h3>
+      <div class='logo-img-container'>
+        <div class='line left-3-margin'></div>
+        <img src="/Users/smirnovev/projects/Varkain/PDF-builder/static/images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
+        <div class='line right-3-margin'></div>
+      </div>
+    </div>
+  </div>
+  <div id='aam' class="aam">
+    <div id="book-content-aam">
+      <h3 class="subtitle journal-date aam-name">All About Me</h3>
+    
+      
+        <span class="one-margin aam-category-text">Challenges</span>
+      
+      <div class="one-margin aam-question-text" >What has been your greatest challenge in life?</div>
+      <div class="one-margin aam-date journal-text">Thursday, July 02, 2020</div>
+      <div
+        class="one-margin journal-text item-content"
+        style="padding-bottom: .3in;"
+      >
+        
+          <p class="align-left">During my freshman year is when I faced my biggest challenge as a student. I had never lived away from home before, and I experienced severe homesickness. I was almost defeated by it and had the opportunity to go home and attend a local college instead.&nbsp;</p>
+<p class="align-left">But I decided to try to overcome my homesickness, which I did by making a real effort to connect socially with new friends in my classes, my dorm, and a campus church group.</p>
+        
+      </div>
+    
+      
+        <span class="one-margin aam-category-text">General</span>
+      
+      <div class="one-margin aam-question-text" >Describe the ideal vacation.</div>
+      <div class="one-margin aam-date journal-text">Monday, July 06, 2020</div>
+      <div
+        class="one-margin journal-text item-content"
+        style="padding-bottom: .3in;"
+      >
+        
+          <p class="align-left">My favorite place to go on holiday is in Trentino/Alto Adige.&nbsp;</p>
+<p class="align-left">I love the mountains in the summertime in general, but there a a few reasons why this particular area calls me back each year.&nbsp;</p>
+<p class="align-left">For one thing, I feel as if I have traveled to another country. The people all speak to me in German (perhaps because of my blond hair). The architecture is Austrian, with wooden houses lined with balconies full of beautiful flowers. Even the food is different. I never get tired of goulash with polenta.&nbsp;</p>
+<p class="align-left">Another reason I like it there is that it is so orderly. You will never find trash on the ground or bottles left on a trail. People speak quietly and . . . the drivers stop at the stop lights!&nbsp;</p>
+<p class="align-left">The third thing that appeals to me about this area is that it is very child-friendly. The cities are full of parks. Every restaurant has swings, slides and a sandbox for children to play in. Also, dinner is served earlier there, so small children never have to wait when they are hungry.&nbsp;</p>
+<p class="align-left">There is no question about it, I know where I will be going on holiday next summer!</p>
+        
+      </div>
+    
+      
+        <span class="one-margin aam-category-text">Accomplishments</span>
+      
+      <div class="one-margin aam-question-text" >Describe your biggest achievement</div>
+      <div class="one-margin aam-date journal-text">Wednesday, July 08, 2020</div>
+      <div
+        class="one-margin journal-text item-content"
+        style="padding-bottom: .3in;"
+      >
+        
+          <p class="align-left">My most significant career achievement was being the youngest person ever awarded a sales management position at my current company.&nbsp;</p>
+<p class="align-left">For 16 months, I often stayed late to make additional sales calls and would go on-site to dormant accounts one to two days per week. I worked very hard for that promotion, and my dedication paid off.</p>
+        
+      </div>
+    
+    </div>
+  </div>
+
+
+
+  
+
+  <div id="journals">
+    <div id="book-content-journals">
+      
+        <div class="page tct journal-title" id="journal-1">
+          <div class="subpage">
+            <h3 class="table-content-title">test01072020's default journal</h3>
+            <div class="journal-title-content">
+              
+            </div>
+            <div class='logo-img-container'>
+              <div class='line left-3-margin'></div>
+              <img src="/Users/smirnovev/projects/Varkain/PDF-builder/static/images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
+              <div class='line right-3-margin'></div>
+            </div>
+          </div>
+        </div>
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Wednesday, July 01, 2020"
+            style=" border: 1px solid grey;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style=""
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Bad day.. 
+                </div>
+                
+                  <div class="pdf-content-location">
+                    <i class="icon-location"></i>
+                    <div class="pdf-content-location-info">
+                      <h3 class="pdf-location-title">C/ Gran Via 23</h3>
+                      <h5 class="pdf-location-subtitle">Madrid, Spain (28013)</h5>
+                    </div>
+                  </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Wednesday, July 01, 2020"
+            >
+            
+              <p class="align-left">I’m so upset!! I don’t even know where to begin!</p>
+<p class="align-left"><br></p>
+<p class="align-left">To start off, I think I completely failed my geometry quiz, which I know I should’ve studied more for...my dad’s not gonna be happy about that. :( Then, we had a pop quiz in history on the reading homework from last night, and I completely forgot most of what I read, which made me even more upset because I actually did the reading! But what really made me mad was the note that Sarah slipped into my locker during passing period. She said she was sad that I’ve been hanging out with Jane more lately and thinks that I don’t want to be her friend anymore. I can’t believe she thinks that, especially after talking with her on the phone for hours and hours last month while she was going through her breakup with Nick! Just because I’ve been hanging out with Jane a little more than usual doesn’t mean I’m not her friend anymore. She completely blew me off at lunch, and when I told Jane, she thought that Sarah was being a “drama queen.”</p>
+<p class="align-left"><br></p>
+<p class="align-left">This is just what I need! My parents are getting on my case about doing more extracurricular activities, I have a huge paper due for AP English soon, and I can’t understand a thing in advanced Spanish! The last thing I need is for my best friend to think I hate her and barely text me back anymore.</p>
+<p class="align-left"><br></p>
+<p class="align-left">Uggh! I can’t concentrate on anything right now because of it. I hope she gets over it!!!</p>
+<p class="align-left"><br></p>
+<p class="align-left"><br></p>
+<figure class="align-left"><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/01/crazy-mad-upset-emoji-sticker-29717-300x300_e62d482e-4e4b-4814-90ad-b92b84b2ab19.png" caption="" alignment="center" style='position:relative; cursor: default; width: 40%;margin-left: auto; margin-right: auto; display: block;'/><figcaption></figcaption></figure></figure>
+            
+            </div>
+          
+          <div entry-date="Wednesday, July 01, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Thursday, July 02, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Seeing an Minpin True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Thursday, July 02, 2020"
+            >
+            
+              <p class="align-left">When I saw the <u><em><strong>Minpin</strong></em></u>, I was completed puzzled because he was as small as an ant. Even though I tried to talk quietly, the Minpin (called Don Mini) kept getting blown away. I found it really funny when I heard his name. Was he really the ‘don’ of this forest? He wore extremely old clothes that belonged in the past. He even had suction-boots! Anyway, he told me all about this horrible creature that lurked around the forest. This ‘Red-Hot Smoke- Belching Gruncher’ would breathe out venomous smoke and devoured any living thing that walked in the forest. Oh blimey, I’m sure glad I escaped from that in time. Before I even had time to ask more questions, something <em><strong>even more </strong></em>peculiar began to happen. All around me, not only on the huge main trunk of the tree but also on all the big branches that grew out of it, other tiny windows were opening and tiny faces were peering out. Heads of men and women stared out. They were silent, unmoving, almost ghost-like. Moreover, the children’s heads were as small as matchsticks.</p>
+<figure class="align-left"><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/43423/2020/07/02/download_b777795f-7f38-4409-96ff-0df64158f19c.jpg" caption="This is my Minpin (Don Mini)" width="100" style='position:relative; cursor: default; width: 100%;'/><figcaption>This is my Minpin (Don Mini)</figcaption></figure></figure>
+<p class="align-left">I realized the sun began to set yet I had to find a way to get home so I devised a plan. It was clever and mind-blowingly amazing because I always created the best plans (obviously). I had the help of a truly magnificent swan, who was as white as snow. It was so thrilling to be flying on the back of this great swan! Despite the fact we were flying in the air, it was very difficult spotting the Cruncher because the smoke enveloped the beast completely. Eventually, as we got extremely close, I noticed an enormous black shadow which belonged to the hairy monster. Someone should give him wax strips that are how bad his hair was. Then we teased the monster to follow us as it leaped up and down in a frenzy of hunger and desire.</p>
+<p class="align-left">A spectacular feeling overcame me when we finally trapped the greedy Gruncher in the forest. Kaboom. Bish. Bash. Job done. I felt like I was a specially trained MI5 agent who could do the impossible. Hmm, maybe I should be a special agent when I grow up. Anyway, to my surprise, the <u><em><strong>Minpins</strong></em></u> rewarded me with a swan to help me arrive at the forest during my nightly visits. You heard that right. I don’t need an airplane or Baguette because I’ve got my own personal swan so I can go to the forest whenever I want.</p>
+<p class="align-left">Well, that was my day. Mom is calling me for supper now. She’s made chicken and I think I can make a good guess about what she’ll warn me not to do. “Beware! Beware! The Forest of Sin. None come out, but many go in!” she will warn. But I know the truth. They do come out. But that’s a secret. Our little secret.😘&nbsp;</p>
+            
+            </div>
+          
+          <div entry-date="Thursday, July 02, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+            <div class="pdf-entry-separator" entry-date="Thursday, July 02, 2020">
+              <i class="icon-jrnl-logo"></i>
+            </div>
+          
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Thursday, July 02, 2020"
+            style=" border: 1px solid grey;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style=""
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Log boat LOG BOAT LOG BOAT Log boat False
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Thursday, July 02, 2020"
+            >
+            
+              <p class="align-left">Today was a beautiful, bright<span style="font-family: Roboto">,</span> and sunny day so I decided to build a boat! I needed to get some long, <span style="font-family: Roboto">hardwood</span> so I <span style="font-family: Roboto">traveled</span> to the forest to collect a huge pile. After I had gathered some wood, I began to nail the pieces together using my flint hammer and dinosaur teeth for nails. It took 2 hours to build, but once it was finished I was very proud of myself. Was it going to float?</p>
+<figure class="align-left"><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/01/thongsomboon-club_587fb1ea-2603-4901-8aa3-cfe00054342d.jpg" caption="" width="100" style='position:relative; cursor: default; width: 100%;'/><figcaption></figcaption></figure></figure>
+<p class="align-left">After some time, I began to get hungry so I decided to go fishing on my brand new log boat. Heaving the boat, I pushed it down towards the lake and into the water. Fortunately, the boat floated and so I jumped in! Slowly, I rowed out into the middle of the lake and then threw my fishing rod (made from a stick) into the deep, <span style="font-family: Roboto">freshwater</span>. Suddenly, my rod pulled me forward so I began to lift the fish into the boat. It was really tricky to catch the fish because it was so wriggly and heavy! Eventually, I caught the fish and sailed back to land. The fish was golden and very slippery!</p>
+<p class="align-left">In the afternoon, I decided to have a nap because I was so tired <span style="font-family: Roboto">of</span> fishing! At that moment, a huge <span style="font-family: Roboto">brown</span> bear came charging through the woods like thunder. Some hunters from my tribe ran away but I stood my ground and began to throw spears at the growling, snarling bear! How was I going to <span style="font-family: Roboto">getaway</span>! The spears didn’t work so I grabbed my hand made bow and arrow and started shooting at it. Whimpering, the bear tumbled to the ground. YES! We had defeated it!</p>
+<p class="align-left">As the <span style="font-family: Roboto">sunset</span> in the sky, my belly began to grumble. What was I going to eat? I skipped back to my family’s hut and asked my Mum for something to eat whilst my baby sister lay on her fur skin mat. She was cooking some raw, mammoth meat on the fire and it smelt delicious. We were running out of wood so I went outside to look for some. Fortunately, I had some <span style="font-family: Roboto">leftover</span> from my boat! Once the mammoth was cooked, I began to eat it. Unfortunately, it tasted disgusting, however<span style="font-family: Roboto">,</span> it filled me up!</p>
+<p class="align-left">I wonder what will happen tomorrow…</p>
+            
+            </div>
+          
+          <div entry-date="Thursday, July 02, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+            <div class="pdf-entry-separator" entry-date="Thursday, July 02, 2020">
+              <i class="icon-jrnl-logo"></i>
+            </div>
+          
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Thursday, July 02, 2020"
+            style=" border: 1px solid grey;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style=""
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Log boat False
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Thursday, July 02, 2020"
+            >
+            
+              <p class="align-left">Today was a beautiful, bright<span style="font-family: Roboto">,</span> and sunny day so I decided to build a boat! I needed to get some long, <span style="font-family: Roboto">hardwood</span> so I <span style="font-family: Roboto">traveled</span> to the forest to collect a huge pile. After I had gathered some wood, I began to nail the pieces together using my flint hammer and dinosaur teeth for nails. It took 2 hours to build, but once it was finished I was very proud of myself. Was it going to float?</p>
+<figure class="align-left"><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/01/thongsomboon-club_587fb1ea-2603-4901-8aa3-cfe00054342d.jpg" caption="" width="100" style='position:relative; cursor: default; width: 100%;'/><figcaption></figcaption></figure></figure>
+<p class="align-left">After some time, I began to get hungry so I decided to go fishing on my brand new log boat. Heaving the boat, I pushed it down towards the lake and into the water. Fortunately, the boat floated and so I jumped in! Slowly, I rowed out into the middle of the lake and then threw my fishing rod (made from a stick) into the deep, <span style="font-family: Roboto">freshwater</span>. Suddenly, my rod pulled me forward so I began to lift the fish into the boat. It was really tricky to catch the fish because it was so wriggly and heavy! Eventually, I caught the fish and sailed back to land. The fish was golden and very slippery!</p>
+<p class="align-left">In the afternoon, I decided to have a nap because I was so tired <span style="font-family: Roboto">of</span> fishing! At that moment, a huge <span style="font-family: Roboto">brown</span> bear came charging through the woods like thunder. Some hunters from my tribe ran away but I stood my ground and began to throw spears at the growling, snarling bear! How was I going to <span style="font-family: Roboto">getaway</span>! The spears didn’t work so I grabbed my hand made bow and arrow and started shooting at it. Whimpering, the bear tumbled to the ground. YES! We had defeated it!</p>
+<p class="align-left">As the <span style="font-family: Roboto">sunset</span> in the sky, my belly began to grumble. What was I going to eat? I skipped back to my family’s hut and asked my Mum for something to eat whilst my baby sister lay on her fur skin mat. She was cooking some raw, mammoth meat on the fire and it smelt delicious. We were running out of wood so I went outside to look for some. Fortunately, I had some <span style="font-family: Roboto">leftover</span> from my boat! Once the mammoth was cooked, I began to eat it. Unfortunately, it tasted disgusting, however<span style="font-family: Roboto">,</span> it filled me up!</p>
+<p class="align-left">I wonder what will happen tomorrow…</p>
+            
+            </div>
+          
+          <div entry-date="Thursday, July 02, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Friday, July 03, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  My amazing day!! True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Friday, July 03, 2020"
+            >
+            
+              <p class="align-left">I had the best day EVER today. I woke up this morning, the sun was shining through the curtains and I could smell breakfast cooking downstairs. I jumped out of my bed, threw on my school clothes<span style="font-family: Roboto">,</span> and skipped down to the kitchen.</p>
+<p class="align-left">A delicious breakfast of <span style="font-family: Roboto">pancakes with syrup </span>was waiting for me on the table and I gobbled it down as quick as a flash. I grabbed my school bag, shouted “Bye!” to my mum<span style="font-family: Roboto">,</span> and dashed out of the door to school.</p>
+<figure><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/01/bb7e2fa1-0d5d-4795-bf50-d134a5ac69a6_6ab1d982-0959-4fb3-a645-0d2775982a70.jpg" caption="" width="100" style='position:relative; cursor: default; width: 100%;'/><figcaption></figcaption></figure></figure>
+<p class="align-left">When I arrived at school, my teacher handed my homework back to me and a huge grin spread across her face. Guess what? I got 20 out of 20! I couldn’t believe it! We had my best lessons in the morning (Literacy and Geography).</p>
+<p class="align-left">Before I knew it, it was lunchtime. The menu today was my <span style="font-family: Roboto">favorite</span>:<span style="font-family: Roboto"> Spaghetti Bolognaise followed by Chocolate pudding</span> – yum! The afternoon flew by, and we ended the school day with a really fun game of Dodgeball, and we all cheered when my team won (of course).</p>
+<figure><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/01/download_13caaeca-62ea-4741-8725-36a0242a9880.jpg" caption="" width="100" style='position:relative; cursor: default; width: 100%;'/><figcaption></figcaption></figure></figure>
+<p class="align-left">After school, I came home and was met with the most amazing surprise; my mum told me that we were going out to the cinema and to Pizza Hut for dinner. We had a fantastic time!</p>
+<figure><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/43381/2020/07/01/TbEKigb_65a6d0fd-16fc-4a95-9f53-0a1539c8c1e2.jpg" caption="" width="100" style='position:relative; cursor: default; width: 100%;'/><figcaption></figcaption></figure></figure>
+<p class="align-left">I’m sitting on my bed writing this, remembering all the fun things that happened today. I hope tomorrow is just as good!</p>
+            
+            </div>
+          
+          <div entry-date="Friday, July 03, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Friday, July 03, 2020"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Sunday, July 05, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  My dreadful day True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Sunday, July 05, 2020"
+            >
+            
+              <p class="align-left"><span style="font-family: Old Standard TT, serif">Dear diary,</span></p>
+<p class="align-left"><span style="font-family: Old Standard TT, serif">Today was a </span><span style="font-family: Old Standard TT, serif"><strong>dreadful</strong></span><span style="font-family: Old Standard TT, serif"> day. As I sit here, the light of my candle is starting to fade; I shall need to be quick as we are only given one candle a month. Raging outside is a storm: the windows are rattling something rotten – I am surprised that they don’t come crashing down around me, covering the close-quartered people with shards of razor-like glass. The blankets, which should cover us, have been taken away by the master – probably to sell.</span></p>
+<p class="align-left"><span style="font-family: Old Standard TT, serif">It all started this morning; shivering, I was woken by a bitter wind meandering its way through the many cracks and crevices in the windows and doors. My blanket has already been missing for several days – I am convinced that the master has sold them to make himself a bit of money. By the time I had reached the front of the long queue for the washing bowl, the water was stagnant and resembled a pool of mud – however desperate I was, I wasn’t going to wash in that! Disgusted, I decided to make my way to breakfast.</span></p>
+            
+            </div>
+          
+          <div entry-date="Sunday, July 05, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Sunday, July 05, 2020"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Tuesday, July 07, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Phone ringing.. True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Tuesday, July 07, 2020"
+            >
+            
+              <p class="align-left">After I woke up this morning, I made the regrettable decision of waking up. I tried to go back to sleep, but I could not even relax.&nbsp;</p>
+<p class="align-left">Today was one of those days where either I get up, or I get up. I then decided to go outside, but because it was raining, I got wet. I went back inside, felt tired enough to go back to bed, but I still had to change out of my wet clothes.&nbsp;</p>
+<p class="align-left">Then I got a phone call from you know who. I got so excited that I didn’t care that I was naked, tired, and there was a puddle on the floor. We are going on a date this Friday. I don’t know how I’m going to sleep. What am I going to wear?&nbsp;</p>
+<figure class="align-left"><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/07/download_88d04763-266d-4749-9568-e812b822c77a.jpg" caption="" alignment="center" style='position:relative; cursor: default; width: 40%;margin-left: auto; margin-right: auto; display: block;'/><figcaption></figcaption></figure></figure>
+<p class="align-left">oh diary, one day I’ll look back on this and say remember when I didn’t pay attention to anything but the phone ringing. FINALLY.</p>
+            
+            </div>
+          
+          <div entry-date="Tuesday, July 07, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Tuesday, July 07, 2020"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Tuesday, July 14, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  New day, new adventure..  True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Tuesday, July 14, 2020"
+            >
+            
+              <p class="align-left">Today Papa and I took our usual weekly stroll to the Butcher’s on Lipton Lane. I felt uneasy during today’s trip as folk walked around faster than usual, as though there was a secret we were prohibited to know.</p>
+<p class="align-left">Soon, we arrived at the butchers where Henry (the butcher) greeted us with a warm smile and I was pleased to see his son, Roger, in there too. Papa instructed me to wait outside while he talked to Henry, so Roger escorted me out.</p>
+<p class="align-left">While we waited outside, Roger told me everything he knew. He explained to me that there was a horrible illness going around. “It’s not like the others that have passed,” he explained, “It has already killed fifteen people in our town. My father said that the people from the trading ships brought it overseas from the Black Sea.”</p>
+<p class="align-left">According to Roger, the doctors are unsure how to treat this disease and it has already spread very quickly.</p>
+<p class="align-left">Now I know why Mother doesn’t tell me anything; she wants me to be happy and stay innocent. To be honest, I’d rather the information was still a secret. I’m petrified! I’m scared of going to sleep in case I have nightmares. What if I get it? What if Mother or Papa get it?</p>
+<p class="align-left">Troubled, worried, scared I can’t talk to either of them about this. They would be terribly mad at Roger if they knew he’d told me. <span style="font-family: Roboto">The mother</span> doesn’t think that peasants are clean. She doesn’t even like it when Papa buys meat from Henry’s shop. According to Mother, the meat is not clean because they are not clean. In the past, she has simply refused to eat anything Papa bought from there, which meant that she went to bed hungry and without supper. I don’t understand it.</p>
+<p class="align-left">I’m starting to feel sleepy now. I am going to say my prayers and hopefully fall into a dreamless sleep.</p>
+            
+            </div>
+          
+          <div entry-date="Tuesday, July 14, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Tuesday, July 14, 2020"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Wednesday, July 15, 2015"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Family reunions True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Wednesday, July 15, 2015"
+            >
+            
+              %3Cp%3EWe+always+went+to+family+reunions.%3C%2Fp%3E%3Cp%3EWe+always+went+to+family+reunions.%3C%2Fp%3E%3Cp%3EWe+always+went+to+family+reunions.%3C%2Fp%3E%3Cp%3EWe+always+went+to+family+reunions.%3C%2Fp%3E
+            
+            </div>
+          
+          <div entry-date="Wednesday, July 15, 2015" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Wednesday, July 15, 2015"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container avoid-page-break"
+            entry-date="Wednesday, July 16, 2015"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Family reunions 2 True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+          <div entry-date="Wednesday, July 16, 2015" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Wednesday, July 16, 2015"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Thursday, July 30, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Shopping day!!!  True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Thursday, July 30, 2020"
+            >
+            
+              <p class="align-left">What a busy day today! &nbsp;I never had a moment’s rest. &nbsp;</p>
+<p class="align-left">The day started with my alarm clock blaring at 7am. &nbsp;I had to be at Smith’s house by 8am to baby-sit. I really didn’t want to wake up so early on a Saturday, but I’m saving money to buy a new iPod and couldn’t say no to an all-day babysitting job.</p>
+<p class="align-left">When I arrived at Smith’s house, both kids were already awake. &nbsp;Madison was watching cartoons in <span style="font-family: Roboto">the </span>living room and Jacob was playing with his Legos in his bedroom. The kids were hungry so I made them some oatmeal in the microwave and we all ate breakfast together.</p>
+<p class="align-left">We had to leave right after breakfast for Jacob’s soccer practice. &nbsp;Luckily, the Smiths only live a couple<span style="font-family: Roboto"> of</span> blocks from the soccer field so we just walked there. &nbsp;It was a lot of fun watching Jacob play soccer. &nbsp;He’s very talented. I was worried that Madison might be bored, but she stayed busy by playing her Gameboy while Jacob practiced.</p>
+<p class="align-left">When practice was over, we went back to the house to make lunch. &nbsp;It’s always a breeze to make lunch for the Smith kids because they love chicken nuggets and French fries. &nbsp;All I had to do was pull the food out of the freezer and bake it in the oven.</p>
+<p class="align-left">After lunch, I planned a special surprise for the kids...I took them to see the new Disney movie. &nbsp;The movie theater is a few miles away from their house so I had to call my mom to pick us up in her car and drive us there. &nbsp;The kids loved the movie; they couldn’t stop laughing. &nbsp;I have to admit that I thought it was pretty funny too. &nbsp;The only bad part was that the theater had the air conditioning cranked up and it was freezing cold!</p>
+<p class="align-left">My mom picked us up again after the movie and took us back to the Smith’s house. &nbsp;We had only been back for a few minutes when Mrs. Smith came back home.&nbsp;</p>
+<p class="align-left">&nbsp;<span style="font-family: Roboto">I </span>didn’t expect her home so soon, but she was back early because the power went out at her office.</p>
+<p class="align-left">It worked out very well though because as soon as I left Smith’s, Danielle called to see if I wanted to go to the mall. &nbsp;I checked in at home to make sure it was ok and then met Danielle at her house.</p>
+<p class="align-left">While we were at the mall, we definitely “shopped ‘til we dropped”. &nbsp;I bought a t-shirt, a sweater, a pair of jeans, and some flip flops. &nbsp;I know that I won’t need the flip flops for much longer since it’s already October, but they were on clearance and I couldn’t pass them up.</p>
+<p class="align-left">Finally<span style="font-family: Roboto">,</span> after all that shopping, we headed home because I was exhausted. &nbsp;Today was a fun day, but I can’t wait to sleep in tomorrow!</p>
+<figure><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/30/SFT16612AQ_9ff8c8be-aadb-4fa6-accb-41fa516611e9.jpg" caption="" alignment="center" width="48" style='position:relative; cursor: default; width: 48%;margin-left: auto; margin-right: auto; display: block;'/><figcaption></figcaption></figure></figure>
+            
+            </div>
+          
+          <div entry-date="Thursday, July 30, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Thursday, July 30, 2020"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Monday, August 03, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  What is a journal?! True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Monday, August 03, 2020"
+            >
+            
+              <p class="align-left"><strong>What is a Journal? </strong>Your journal should be a reflective document that provides personal, thoughtful analysis of your individual participation/progress on the group project, and your assessment of the group interactions that may have occurred during the week.</p>
+<figure class="align-left"><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/43981/2020/08/07/big_life_journal_growth_mindset_kids_hardcover%402x_b0697c97-31b4-4e54-86f2-42899495816a.jpg" caption="" width="100" style='position:relative; cursor: default; width: 100%;'/><figcaption></figcaption></figure></figure>
+<p class="align-left"><strong>Why keep a journal? </strong>Of course, one of the reasons is that it is a course requirement! However, more importantly, we know that the personal reflection and self-appraisal that is part of “journaling” will help you <u>articulate what you learned as a leadership major</u>and why you do the things you do—we call this “deep learning” since it comes about through your own self-analysis, rather than through lectures, memorization, or “book learning.” This thoughtful introspection can help you tell a potential employer, or a graduate school admissions officer, who you are and what talents and interests you possess.</p>
+<p class="align-left"><strong>What “products” are required?</strong></p>
+<p class="align-left">You will submit weekly journal entries. At the end of the semester, you will also submit your full, aggregated collection of entries so that your “final” journal covers the entire semester. Your full collection may be comprised of your original entries, or you may choose to revise some or all of them based upon feedback from the instructor. More details are found later in this document.</p>
+<p class="align-left"><strong>What constitutes a “thoughtful” Journal entry?</strong> <strong>What are some examples of what you might address in your Journal?</strong></p>
+<p><u>Remember that the more connections you make between what is going on in this capstone class to what you’ve learned in other leadership courses, the better your entries will be and the easier they will be to write</u>. For example, analyze the merits (or problems) of the decision-making processes used in this class in light of what you’ve learned about decision-making models in LEAD 341. Additionally, keep in mind the Capstone course student learning outcomes, and be sure to address how you are or are not achieving them. The following are some ideas that you might use as you engage in reflective journaling.</p>
+<p><em>In considering your interactions with your classmates as you proceed with your group project, you could and should address:</em></p>
+<ol>
+  <li class="align-left">What did you learn during this interaction?</li>
+  <li class="align-left">&nbsp;What did you contribute?</li>
+  <li class="align-left">What did the other members of the group contribute?</li>
+  <li class="align-left">&nbsp;What are the gr<span style="font-family: Roboto">o</span>up’s plans for the future?</li>
+  <li class="align-left">What is your assessment of how the group is functioning thus far?</li>
+</ol>
+<p class="align-left"><em>In considering your own actions, you could address:</em></p>
+<ul>
+  <li class="align-left">What happened in the group process today and how does it relate to something I learned as a Leadership major at UD?</li>
+  <li class="align-left">What happened when I tried something new? Why did I success or fail?</li>
+  <li class="align-left">Did I have an “aha” moment?</li>
+  <li class="align-left">Why am I having a déjà vu moment?</li>
+  <li class="align-left">Did I consider an alternative perspective? Why or why not?</li>
+  <li class="align-left">Do I have a theory about why this is working or not working?</li>
+  <li class="align-left">What have I learned that is causing me to interact differently?</li>
+  <li class="align-left">What new behaviors do I plan on taking for the purpose of what action?</li>
+  <li class="align-left">What skill set did I offer the group? Do I have skills that I “kept to myself?”</li>
+  <li class="align-left">What skills need to be addressed or developed in the group for us to accomplish our goals? How will we go about gaining them?</li>
+</ul>
+            
+            </div>
+          
+          <div entry-date="Monday, August 03, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Monday, August 03, 2020"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Wednesday, August 12, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  This is a smiling entry True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Wednesday, August 12, 2020"
+            >
+            
+              <p class="align-left"><span style="font-family: Roboto">This is a new entry with smiling </span>🤣 &nbsp;😮 🤔 😅&nbsp;</p>
+<p class="align-left"><span style="font-family: Roboto">And a minor picture in it</span></p>
+<figure><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/08/12/man-walking-dog_5ea90b33-098d-4e2c-8677-848e20d2be88.jpg" caption="This is the Image description" width="15" style='position:relative; cursor: default; width: 15%;'/><figcaption>This is the Image description</figcaption></figure></figure>
+<p class="align-left"><span style="font-family: Roboto">But anyway let's see how this goes on the book builder </span>🙏 😳&nbsp;</p>
+<figure><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/08/12/turkey-3048299_1920-1366x550_d165cc28-9af0-4c8d-8abb-9bb1415ea868.jpg" caption="" alignment="center" style='position:relative; cursor: default; width: 40%;margin-left: auto; margin-right: auto; display: block;'/><figcaption></figcaption></figure></figure>
+<p class="align-left"><span style="font-family: Abril Fatface, cursive">Ups, I fotgot.. I will also add this font ..</span><span style="font-family: PT Mono, monospace"> just in case to see how it looks</span></p>
+            
+            </div>
+          
+          <div entry-date="Wednesday, August 12, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Wednesday, August 12, 2020"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Thursday, August 13, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Emoji True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Thursday, August 13, 2020"
+            >
+            
+              <p class="align-left">I’m so upset!! I don’t even know where to begin!</p>
+<p class="align-left">To start off, I think I completely failed my geometry quiz, which I know I should’ve studied more for...my dad’s not gonna be happy about that. :( Then, we had a pop quiz in history on the reading homework from last night, and I completely forgot most of what I read, which made me even more upset because I actually did the reading! But what really made me mad was the note that Sarah slipped into my locker during passing period. She said she was sad that I’ve been hanging out with Jane more lately and thinks that I don’t want to be her friend anymore. I can’t believe she thinks that, especially after talking with her on the phone for hours and hours last month while she was going through her breakup with Nick! Just because I’ve been hanging out with Jane a little more than usual doesn’t mean I’m not her friend anymore. She completely blew me off at lunch, and when I told Jane, she thought that Sarah was being a “drama queen.”</p>
+<p class="align-left">This is just what I need! My parents are getting on my case about doing more extracurricular activities, I have a huge paper due for AP English soon, and I can’t understand a thing in advanced Spanish! The last thing I need is for my best friend to think I hate her and barely text me back anymore.</p>
+<p class="align-left">Uggh! I can’t concentrate on anything right now because of it. I hope she gets over it!!!</p>
+<figure class="align-left"><figure><img class="media-photo"  class="media-photo" src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/01/crazy-mad-upset-emoji-sticker-29717-300x300_e62d482e-4e4b-4814-90ad-b92b84b2ab19.png" caption="" alignment="center" style='position:relative; cursor: default; width: 40%;margin-left: auto; margin-right: auto; display: block;'/><figcaption></figcaption></figure></figure>
+            
+            </div>
+          
+          <div entry-date="Thursday, August 13, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Thursday, August 13, 2020"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Thursday, November 12, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  New doc True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Thursday, November 12, 2020"
+            >
+            
+              <p>Test</p>
+<figure>
+                <q type="document"  src="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/nature_dd6e3379-7d5e-45dd-a07c-c79f3b14796c.pdf" size="8458441" formatted_size="8.07 MB" caption="Nature.pdf" name="nature.pdf" entry_link="https://link.jrnl.com/dynamicpagelink/8NncnJPqvg1aiyiD6" created_date="Thursday, 12 November 2020" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/10/46096/2020/11/12/entry-qrcode_c8bab591-1375-410d-a9cd-c8bea44800dd.svg">
+                    <div class="add-media-box-file original-content" style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.25rem;
+                width: 100%;
+                height: 3.75rem;
+                border-radius: 0.3125rem;
+                border: solid 0.0625rem #d5d5d5;
+                background-color: #ffffff;
+            ">
+                        <img
+                            src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/11/file_2ef74894-1bf9-4b77-9745-08fd879d9d28.png"
+                            alt=""
+                            style="
+                color: rgb(47, 95, 129);
+                width: 1.9563rem;
+                height: 2.4438rem;
+                font-size: 2.5rem;
+                margin-left: 1.25rem;
+                min-width: 0px !important;
+            " />
+                        <div class="add-media-box-file-info" style="
+                cursor: pointer;
+                padding-left: 1.275rem;
+                overflow: hidden;
+            ">
+                            <p class="file-info-name" style="
+                white-space: pre;
+                padding-bottom: 0.3125rem;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 1.0625rem;
+                font-weight: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            ">nature.pdf</p>
+                            <a href="https://link.jrnl.com/dynamicpagelink/8NncnJPqvg1aiyiD6" class="file-info-size" style="
+                display: inline-block;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 0.875rem;
+                font-weight: normal;
+                color: #2f5f81;
+                border-bottom: 1px solid #2f5f81;
+            " onClick={openDocument}>Open File (8.07 MB)</a>
+                        </div>
+                    </div>
+                </q>
+                <map style="width: 100%; display: none;">
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        ">
+                        <div style="display: flex; align-items: center;">
+                            <img
+                                style="
+            width: 2.9375rem;
+            height: 2.5rem;
+            object-fit: contain;
+            margin-right: 0.9375rem;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/05/file_8208c991-d54e-4fac-bd8a-ecb831239f30.png"
+                                alt="audiowave"
+                            />
+                            <div class="pdf-content-media-desc">
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">nature.pdf</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">8.07 MB</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">PDF File</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">Uploaded on Thursday, 12 November 2020</div>
+                            </div>
+                        </div>
+                        <div class="pdf-content-media-qr">
+                            <img
+                                style="
+            width: 100px;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/10/46096/2020/11/12/entry-qrcode_c8bab591-1375-410d-a9cd-c8bea44800dd.svg"
+                                alt="qr" 
+                            />
+                        </div>
+                    </div>
+                </map>
+             &nbsp;</figure>
+<p style="text-align: left"><br></p>
+<figure>
+                    <figure>
+                        <video class="original-content" controls  src="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/What_is_CRM_275bd9bd-050d-43e7-bdf4-79f8d6049112.mp4" caption="Description of a Video" entry_link="https://link.jrnl.com/dynamicpagelink/UHiq81EJTEYAHvEbA" video_play_poster="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/What_is_CRM_275bd9bd-050d-43e7-bdf4-79f8d6049112.mp4_poster_868af3e2-6bbb-45c0-80b9-1e09c577a851.jpg_play_poster_61243fa8-21b6-401f-aedb-3b172bf85229.jpg" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/10/46096/2020/11/12/entry-qrcode_f95121f1-2a71-4237-a12c-a8900379db86.svg" style="position:relative; cursor: default; width: 100%;">
+                            <source  src="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/What_is_CRM_275bd9bd-050d-43e7-bdf4-79f8d6049112.mp4" caption="Description of a Video" entry_link="https://link.jrnl.com/dynamicpagelink/UHiq81EJTEYAHvEbA" video_play_poster="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/What_is_CRM_275bd9bd-050d-43e7-bdf4-79f8d6049112.mp4_poster_868af3e2-6bbb-45c0-80b9-1e09c577a851.jpg_play_poster_61243fa8-21b6-401f-aedb-3b172bf85229.jpg" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/10/46096/2020/11/12/entry-qrcode_f95121f1-2a71-4237-a12c-a8900379db86.svg" type="video/mp4"></source>
+                            <source  src="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/What_is_CRM_275bd9bd-050d-43e7-bdf4-79f8d6049112.mp4" caption="Description of a Video" entry_link="https://link.jrnl.com/dynamicpagelink/UHiq81EJTEYAHvEbA" video_play_poster="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/What_is_CRM_275bd9bd-050d-43e7-bdf4-79f8d6049112.mp4_poster_868af3e2-6bbb-45c0-80b9-1e09c577a851.jpg_play_poster_61243fa8-21b6-401f-aedb-3b172bf85229.jpg" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/10/46096/2020/11/12/entry-qrcode_f95121f1-2a71-4237-a12c-a8900379db86.svg" type="video/ogg"></source>
+                        </video>
+                        <map style="width: 100%; display: none;">
+                            <div 
+                                style=" 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+         ">
+                                <div style="display: flex; align-items: center; 
+            position: relative;
+            margin-bottom: 0.3125rem;
+            width: 100% !important;
+         ">
+                                    <img 
+                                        style="margin-right: 0.9375rem; 
+            width: 100% !important;
+            background-color: rgba(255, 255, 255, 0.25);
+         margin-right: 0px !important; " 
+                                        src="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/What_is_CRM_275bd9bd-050d-43e7-bdf4-79f8d6049112.mp4_poster_868af3e2-6bbb-45c0-80b9-1e09c577a851.jpg_play_poster_61243fa8-21b6-401f-aedb-3b172bf85229.jpg"
+                                        alt="video"
+                                    />
+                                    <div style="
+            position: absolute;
+            right: 1.75rem;
+            bottom: 0.625rem;
+            background: #fff;
+        ">
+                                        <img
+                                            style="
+            width: 100px;
+        "
+                                            src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/10/46096/2020/11/12/entry-qrcode_f95121f1-2a71-4237-a12c-a8900379db86.svg"
+                                            alt="qr" 
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </map>
+                        <figcaption>Description of a Video</figcaption>
+                    </figure>
+                    </figure>
+<p style="text-align: left"><br></p>
+            
+            </div>
+          
+          <div entry-date="Thursday, November 12, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+        
+      
+        <div class="page tct journal-title" id="journal-2">
+          <div class="subpage">
+            <h3 class="table-content-title">journal2</h3>
+            <div class="journal-title-content">
+              
+            </div>
+            <div class='logo-img-container'>
+              <div class='line left-3-margin'></div>
+              <img src="/Users/smirnovev/projects/Varkain/PDF-builder/static/images/timeline-images/logo.png" alt="logo" class="center small-logo-img"/>
+              <div class='line right-3-margin'></div>
+            </div>
+          </div>
+        </div>
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Wednesday, July 01, 2020"
+            style=" border: 1px solid grey;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style=""
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Bad day.. 
+                </div>
+                
+                  <div class="pdf-content-location">
+                    <i class="icon-location"></i>
+                    <div class="pdf-content-location-info">
+                      <h3 class="pdf-location-title">C/ Gran Via 23</h3>
+                      <h5 class="pdf-location-subtitle">Madrid, Spain (28013)</h5>
+                    </div>
+                  </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Wednesday, July 01, 2020"
+            >
+            
+              <p class="align-left">I’m so upset!! I don’t even know where to begin!</p>
+<p class="align-left"><br></p>
+<p class="align-left">To start off, I think I completely failed my geometry quiz, which I know I should’ve studied more for...my dad’s not gonna be happy about that. :( Then, we had a pop quiz in history on the reading homework from last night, and I completely forgot most of what I read, which made me even more upset because I actually did the reading! But what really made me mad was the note that Sarah slipped into my locker during passing period. She said she was sad that I’ve been hanging out with Jane more lately and thinks that I don’t want to be her friend anymore. I can’t believe she thinks that, especially after talking with her on the phone for hours and hours last month while she was going through her breakup with Nick! Just because I’ve been hanging out with Jane a little more than usual doesn’t mean I’m not her friend anymore. She completely blew me off at lunch, and when I told Jane, she thought that Sarah was being a “drama queen.”</p>
+<p class="align-left"><br></p>
+<p class="align-left">This is just what I need! My parents are getting on my case about doing more extracurricular activities, I have a huge paper due for AP English soon, and I can’t understand a thing in advanced Spanish! The last thing I need is for my best friend to think I hate her and barely text me back anymore.</p>
+<p class="align-left"><br></p>
+<p class="align-left">Uggh! I can’t concentrate on anything right now because of it. I hope she gets over it!!!</p>
+<p class="align-left"><br></p>
+<p class="align-left"><br></p>
+<figure class="align-left"><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/01/crazy-mad-upset-emoji-sticker-29717-300x300_e62d482e-4e4b-4814-90ad-b92b84b2ab19.png" caption="" alignment="center" style='position:relative; cursor: default; width: 40%;margin-left: auto; margin-right: auto; display: block;'/><figcaption></figcaption></figure></figure>
+            
+            </div>
+          
+          <div entry-date="Wednesday, July 01, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Thursday, July 02, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Seeing an Minpin True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Thursday, July 02, 2020"
+            >
+            
+              <p class="align-left">When I saw the <u><em><strong>Minpin</strong></em></u>, I was completed puzzled because he was as small as an ant. Even though I tried to talk quietly, the Minpin (called Don Mini) kept getting blown away. I found it really funny when I heard his name. Was he really the ‘don’ of this forest? He wore extremely old clothes that belonged in the past. He even had suction-boots! Anyway, he told me all about this horrible creature that lurked around the forest. This ‘Red-Hot Smoke- Belching Gruncher’ would breathe out venomous smoke and devoured any living thing that walked in the forest. Oh blimey, I’m sure glad I escaped from that in time. Before I even had time to ask more questions, something <em><strong>even more </strong></em>peculiar began to happen. All around me, not only on the huge main trunk of the tree but also on all the big branches that grew out of it, other tiny windows were opening and tiny faces were peering out. Heads of men and women stared out. They were silent, unmoving, almost ghost-like. Moreover, the children’s heads were as small as matchsticks.</p>
+<figure class="align-left"><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/43423/2020/07/02/download_b777795f-7f38-4409-96ff-0df64158f19c.jpg" caption="This is my Minpin (Don Mini)" width="100" style='position:relative; cursor: default; width: 100%;'/><figcaption>This is my Minpin (Don Mini)</figcaption></figure></figure>
+<p class="align-left">I realized the sun began to set yet I had to find a way to get home so I devised a plan. It was clever and mind-blowingly amazing because I always created the best plans (obviously). I had the help of a truly magnificent swan, who was as white as snow. It was so thrilling to be flying on the back of this great swan! Despite the fact we were flying in the air, it was very difficult spotting the Cruncher because the smoke enveloped the beast completely. Eventually, as we got extremely close, I noticed an enormous black shadow which belonged to the hairy monster. Someone should give him wax strips that are how bad his hair was. Then we teased the monster to follow us as it leaped up and down in a frenzy of hunger and desire.</p>
+<p class="align-left">A spectacular feeling overcame me when we finally trapped the greedy Gruncher in the forest. Kaboom. Bish. Bash. Job done. I felt like I was a specially trained MI5 agent who could do the impossible. Hmm, maybe I should be a special agent when I grow up. Anyway, to my surprise, the <u><em><strong>Minpins</strong></em></u> rewarded me with a swan to help me arrive at the forest during my nightly visits. You heard that right. I don’t need an airplane or Baguette because I’ve got my own personal swan so I can go to the forest whenever I want.</p>
+<p class="align-left">Well, that was my day. Mom is calling me for supper now. She’s made chicken and I think I can make a good guess about what she’ll warn me not to do. “Beware! Beware! The Forest of Sin. None come out, but many go in!” she will warn. But I know the truth. They do come out. But that’s a secret. Our little secret.😘&nbsp;</p>
+            
+            </div>
+          
+          <div entry-date="Thursday, July 02, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+            <div class="pdf-entry-separator" entry-date="Thursday, July 02, 2020">
+              <i class="icon-jrnl-logo"></i>
+            </div>
+          
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Thursday, July 02, 2020"
+            style=" border: 1px solid grey;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style=""
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Log boat LOG BOAT LOG BOAT Log boat False
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Thursday, July 02, 2020"
+            >
+            
+              <p class="align-left">Today was a beautiful, bright<span style="font-family: Roboto">,</span> and sunny day so I decided to build a boat! I needed to get some long, <span style="font-family: Roboto">hardwood</span> so I <span style="font-family: Roboto">traveled</span> to the forest to collect a huge pile. After I had gathered some wood, I began to nail the pieces together using my flint hammer and dinosaur teeth for nails. It took 2 hours to build, but once it was finished I was very proud of myself. Was it going to float?</p>
+<figure class="align-left"><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/01/thongsomboon-club_587fb1ea-2603-4901-8aa3-cfe00054342d.jpg" caption="" width="100" style='position:relative; cursor: default; width: 100%;'/><figcaption></figcaption></figure></figure>
+<p class="align-left">After some time, I began to get hungry so I decided to go fishing on my brand new log boat. Heaving the boat, I pushed it down towards the lake and into the water. Fortunately, the boat floated and so I jumped in! Slowly, I rowed out into the middle of the lake and then threw my fishing rod (made from a stick) into the deep, <span style="font-family: Roboto">freshwater</span>. Suddenly, my rod pulled me forward so I began to lift the fish into the boat. It was really tricky to catch the fish because it was so wriggly and heavy! Eventually, I caught the fish and sailed back to land. The fish was golden and very slippery!</p>
+<p class="align-left">In the afternoon, I decided to have a nap because I was so tired <span style="font-family: Roboto">of</span> fishing! At that moment, a huge <span style="font-family: Roboto">brown</span> bear came charging through the woods like thunder. Some hunters from my tribe ran away but I stood my ground and began to throw spears at the growling, snarling bear! How was I going to <span style="font-family: Roboto">getaway</span>! The spears didn’t work so I grabbed my hand made bow and arrow and started shooting at it. Whimpering, the bear tumbled to the ground. YES! We had defeated it!</p>
+<p class="align-left">As the <span style="font-family: Roboto">sunset</span> in the sky, my belly began to grumble. What was I going to eat? I skipped back to my family’s hut and asked my Mum for something to eat whilst my baby sister lay on her fur skin mat. She was cooking some raw, mammoth meat on the fire and it smelt delicious. We were running out of wood so I went outside to look for some. Fortunately, I had some <span style="font-family: Roboto">leftover</span> from my boat! Once the mammoth was cooked, I began to eat it. Unfortunately, it tasted disgusting, however<span style="font-family: Roboto">,</span> it filled me up!</p>
+<p class="align-left">I wonder what will happen tomorrow…</p>
+            
+            </div>
+          
+          <div entry-date="Thursday, July 02, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+            <div class="pdf-entry-separator" entry-date="Thursday, July 02, 2020">
+              <i class="icon-jrnl-logo"></i>
+            </div>
+          
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Thursday, July 02, 2020"
+            style=" border: 1px solid grey;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style=""
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Log boat False
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Thursday, July 02, 2020"
+            >
+            
+              <p class="align-left">Today was a beautiful, bright<span style="font-family: Roboto">,</span> and sunny day so I decided to build a boat! I needed to get some long, <span style="font-family: Roboto">hardwood</span> so I <span style="font-family: Roboto">traveled</span> to the forest to collect a huge pile. After I had gathered some wood, I began to nail the pieces together using my flint hammer and dinosaur teeth for nails. It took 2 hours to build, but once it was finished I was very proud of myself. Was it going to float?</p>
+<figure class="align-left"><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/01/thongsomboon-club_587fb1ea-2603-4901-8aa3-cfe00054342d.jpg" caption="" width="100" style='position:relative; cursor: default; width: 100%;'/><figcaption></figcaption></figure></figure>
+<p class="align-left">After some time, I began to get hungry so I decided to go fishing on my brand new log boat. Heaving the boat, I pushed it down towards the lake and into the water. Fortunately, the boat floated and so I jumped in! Slowly, I rowed out into the middle of the lake and then threw my fishing rod (made from a stick) into the deep, <span style="font-family: Roboto">freshwater</span>. Suddenly, my rod pulled me forward so I began to lift the fish into the boat. It was really tricky to catch the fish because it was so wriggly and heavy! Eventually, I caught the fish and sailed back to land. The fish was golden and very slippery!</p>
+<p class="align-left">In the afternoon, I decided to have a nap because I was so tired <span style="font-family: Roboto">of</span> fishing! At that moment, a huge <span style="font-family: Roboto">brown</span> bear came charging through the woods like thunder. Some hunters from my tribe ran away but I stood my ground and began to throw spears at the growling, snarling bear! How was I going to <span style="font-family: Roboto">getaway</span>! The spears didn’t work so I grabbed my hand made bow and arrow and started shooting at it. Whimpering, the bear tumbled to the ground. YES! We had defeated it!</p>
+<p class="align-left">As the <span style="font-family: Roboto">sunset</span> in the sky, my belly began to grumble. What was I going to eat? I skipped back to my family’s hut and asked my Mum for something to eat whilst my baby sister lay on her fur skin mat. She was cooking some raw, mammoth meat on the fire and it smelt delicious. We were running out of wood so I went outside to look for some. Fortunately, I had some <span style="font-family: Roboto">leftover</span> from my boat! Once the mammoth was cooked, I began to eat it. Unfortunately, it tasted disgusting, however<span style="font-family: Roboto">,</span> it filled me up!</p>
+<p class="align-left">I wonder what will happen tomorrow…</p>
+            
+            </div>
+          
+          <div entry-date="Thursday, July 02, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Friday, July 03, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  My amazing day!! True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Friday, July 03, 2020"
+            >
+            
+              <p class="align-left">I had the best day EVER today. I woke up this morning, the sun was shining through the curtains and I could smell breakfast cooking downstairs. I jumped out of my bed, threw on my school clothes<span style="font-family: Roboto">,</span> and skipped down to the kitchen.</p>
+<p class="align-left">A delicious breakfast of <span style="font-family: Roboto">pancakes with syrup </span>was waiting for me on the table and I gobbled it down as quick as a flash. I grabbed my school bag, shouted “Bye!” to my mum<span style="font-family: Roboto">,</span> and dashed out of the door to school.</p>
+<figure><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/01/bb7e2fa1-0d5d-4795-bf50-d134a5ac69a6_6ab1d982-0959-4fb3-a645-0d2775982a70.jpg" caption="" width="100" style='position:relative; cursor: default; width: 100%;'/><figcaption></figcaption></figure></figure>
+<p class="align-left">When I arrived at school, my teacher handed my homework back to me and a huge grin spread across her face. Guess what? I got 20 out of 20! I couldn’t believe it! We had my best lessons in the morning (Literacy and Geography).</p>
+<p class="align-left">Before I knew it, it was lunchtime. The menu today was my <span style="font-family: Roboto">favorite</span>:<span style="font-family: Roboto"> Spaghetti Bolognaise followed by Chocolate pudding</span> – yum! The afternoon flew by, and we ended the school day with a really fun game of Dodgeball, and we all cheered when my team won (of course).</p>
+<figure><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/01/download_13caaeca-62ea-4741-8725-36a0242a9880.jpg" caption="" width="100" style='position:relative; cursor: default; width: 100%;'/><figcaption></figcaption></figure></figure>
+<p class="align-left">After school, I came home and was met with the most amazing surprise; my mum told me that we were going out to the cinema and to Pizza Hut for dinner. We had a fantastic time!</p>
+<figure><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/43381/2020/07/01/TbEKigb_65a6d0fd-16fc-4a95-9f53-0a1539c8c1e2.jpg" caption="" width="100" style='position:relative; cursor: default; width: 100%;'/><figcaption></figcaption></figure></figure>
+<p class="align-left">I’m sitting on my bed writing this, remembering all the fun things that happened today. I hope tomorrow is just as good!</p>
+            
+            </div>
+          
+          <div entry-date="Friday, July 03, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Friday, July 03, 2020"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Sunday, July 05, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  My dreadful day True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Sunday, July 05, 2020"
+            >
+            
+              <p class="align-left"><span style="font-family: Old Standard TT, serif">Dear diary,</span></p>
+<p class="align-left"><span style="font-family: Old Standard TT, serif">Today was a </span><span style="font-family: Old Standard TT, serif"><strong>dreadful</strong></span><span style="font-family: Old Standard TT, serif"> day. As I sit here, the light of my candle is starting to fade; I shall need to be quick as we are only given one candle a month. Raging outside is a storm: the windows are rattling something rotten – I am surprised that they don’t come crashing down around me, covering the close-quartered people with shards of razor-like glass. The blankets, which should cover us, have been taken away by the master – probably to sell.</span></p>
+<p class="align-left"><span style="font-family: Old Standard TT, serif">It all started this morning; shivering, I was woken by a bitter wind meandering its way through the many cracks and crevices in the windows and doors. My blanket has already been missing for several days – I am convinced that the master has sold them to make himself a bit of money. By the time I had reached the front of the long queue for the washing bowl, the water was stagnant and resembled a pool of mud – however desperate I was, I wasn’t going to wash in that! Disgusted, I decided to make my way to breakfast.</span></p>
+            
+            </div>
+          
+          <div entry-date="Sunday, July 05, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Sunday, July 05, 2020"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Tuesday, July 07, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Phone ringing.. True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Tuesday, July 07, 2020"
+            >
+            
+              <p class="align-left">After I woke up this morning, I made the regrettable decision of waking up. I tried to go back to sleep, but I could not even relax.&nbsp;</p>
+<p class="align-left">Today was one of those days where either I get up, or I get up. I then decided to go outside, but because it was raining, I got wet. I went back inside, felt tired enough to go back to bed, but I still had to change out of my wet clothes.&nbsp;</p>
+<p class="align-left">Then I got a phone call from you know who. I got so excited that I didn’t care that I was naked, tired, and there was a puddle on the floor. We are going on a date this Friday. I don’t know how I’m going to sleep. What am I going to wear?&nbsp;</p>
+<figure class="align-left"><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/07/download_88d04763-266d-4749-9568-e812b822c77a.jpg" caption="" alignment="center" style='position:relative; cursor: default; width: 40%;margin-left: auto; margin-right: auto; display: block;'/><figcaption></figcaption></figure></figure>
+<p class="align-left">oh diary, one day I’ll look back on this and say remember when I didn’t pay attention to anything but the phone ringing. FINALLY.</p>
+            
+            </div>
+          
+          <div entry-date="Tuesday, July 07, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Tuesday, July 07, 2020"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Tuesday, July 14, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  New day, new adventure..  True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Tuesday, July 14, 2020"
+            >
+            
+              <p class="align-left">Today Papa and I took our usual weekly stroll to the Butcher’s on Lipton Lane. I felt uneasy during today’s trip as folk walked around faster than usual, as though there was a secret we were prohibited to know.</p>
+<p class="align-left">Soon, we arrived at the butchers where Henry (the butcher) greeted us with a warm smile and I was pleased to see his son, Roger, in there too. Papa instructed me to wait outside while he talked to Henry, so Roger escorted me out.</p>
+<p class="align-left">While we waited outside, Roger told me everything he knew. He explained to me that there was a horrible illness going around. “It’s not like the others that have passed,” he explained, “It has already killed fifteen people in our town. My father said that the people from the trading ships brought it overseas from the Black Sea.”</p>
+<p class="align-left">According to Roger, the doctors are unsure how to treat this disease and it has already spread very quickly.</p>
+<p class="align-left">Now I know why Mother doesn’t tell me anything; she wants me to be happy and stay innocent. To be honest, I’d rather the information was still a secret. I’m petrified! I’m scared of going to sleep in case I have nightmares. What if I get it? What if Mother or Papa get it?</p>
+<p class="align-left">Troubled, worried, scared I can’t talk to either of them about this. They would be terribly mad at Roger if they knew he’d told me. <span style="font-family: Roboto">The mother</span> doesn’t think that peasants are clean. She doesn’t even like it when Papa buys meat from Henry’s shop. According to Mother, the meat is not clean because they are not clean. In the past, she has simply refused to eat anything Papa bought from there, which meant that she went to bed hungry and without supper. I don’t understand it.</p>
+<p class="align-left">I’m starting to feel sleepy now. I am going to say my prayers and hopefully fall into a dreamless sleep.</p>
+            
+            </div>
+          
+          <div entry-date="Tuesday, July 14, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Tuesday, July 14, 2020"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Wednesday, July 15, 2015"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Family reunions True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Wednesday, July 15, 2015"
+            >
+            
+              %3Cp%3EWe+always+went+to+family+reunions.%3C%2Fp%3E%3Cp%3EWe+always+went+to+family+reunions.%3C%2Fp%3E%3Cp%3EWe+always+went+to+family+reunions.%3C%2Fp%3E%3Cp%3EWe+always+went+to+family+reunions.%3C%2Fp%3E
+            
+            </div>
+          
+          <div entry-date="Wednesday, July 15, 2015" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Wednesday, July 15, 2015"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Thursday, July 30, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Shopping day!!!  True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Thursday, July 30, 2020"
+            >
+            
+              <p class="align-left">What a busy day today! &nbsp;I never had a moment’s rest. &nbsp;</p>
+<p class="align-left">The day started with my alarm clock blaring at 7am. &nbsp;I had to be at Smith’s house by 8am to baby-sit. I really didn’t want to wake up so early on a Saturday, but I’m saving money to buy a new iPod and couldn’t say no to an all-day babysitting job.</p>
+<p class="align-left">When I arrived at Smith’s house, both kids were already awake. &nbsp;Madison was watching cartoons in <span style="font-family: Roboto">the </span>living room and Jacob was playing with his Legos in his bedroom. The kids were hungry so I made them some oatmeal in the microwave and we all ate breakfast together.</p>
+<p class="align-left">We had to leave right after breakfast for Jacob’s soccer practice. &nbsp;Luckily, the Smiths only live a couple<span style="font-family: Roboto"> of</span> blocks from the soccer field so we just walked there. &nbsp;It was a lot of fun watching Jacob play soccer. &nbsp;He’s very talented. I was worried that Madison might be bored, but she stayed busy by playing her Gameboy while Jacob practiced.</p>
+<p class="align-left">When practice was over, we went back to the house to make lunch. &nbsp;It’s always a breeze to make lunch for the Smith kids because they love chicken nuggets and French fries. &nbsp;All I had to do was pull the food out of the freezer and bake it in the oven.</p>
+<p class="align-left">After lunch, I planned a special surprise for the kids...I took them to see the new Disney movie. &nbsp;The movie theater is a few miles away from their house so I had to call my mom to pick us up in her car and drive us there. &nbsp;The kids loved the movie; they couldn’t stop laughing. &nbsp;I have to admit that I thought it was pretty funny too. &nbsp;The only bad part was that the theater had the air conditioning cranked up and it was freezing cold!</p>
+<p class="align-left">My mom picked us up again after the movie and took us back to the Smith’s house. &nbsp;We had only been back for a few minutes when Mrs. Smith came back home.&nbsp;</p>
+<p class="align-left">&nbsp;<span style="font-family: Roboto">I </span>didn’t expect her home so soon, but she was back early because the power went out at her office.</p>
+<p class="align-left">It worked out very well though because as soon as I left Smith’s, Danielle called to see if I wanted to go to the mall. &nbsp;I checked in at home to make sure it was ok and then met Danielle at her house.</p>
+<p class="align-left">While we were at the mall, we definitely “shopped ‘til we dropped”. &nbsp;I bought a t-shirt, a sweater, a pair of jeans, and some flip flops. &nbsp;I know that I won’t need the flip flops for much longer since it’s already October, but they were on clearance and I couldn’t pass them up.</p>
+<p class="align-left">Finally<span style="font-family: Roboto">,</span> after all that shopping, we headed home because I was exhausted. &nbsp;Today was a fun day, but I can’t wait to sleep in tomorrow!</p>
+<figure><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/30/SFT16612AQ_9ff8c8be-aadb-4fa6-accb-41fa516611e9.jpg" caption="" alignment="center" width="48" style='position:relative; cursor: default; width: 48%;margin-left: auto; margin-right: auto; display: block;'/><figcaption></figcaption></figure></figure>
+            
+            </div>
+          
+          <div entry-date="Thursday, July 30, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Thursday, July 30, 2020"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Wednesday, August 12, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  This is a smiling entry True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Wednesday, August 12, 2020"
+            >
+            
+              <p class="align-left"><span style="font-family: Roboto">This is a new entry with smiling </span>🤣 &nbsp;😮 🤔 😅&nbsp;</p>
+<p class="align-left"><span style="font-family: Roboto">And a minor picture in it</span></p>
+<figure><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/08/12/man-walking-dog_5ea90b33-098d-4e2c-8677-848e20d2be88.jpg" caption="This is the Image description" width="15" style='position:relative; cursor: default; width: 15%;'/><figcaption>This is the Image description</figcaption></figure></figure>
+<p class="align-left"><span style="font-family: Roboto">But anyway let's see how this goes on the book builder </span>🙏 😳&nbsp;</p>
+<figure><figure><img src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/08/12/turkey-3048299_1920-1366x550_d165cc28-9af0-4c8d-8abb-9bb1415ea868.jpg" caption="" alignment="center" style='position:relative; cursor: default; width: 40%;margin-left: auto; margin-right: auto; display: block;'/><figcaption></figcaption></figure></figure>
+<p class="align-left"><span style="font-family: Abril Fatface, cursive">Ups, I fotgot.. I will also add this font ..</span><span style="font-family: PT Mono, monospace"> just in case to see how it looks</span></p>
+            
+            </div>
+          
+          <div entry-date="Wednesday, August 12, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Wednesday, August 12, 2020"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Thursday, August 13, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  Emoji True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Thursday, August 13, 2020"
+            >
+            
+              <p class="align-left">I’m so upset!! I don’t even know where to begin!</p>
+<p class="align-left">To start off, I think I completely failed my geometry quiz, which I know I should’ve studied more for...my dad’s not gonna be happy about that. :( Then, we had a pop quiz in history on the reading homework from last night, and I completely forgot most of what I read, which made me even more upset because I actually did the reading! But what really made me mad was the note that Sarah slipped into my locker during passing period. She said she was sad that I’ve been hanging out with Jane more lately and thinks that I don’t want to be her friend anymore. I can’t believe she thinks that, especially after talking with her on the phone for hours and hours last month while she was going through her breakup with Nick! Just because I’ve been hanging out with Jane a little more than usual doesn’t mean I’m not her friend anymore. She completely blew me off at lunch, and when I told Jane, she thought that Sarah was being a “drama queen.”</p>
+<p class="align-left">This is just what I need! My parents are getting on my case about doing more extracurricular activities, I have a huge paper due for AP English soon, and I can’t understand a thing in advanced Spanish! The last thing I need is for my best friend to think I hate her and barely text me back anymore.</p>
+<p class="align-left">Uggh! I can’t concentrate on anything right now because of it. I hope she gets over it!!!</p>
+<figure class="align-left"><figure><img class="media-photo"  class="media-photo" src="https://jrnl.s3.amazonaws.com/dev/entry_images/66229/2020/07/01/crazy-mad-upset-emoji-sticker-29717-300x300_e62d482e-4e4b-4814-90ad-b92b84b2ab19.png" caption="" alignment="center" style='position:relative; cursor: default; width: 40%;margin-left: auto; margin-right: auto; display: block;'/><figcaption></figcaption></figure></figure>
+            
+            </div>
+          
+          <div entry-date="Thursday, August 13, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+            <div
+              class="new-date-breaker avoid-page-break"
+            
+              changed-entry-date="Thursday, August 13, 2020"
+            
+              style="
+                position: relative;
+                border: 1px solid green;
+                overflow: hidden;
+                max-height: 0px;
+              "
+            ></div>
+          
+        
+          
+          
+          
+          <div
+            class="journal-entry-main-container "
+            entry-date="Thursday, November 12, 2020"
+            style=" border: 1px solid grey;padding-top: 15px;"
+          >
+            <div
+              class="journal-entry-title-container"
+              style="border-top: 1px solid black;"
+            >
+              <div class="one-margin pdf-content-header">
+                <div 
+                  class="pdf-content-title journal-title-text"
+                >
+                  New doc True
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+            <div
+              class="one-margin journal-text item-content"
+              style="orphans:1; border: 1px solid blue;"
+              entry-date="Thursday, November 12, 2020"
+            >
+            
+              <p>Test</p>
+<figure>
+                <q type="document"  src="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/nature_dd6e3379-7d5e-45dd-a07c-c79f3b14796c.pdf" size="8458441" formatted_size="8.07 MB" caption="Nature.pdf" name="nature.pdf" entry_link="https://link.jrnl.com/dynamicpagelink/8NncnJPqvg1aiyiD6" created_date="Thursday, 12 November 2020" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/10/46096/2020/11/12/entry-qrcode_c8bab591-1375-410d-a9cd-c8bea44800dd.svg">
+                    <div class="add-media-box-file original-content" style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.25rem;
+                width: 100%;
+                height: 3.75rem;
+                border-radius: 0.3125rem;
+                border: solid 0.0625rem #d5d5d5;
+                background-color: #ffffff;
+            ">
+                        <img
+                            src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/11/file_2ef74894-1bf9-4b77-9745-08fd879d9d28.png"
+                            alt=""
+                            style="
+                color: rgb(47, 95, 129);
+                width: 1.9563rem;
+                height: 2.4438rem;
+                font-size: 2.5rem;
+                margin-left: 1.25rem;
+                min-width: 0px !important;
+            " />
+                        <div class="add-media-box-file-info" style="
+                cursor: pointer;
+                padding-left: 1.275rem;
+                overflow: hidden;
+            ">
+                            <p class="file-info-name" style="
+                white-space: pre;
+                padding-bottom: 0.3125rem;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 1.0625rem;
+                font-weight: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            ">nature.pdf</p>
+                            <a href="https://link.jrnl.com/dynamicpagelink/8NncnJPqvg1aiyiD6" class="file-info-size" style="
+                display: inline-block;
+                margin-bottom: 0;
+                font-family: 'Roboto';
+                font-size: 0.875rem;
+                font-weight: normal;
+                color: #2f5f81;
+                border-bottom: 1px solid #2f5f81;
+            " onClick={openDocument}>Open File (8.07 MB)</a>
+                        </div>
+                    </div>
+                </q>
+                <map style="width: 100%; display: none;">
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        ">
+                        <div style="display: flex; align-items: center;">
+                            <img
+                                style="
+            width: 2.9375rem;
+            height: 2.5rem;
+            object-fit: contain;
+            margin-right: 0.9375rem;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/entry_images/66122/2020/11/05/file_8208c991-d54e-4fac-bd8a-ecb831239f30.png"
+                                alt="audiowave"
+                            />
+                            <div class="pdf-content-media-desc">
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">nature.pdf</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.1;
+        ">8.07 MB</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">PDF File</div>
+                                <div style="
+            font-family: open sans, sans-serif;
+            font-size: 0.5rem;
+            font-weight: normal;
+            color: #000000;
+            line-height: 1.1;
+        ">Uploaded on Thursday, 12 November 2020</div>
+                            </div>
+                        </div>
+                        <div class="pdf-content-media-qr">
+                            <img
+                                style="
+            width: 100px;
+        "
+                                src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/10/46096/2020/11/12/entry-qrcode_c8bab591-1375-410d-a9cd-c8bea44800dd.svg"
+                                alt="qr" 
+                            />
+                        </div>
+                    </div>
+                </map>
+             &nbsp;</figure>
+<p style="text-align: left"><br></p>
+<figure>
+                    <figure>
+                        <video class="original-content" controls  src="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/What_is_CRM_275bd9bd-050d-43e7-bdf4-79f8d6049112.mp4" caption="Description of a Video" entry_link="https://link.jrnl.com/dynamicpagelink/UHiq81EJTEYAHvEbA" video_play_poster="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/What_is_CRM_275bd9bd-050d-43e7-bdf4-79f8d6049112.mp4_poster_868af3e2-6bbb-45c0-80b9-1e09c577a851.jpg_play_poster_61243fa8-21b6-401f-aedb-3b172bf85229.jpg" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/10/46096/2020/11/12/entry-qrcode_f95121f1-2a71-4237-a12c-a8900379db86.svg" style="position:relative; cursor: default; width: 100%;">
+                            <source  src="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/What_is_CRM_275bd9bd-050d-43e7-bdf4-79f8d6049112.mp4" caption="Description of a Video" entry_link="https://link.jrnl.com/dynamicpagelink/UHiq81EJTEYAHvEbA" video_play_poster="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/What_is_CRM_275bd9bd-050d-43e7-bdf4-79f8d6049112.mp4_poster_868af3e2-6bbb-45c0-80b9-1e09c577a851.jpg_play_poster_61243fa8-21b6-401f-aedb-3b172bf85229.jpg" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/10/46096/2020/11/12/entry-qrcode_f95121f1-2a71-4237-a12c-a8900379db86.svg" type="video/mp4"></source>
+                            <source  src="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/What_is_CRM_275bd9bd-050d-43e7-bdf4-79f8d6049112.mp4" caption="Description of a Video" entry_link="https://link.jrnl.com/dynamicpagelink/UHiq81EJTEYAHvEbA" video_play_poster="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/What_is_CRM_275bd9bd-050d-43e7-bdf4-79f8d6049112.mp4_poster_868af3e2-6bbb-45c0-80b9-1e09c577a851.jpg_play_poster_61243fa8-21b6-401f-aedb-3b172bf85229.jpg" qrcode="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/10/46096/2020/11/12/entry-qrcode_f95121f1-2a71-4237-a12c-a8900379db86.svg" type="video/ogg"></source>
+                        </video>
+                        <map style="width: 100%; display: none;">
+                            <div 
+                                style=" 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+         ">
+                                <div style="display: flex; align-items: center; 
+            position: relative;
+            margin-bottom: 0.3125rem;
+            width: 100% !important;
+         ">
+                                    <img 
+                                        style="margin-right: 0.9375rem; 
+            width: 100% !important;
+            background-color: rgba(255, 255, 255, 0.25);
+         margin-right: 0px !important; " 
+                                        src="https://jrnl.s3.amazonaws.com/dev/entry_files/10/46096/2020/11/12/What_is_CRM_275bd9bd-050d-43e7-bdf4-79f8d6049112.mp4_poster_868af3e2-6bbb-45c0-80b9-1e09c577a851.jpg_play_poster_61243fa8-21b6-401f-aedb-3b172bf85229.jpg"
+                                        alt="video"
+                                    />
+                                    <div style="
+            position: absolute;
+            right: 1.75rem;
+            bottom: 0.625rem;
+            background: #fff;
+        ">
+                                        <img
+                                            style="
+            width: 100px;
+        "
+                                            src="https://jrnl.s3.amazonaws.com/dev/media_qrcodes/10/46096/2020/11/12/entry-qrcode_f95121f1-2a71-4237-a12c-a8900379db86.svg"
+                                            alt="qr" 
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </map>
+                        <figcaption>Description of a Video</figcaption>
+                    </figure>
+                    </figure>
+<p style="text-align: left"><br></p>
+            
+            </div>
+          
+          <div entry-date="Thursday, November 12, 2020" style="height: 0px;max-height: 0px;"></div>
+          
+          
+          
+        
+      
+    </div>
+  </div>
+
+
+
+</body>
+</html>
