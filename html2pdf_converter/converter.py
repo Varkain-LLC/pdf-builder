@@ -141,7 +141,6 @@ class HtmlToPdfConverter:
         else:
             with open(output_file, 'wb') as file:
                 file.write(self.get_pdf_file(temp_html_file_path))
-        # print(temp_html_file_path)
         os.remove(temp_html_file_path)
 
     def get_html(self):
