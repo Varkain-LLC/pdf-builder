@@ -9,7 +9,6 @@ img {
 
 @page:right {
   margin: 0.5in 0.7in 0.5in 0.5in;
-  border: 1px dotted sienna;
   @bottom-left {
     content: counter(page);
     font-size: .13in;
@@ -31,7 +30,6 @@ img {
 
 @page:left {
   margin: 0.5in 0.5in 0.5in 0.7in;
-  border: 1px dotted burlywood;
   @bottom-right {
     content: counter(page);
     font-size: .13in;
