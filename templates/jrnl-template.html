@@ -226,6 +226,7 @@
         {% for entry in journal.entries %}
           {% set content = entry.content|striptags %}
           {% set is_date_changed = loop.previtem and entry.entry_date != loop.previtem.entry_date %}
+          {% set is_the_same_date = loop.nextitem and entry.entry_date == loop.nextitem.entry_date %}
         <div
           class="entry-container"
           entry-date="{{ entry.entry_date }}"
@@ -290,6 +291,7 @@
               <div
                 class="two-margin journal-comment-container"
                 entry-date="{{ entry.entry_date }}"
+                style="{% if is_the_same_date %}margin-bottom: 15px;{% endif %}"
               >
                 <div class="journal-comment-user-container">
                   <img src="{{ comment.user.avatar_image_url }}" alt="user"/>
@@ -305,7 +307,7 @@
               </div>
             {% endfor %}
           {% endif %}
-          {% if loop.nextitem and entry.entry_date == loop.nextitem.entry_date %}
+          {% if is_the_same_date %}
             <div
               class="pdf-entry-separator avoid-page-break"
               entry-date="{{ entry.entry_date }}"
@@ -338,6 +340,7 @@
         {% for entry in tag.entries %}
           {% set content = entry.content|striptags %}
           {% set is_date_changed = loop.previtem and entry.entry_date != loop.previtem.entry_date %}
+          {% set is_the_same_date = loop.nextitem and entry.entry_date == loop.nextitem.entry_date %}
         <div
           class="entry-container"
           entry-date="{{ entry.entry_date }}"
@@ -402,6 +405,7 @@
               <div
                 class="two-margin journal-comment-container"
                 entry-date="{{ entry.entry_date }}"
+                style="{% if is_the_same_date %}margin-bottom: 15px;{% endif %}"
               >
                 <div class="journal-comment-user-container">
                   <img src="{{ comment.user.avatar_image_url }}" alt="user"/>
@@ -417,7 +421,7 @@
               </div>
             {% endfor %}
           {% endif %}
-          {% if loop.nextitem and entry.entry_date == loop.nextitem.entry_date %}
+          {% if is_the_same_date %}
             <div
               class="pdf-entry-separator avoid-page-break"
               entry-date="{{ entry.entry_date }}"
