@@ -122,7 +122,7 @@ img {
 div.entry-container {
   string-set: pagetitle attr(entry-date);
 }
-div {
+div, img, p {
   string-set: pagetitle attr(entry-date);
 }
 .journal-date {
