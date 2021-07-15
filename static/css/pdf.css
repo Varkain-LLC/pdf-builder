@@ -578,7 +578,7 @@ blockquote {
 }
 
 .journal-entry-title-container {
-  margin-top: 15px;
+  /*margin-top: 15px;*/
   break-after: avoid-page;
   page-break-after: avoid;
   page-break-inside: avoid;
